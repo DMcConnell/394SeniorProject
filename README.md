@@ -5,6 +5,10 @@ The senior project for the Armadillo group of Dr. Elliott's CSC 394 Senior Capst
 
 We need to finalize a name for this application.
 
+## Quick Tips
+
+Always check for updates to the repo before you start coding to prevent as many conflicts as possible.
+
 ## Steps To Get Things Running
 
 ### Copying the Project
@@ -29,4 +33,4 @@ We need to finalize a name for this application.
 2. Check all files on the left pane that you want to commit
 3. At the bottom left, add a title and description
 4. Commit to whatever branch you're committing to
-5.
+5. **IMPORTANT** - Must click Push Origin button at the top or changes will not push to other developers
