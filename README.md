@@ -11,6 +11,25 @@ Always check for updates to the repo before you start coding to prevent as many 
 
 ## Steps To Get Things Running
 
+1. Open eclipse with whatever workspace you choose
+2. File > Import
+3. Git > Projects from Git
+4. Clone URI
+5. Insert this link into URI field: <https://github.com/DMcConnell/394SeniorProject.git>
+6. Enter your GitHub login credentials and click Next
+7. Ensure the master branch is checked and click Next
+8. Edit the directory path if you wish and click Next
+9. Import Existing Eclipse Project and click Next
+10. Select EatMyFood and click Next
+11. Finish
+
+## Committing Changes
+
+To update the project to reflect someone else's changes you can right click on the project, hover over "Team" and select Pull
+To commit your changes for others to use, right click o nthe projeck, hover over "Team" and select "Commit"
+
+## OLD - Steps To Get Things Running - Left in for Documentation
+
 ### Copying the Project
 1. Share your email (that is linked to your GitHub) with Duncan so he can add you as a collaborator
 2. Download GitHub Desktop at <https://desktop.github.com>
