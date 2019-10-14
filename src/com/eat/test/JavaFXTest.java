@@ -1,4 +1,4 @@
-package com.eat.Test;
+package com.eat.test;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
