@@ -26,10 +26,10 @@ public class CreateUsersTables {
 	public CreateUsersTables () {
         System.out.println("Attempting to connect...");
         //Main DB
-        //DBInteractor db = new DBInteractor("jdbc:mysql://34.223.151.87:3306/javabase", "remoteu", "password");
+        DBInteractor db = new DBInteractor("jdbc:mysql://34.223.151.87:3306/javabase", "remoteu", "password");
         
         //Backup DB
-        DBInteractor db = new DBInteractor("jdbc:mysql://18.190.142.138:3306/javabase", "remoteu", "password");
+        //DBInteractor db = new DBInteractor("jdbc:mysql://18.190.142.138:3306/javabase", "remoteu", "password");
         
         System.out.print("Creating users table... ");
         try {
