@@ -27,6 +27,7 @@ public class Profile extends Application{
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.TOP_CENTER);
 		
+		
 		//Title
 		Label title = new Label("Profile");
 		title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 70));
