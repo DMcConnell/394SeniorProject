@@ -17,45 +17,43 @@ public class DBInteractor {
         }
     }
 
-    public DBInteractor(String url, String username, String password) {
+    public DBInteractor(String url, String username, String password) throws Exception {
         try {
             con = DriverManager.getConnection(url, username, password);
             st = con.createStatement();
         } catch(Exception e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 
-    public void executeStatement(String statement) {
+    public void executeStatement(String statement) throws Exception {
         try {
             st.executeUpdate(statement);
         }
         catch(Exception e) {
-            System.out.println(e);
+            throw e;
         }
     }
 
-    public ResultSet executeQuery(String query) {
+    public ResultSet executeQuery(String query) throws Exception {
         try {
             return st.executeQuery(query);
         }
         catch(Exception e){
-            System.out.println(e);
-            return null;
+            throw e;
         }
     }
 
-    public DatabaseMetaData getMetaData() {
+    public DatabaseMetaData getMetaData() throws Exception {
         try {
             return con.getMetaData();
         }
         catch(Exception e) {
-            System.out.println(e);
-            return null;
+            throw e;
         }
     }
 
-    public void closeEverything() {
+    public void closeEverything() throws Exception {
         try {
             if(st != null) {
                 st.close();
@@ -65,7 +63,7 @@ public class DBInteractor {
             }
         }
         catch(Exception e) {
-            System.out.println(e);
+            throw e;
         }
     }
 }

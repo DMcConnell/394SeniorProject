@@ -1,5 +1,7 @@
 package com.eat.mysql;
 
+import com.eat.IEatMyFood;
+
 public class CreateUsersTables {
 	
 	public static String createMainTable() {
@@ -25,11 +27,19 @@ public class CreateUsersTables {
 	
 	public CreateUsersTables () {
         System.out.println("Attempting to connect...");
-        //Main DB
-        DBInteractor db = new DBInteractor("jdbc:mysql://34.223.151.87:3306/javabase", "remoteu", "password");
-        
-        //Backup DB
-        //DBInteractor db = new DBInteractor("jdbc:mysql://18.190.142.138:3306/javabase", "remoteu", "password");
+
+        DBInteractor db;
+        try {
+        	if(IEatMyFood.MAINDB) {
+	        	db = new DBInteractor("jdbc:mysql://34.223.151.87:3306/javabase", "remoteu", "password");
+	        }
+	        else {
+	            db = new DBInteractor("jdbc:mysql://18.190.142.138:3306/javabase", "remoteu", "password");
+	        }
+        } catch(Exception e) {
+        	e.printStackTrace();
+        	return;
+        }
         
         System.out.print("Creating users table... ");
         try {
@@ -47,7 +57,11 @@ public class CreateUsersTables {
         	System.out.println("Failed");
         }
         
-        db.closeEverything();
+        try {
+        	db.closeEverything();
+        } catch(Exception e) {
+        	e.printStackTrace();
+        }
         System.out.println("All tables created");
 	}
 }
