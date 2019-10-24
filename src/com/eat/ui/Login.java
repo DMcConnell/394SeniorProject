@@ -19,15 +19,106 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class Login extends Application {
+public class Login extends GridPane {
 
+	/*
     public static void main(String[] args) {
         launch(args);
     }
+    */
+    public Login()
+    {
+        this.setAlignment(Pos.CENTER);
+        this.setHgap(10);
+        this.setVgap(10);
+        this.setPadding(new Insets(20, 20, 20, 20));
+        this.getColumnConstraints().add(new ColumnConstraints(150)); // column 0 is 150 wide
 
+        Text scenetitle = new Text("Please enter your username and password to log in.");
+        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
+        this.add(scenetitle, 0, 0, 3, 1);
+        
+        //username fields
+        Label userNamePrefix = new Label("");
+        userNamePrefix.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
+        this.add(userNamePrefix, 0, 1);
+
+        Label userName = new Label("User Name:");
+        userName.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        this.add(userName, 1, 1);
+
+        TextField userTextField = new TextField();
+        userTextField.setMinWidth(200);
+        userTextField.setMaxWidth(300);
+        userTextField.setMinHeight(50);
+        userTextField.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        this.add(userTextField, 2, 1);
+        
+        //password fields
+        Label pwPrefix = new Label("");
+        pwPrefix.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
+        this.add(pwPrefix, 0, 2);
+
+        Label pw = new Label("Password:");
+        pw.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        this.add(pw, 1, 2);
+
+        PasswordField pwBox = new PasswordField();
+        pwBox.setMinWidth(200);
+        pwBox.setMaxWidth(300);
+        pwBox.setMinHeight(50);
+        this.add(pwBox, 2, 2);
+
+        //log in and register buttons
+        Button LoginBtn = new Button("Log in");
+        LoginBtn.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        LoginBtn.setMinWidth(145);
+        Button RegBtn = new Button("Register");
+        RegBtn.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        RegBtn.setMinWidth(145);
+        HBox hbBtn = new HBox(10);
+        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
+        hbBtn.getChildren().add(LoginBtn);
+        hbBtn.getChildren().add(RegBtn);
+        this.add(hbBtn, 2, 3);
+        
+        //forgot password button
+        Button ForgotPW = new Button("Forgot your password?");
+        ForgotPW.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        ForgotPW.setMinWidth(300);
+        HBox hbForgot = new HBox(10);
+        hbForgot.setAlignment(Pos.BOTTOM_LEFT);
+        hbForgot.getChildren().add(ForgotPW);
+        this.add(hbForgot, 2, 4);
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Eat My Food");
+        
+        
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
@@ -91,10 +182,11 @@ public class Login extends Application {
         hbForgot.setAlignment(Pos.BOTTOM_LEFT);
         hbForgot.getChildren().add(ForgotPW);
         grid.add(hbForgot, 2, 4);
+        */
 
         
         /*------------------------------------------------------ACTIONS------------------------------------------------------*/
-
+    	/*
         LoginBtn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -131,4 +223,7 @@ public class Login extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+	*/
+
+
 }
