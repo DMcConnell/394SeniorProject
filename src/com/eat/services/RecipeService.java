@@ -3,10 +3,15 @@ package com.eat.services;
 import java.io.File;
 import java.sql.ResultSet;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.eat.IEatMyFood;
 import com.eat.mysql.DBInteractor;
+import com.eat.support.Ingredient;
 
 public class RecipeService {
 	
@@ -52,12 +57,12 @@ public class RecipeService {
 			throw e;
 		}
 		
-		return getRecipe(Integer.toString(i));
+		return getRecipe(i);
 	}
 	
 	//Will return the recipe searched for based on uniqueID, if uniqueID does not exist
 	//will return an empty HashMap
-	public Map<String,String> getRecipe(String uniqueID) throws Exception {
+	public HashMap<String,String> getRecipe(int uniqueID) throws Exception {
 		String SQL = "SELECT * FROM recipes WHERE recipeID='" + uniqueID + "'";
 		try {
 			ResultSet rs = db.executeQuery(SQL);
@@ -84,16 +89,88 @@ public class RecipeService {
 		}
 	}
 	
+	//Will add ingredients into the ingredients database table directly tied to
+	//a recipe via uniqueID
+	public LinkedList<Ingredient> addIngredients(int uniqueID, List<Ingredient> ingredients) throws Exception {
+		Map<String,String> recipe = getRecipe(uniqueID);
+		if(recipe.size() == 0) {
+			throw new Exception("Corrupted recipe passed to addIngredients");
+		}
+		for(Ingredient ingredient : ingredients) {
+			addIngredient(uniqueID, ingredient.getName(), ingredient.getAmount(), ingredient.getUnit());
+		}
+		return getIngredients(uniqueID);
+	}
 	
-	public void addIngredients(int uniqueID, Map<String,Double> ingredients) throws Exception {}
-	public void addSteps(int uniqueID, Map<Integer,String> directions) throws Exception {}
+	//Adds each ingredient and it's  related proportion and unit
+	private void addIngredient(int uniqueID, String ingredient, Double amount, String units) throws Exception{
+		String SQL = "INSERT INTO ingredients(recipeID, ingredient, proportion, units) VALUES (" +
+				uniqueID + COMMA + ingredient + COMMA + amount + COMMA + units + ")";
+		try {
+			db.executeStatement(SQL);
+		} catch(Exception e) {
+			throw e;
+		}
+	}
 	
-	private void addIngredient(int uniqueID, String ingredient, Double amount) {}
-	private void addStep(int uniqueID, Integer stepNum, String direction) {}
-	private int generateUniqueID() {return 0;}
+	//Gets all ingredients for a given recipe based upon recipe's uniqueID
+	public LinkedList<Ingredient> getIngredients(int uniqueID) throws Exception {
+		String SQL = "SELECT * FROM ingredients WHERE uniqueID='" + uniqueID + "'";
+		ResultSet rs;
+		try {
+			rs = db.executeQuery(SQL);
+			
+			LinkedList<Ingredient> ret = new LinkedList<Ingredient>();
+			while(rs.next()) {
+				Ingredient ing = new Ingredient(rs.getString("ingredient"), rs.getDouble("proportion"), rs.getString("unit"));
+				ret.add(ing);
+			}
+			return ret;
+		} catch(Exception e) {
+			throw e;
+		}
+	}
 	
-	public void setRating(int uniqueID, double rating) throws Exception{}
 	
-	public Map<String, Double> getIngredients(int uniqueID) throws Exception {return null;}
-	public Map<Integer, String> getSteps(int uniqueID) throws Exception {return null;}
+	//public void editRecipe(int uniqueID, String changedProp, String changedValue) throws Exception {}
+	//public LinkedList<Ingredient> editIngredients(int uniqueID, List<Ingredient>) throws Exception {}
+	//public Map<Integer, Step> editSteps(int uniqueID, Map<Integer,String> newSteps) throws Exception {}
+	
+	public HashMap<Integer,String> addSteps(int uniqueID, Map<Integer,String> steps) throws Exception {
+		Map<String,String> recipe = getRecipe(uniqueID);
+		if(recipe.size() == 0) {
+			throw new Exception("Corrupted recipe passed to addIngredients");
+		}
+		for(Entry<Integer,String> step: steps.entrySet()) {
+			addStep(uniqueID, step.getKey(), step.getValue());
+		}
+		return getSteps(uniqueID);
+		
+	}
+	
+	private void addStep(int uniqueID, Integer stepNum, String direction) throws Exception {
+		String SQL = "INSERT INTO directions(recipeID, stepNum, direction) VALUES (" +
+				uniqueID + COMMA + stepNum + COMMA + direction + ")";
+		try {
+			db.executeStatement(SQL);
+		} catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	public HashMap<Integer, String> getSteps(int uniqueID) throws Exception {
+		String SQL = "SELECT * FROM directions WHERE uniqueID = '" + uniqueID + "' ORDER BY stepNum ASC";
+		ResultSet rs;
+		try {
+			rs = db.executeQuery(SQL);
+			
+			HashMap<Integer, String> ret = new HashMap<Integer, String>();
+			while(rs.next()) {
+				ret.put(rs.getInt("stepNum"), rs.getString("direction"));
+			}
+			return ret;
+		} catch(Exception e) {
+			throw e;
+		}
+	}
 }
