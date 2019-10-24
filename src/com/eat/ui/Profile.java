@@ -16,15 +16,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-public class Profile extends Application{
+public class Profile extends ScrollPane{
 	
-	public static void main (String[] args) {
-		launch(args);
-	}
+//	public static void main (String[] args) {
+//		launch(args);
+//	}
 	
-	@Override
-	public void start(Stage primaryStage) {
-		primaryStage.setTitle("Update Profile");
+
+	public Profile () {
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.TOP_CENTER);
 		
@@ -672,7 +671,7 @@ public class Profile extends Application{
 		saveButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		grid.add(saveButton, 0, 34);
 		
-		/*---------------------------------------ACTIONS---------------------------------------------------------------*/
+		/*---------------------------------------ACTIONS---------------------------------------------------------------
 		
         saveButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -684,12 +683,8 @@ public class Profile extends Application{
         
         //TODO NEED A FUNCTION(S) TO HIDE ALLERGENS FROM PANTRY WHEN CERTAIN ALLERGIES ARE SELECTED
         
-        /*-------------------------------------------------------------------------------------------------------------*/
+        -------------------------------------------------------------------------------------------------------------*/
         
-		ScrollPane sp = new ScrollPane();
-		sp.setContent(grid);
-        Scene scene = new Scene(sp, 1820, 980);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+		this.setContent(grid);
 	}
 }

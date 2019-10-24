@@ -9,6 +9,8 @@ public class LaunchStage extends Application {
 
 	
 	Login login;
+	Profile profile;
+	Recipe recipe;
 	
 	
 	@Override
