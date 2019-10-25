@@ -22,21 +22,22 @@ import javafx.stage.Stage;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Login extends GridPane {
+public class Registration extends GridPane {
 
 	
 	Text scenetitle;
 	Label Prefix;
+	Label email;
+	TextField emailTextField;
 	Label userName;
 	TextField userTextField;
 	Label pw;
 	PasswordField pwBox;
 	Button LoginBtn;
 	Button RegBtn;
-	Button ForgotPW;
 	
 	
-    public Login()
+    public Registration()
     {
         this.setAlignment(Pos.CENTER);
         this.setHgap(10);
@@ -44,7 +45,7 @@ public class Login extends GridPane {
         this.setPadding(new Insets(20, 20, 20, 20));
         this.getColumnConstraints().add(new ColumnConstraints(150)); // column 0 is 150 wide
 
-        scenetitle = new Text("Please enter your username and password to log in.");
+        scenetitle = new Text("Please enter your information to register.");
         scenetitle.setTextAlignment(TextAlignment.CENTER);
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
         this.add(scenetitle, 0, 0, 3, 1);
@@ -53,31 +54,43 @@ public class Login extends GridPane {
         Prefix.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
         Prefix.setWrapText(true);
         Prefix.setTextFill(Color.web("red"));
-        this.add(Prefix, 0, 1, 1, 2);
+        this.add(Prefix, 0, 1, 1, 4);
+        
+        //email fields
+        email = new Label("Email:");
+        email.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        this.add(email, 1, 1);
+
+        emailTextField = new TextField();
+        emailTextField.setMinWidth(200);
+        emailTextField.setMaxWidth(300);
+        emailTextField.setMinHeight(50);
+        emailTextField.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        this.add(emailTextField, 2, 1);
 
         //username fields
         userName = new Label("User Name:");
         userName.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        this.add(userName, 1, 1);
+        this.add(userName, 1, 2);
 
         userTextField = new TextField();
         userTextField.setMinWidth(200);
         userTextField.setMaxWidth(300);
         userTextField.setMinHeight(50);
         userTextField.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        this.add(userTextField, 2, 1);
+        this.add(userTextField, 2, 2);
         
         //password fields
 
         pw = new Label("Password:");
         pw.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        this.add(pw, 1, 2);
+        this.add(pw, 1, 3);
 
         pwBox = new PasswordField();
         pwBox.setMinWidth(200);
         pwBox.setMaxWidth(300);
         pwBox.setMinHeight(50);
-        this.add(pwBox, 2, 2);
+        this.add(pwBox, 2, 3);
 
         //log in and register buttons
         LoginBtn = new Button("Log in");
@@ -90,16 +103,8 @@ public class Login extends GridPane {
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         hbBtn.getChildren().add(LoginBtn);
         hbBtn.getChildren().add(RegBtn);
-        this.add(hbBtn, 2, 3);
+        this.add(hbBtn, 2, 4);
         
-        //forgot password button
-        ForgotPW = new Button("Forgot your password?");
-        ForgotPW.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        ForgotPW.setMinWidth(300);
-        HBox hbForgot = new HBox(10);
-        hbForgot.setAlignment(Pos.BOTTOM_LEFT);
-        hbForgot.getChildren().add(ForgotPW);
-        this.add(hbForgot, 2, 4);
         
         
         setActions();
@@ -112,6 +117,17 @@ public class Login extends GridPane {
 
             @Override
             public void handle(ActionEvent e) {
+            	
+            	//REDIRECT TO LOGIN PAGE
+            	LaunchStage.getInstance().LoginPane();
+            }
+        });
+        
+        RegBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+            	String email = emailTextField.getText();
             	String username = userTextField.getText();
             	String password = pwBox.getText();
             	
@@ -120,12 +136,21 @@ public class Login extends GridPane {
             	//CHECK IF VALID PASSWORD (certain characters only, min length)
             	// - if not, say incorrect or invalid username and password
             	
+            	Pattern emailPattern = Pattern.compile("^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$");
+                Matcher emailMatcher = emailPattern.matcher(email);
+                boolean specialEmail = !emailMatcher.matches();
+            	
             	Pattern userPattern = Pattern.compile("[^A-Za-z0-9]");
                 Matcher userMatcher = userPattern.matcher(username);
                 boolean specialUsername = userMatcher.find();
-               
                 
-            	if(username.length() < 1)
+                
+               
+                if(specialEmail)
+                {
+                	Prefix.setText("Enter a valid email address");
+                }
+                else if(username.length() < 1)
             	{
             		Prefix.setText("Enter a valid username");
             	}
@@ -151,12 +176,12 @@ public class Login extends GridPane {
                 	try
                 	{
                 		//com.eat.services.ContactService.login(username, password);
-                		TEMP_TEST_LOGIN(username, password);
+                		TEMP_TEST_REGISTER(username, password, email);
                 		success = true;
                 	}
                 	catch (Exception ex)
                 	{
-                		Prefix.setText("Incorrect username and password combination");
+                		Prefix.setText("There is already an account associated with this email address.");
                 	}
                 	if(success)
                 	{
@@ -167,27 +192,10 @@ public class Login extends GridPane {
             }
         });
         
-        RegBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent e) {
-                //REDIRECT TO REGISTRATION PAGE
-            	LaunchStage.getInstance().RegistrationPane();
-            }
-        });
-        
-        ForgotPW.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent e) {
-                //REDIRECT TO FORGOT PASSWORD PAGE
-            	LaunchStage.getInstance().ForgotPasswordPane();
-            }
-        });
     }
     
     
-    public void TEMP_TEST_LOGIN(String u, String p) throws Exception
+    public void TEMP_TEST_REGISTER(String u, String p, String email) throws Exception
     {
     	throw new Exception();
     }
