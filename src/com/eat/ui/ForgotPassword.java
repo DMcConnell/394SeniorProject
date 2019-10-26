@@ -50,7 +50,7 @@ public class ForgotPassword extends GridPane {
         Prefix.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
         Prefix.setWrapText(true);
         Prefix.setTextFill(Color.web("red"));
-        this.add(Prefix, 0, 1, 1, 4);
+        this.add(Prefix, 0, 1, 1, 1);
         
         //email fields
         email = new Label("Email:");
@@ -114,6 +114,7 @@ public class ForgotPassword extends GridPane {
                 if(specialEmail)
                 {
                 	Prefix.setText("Enter a valid email address");
+                	emailTextField.setStyle("-fx-border-color: red");
                 }
             	else //all valid information
             	{
@@ -127,10 +128,12 @@ public class ForgotPassword extends GridPane {
                 	catch (Exception ex)
                 	{
                 		Prefix.setText("An email will has been sent to the address.");
+                    	emailTextField.setStyle("-fx-border-color: black");
                 	}
                 	if(success)
                 	{
-                		Prefix.setText("An email will has been sent to the address.");
+                		Prefix.setText("An email has been sent to the address.");
+                    	emailTextField.setStyle("-fx-border-color: black");
                 	}
             	}
             	

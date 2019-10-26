@@ -128,22 +128,32 @@ public class Login extends GridPane {
             	if(username.length() < 1)
             	{
             		Prefix.setText("Enter a valid username");
+            		userTextField.setStyle("-fx-border-color: red");
+            		pwBox.setStyle("-fx-border-color: black");
             	}
             	else if(username.length() > 30)
             	{
             		Prefix.setText("Username cannot be more than 30 characters long");
+            		userTextField.setStyle("-fx-border-color: red");
+            		pwBox.setStyle("-fx-border-color: black");
             	}
             	else if(specialUsername)
             	{
             		Prefix.setText("Username must only contain letters and digits");
+            		userTextField.setStyle("-fx-border-color: red");
+            		pwBox.setStyle("-fx-border-color: black");
             	}
             	else if(password.length() < 8)
             	{
             		Prefix.setText("Password must be at least 8 characters long.");
+            		pwBox.setStyle("-fx-border-color: red");
+            		userTextField.setStyle("-fx-border-color: black");
             	}
             	else if(password.length() > 30)
             	{
             		Prefix.setText("Password cannot be more than 30 characters long");
+            		pwBox.setStyle("-fx-border-color: red");
+            		userTextField.setStyle("-fx-border-color: black");
             	}
             	else //all valid information
             	{
@@ -157,6 +167,8 @@ public class Login extends GridPane {
                 	catch (Exception ex)
                 	{
                 		Prefix.setText("Incorrect username and password combination");
+                		userTextField.setStyle("-fx-border-color: red");
+                		pwBox.setStyle("-fx-border-color: red");
                 	}
                 	if(success)
                 	{
