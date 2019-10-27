@@ -21,6 +21,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import com.eat.services.Exceptions.*;
 
 public class Login extends GridPane {
 
@@ -171,14 +172,15 @@ public class Login extends GridPane {
                 	}
                 	catch (Exception ex)
                 	{
-                		Prefix.setText("Incorrect username and password combination");
+                		Prefix.setText(ex.getMessage());
                 		userTextField.setStyle("-fx-border-color: red");
                 		pwBox.setStyle("-fx-border-color: red");
                 		pwBox.clear();
                 	}
                 	if(success)
                 	{
-                		//open profile page, where profile will retrieve the proper information needed. perhaps constructor parameter of username/email.
+                		//open profile page, where profile will retrieve the proper information needed.
+                		LaunchStage.getInstance().MainScene();
                 	}
             	}
             	
@@ -207,7 +209,8 @@ public class Login extends GridPane {
     
     public void TEMP_TEST_LOGIN(String u, String p) throws Exception
     {
-    	throw new Exception();
+    	if(!u.equals("testuser") && !p.equals("password"))
+    		throw new InvalidCombinationException();
     }
         
 

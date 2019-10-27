@@ -28,27 +28,32 @@ public class LaunchStage extends Application {
 	
 	Scene currentScene;
 	Scene startScene;
-	Scene connectedScene;
+	Scene mainScene;
 
 	GridPane currentPane;
+	GridPane startPane;
+	GridPane mainPane;
 	
 	Login login;
 	Registration registration;
 	ForgotPassword forgotPassword;
+	
 	Profile profile;
 	Recipe recipe;
 	
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		currentPane = new GridPane();
-		currentPane.setAlignment(Pos.CENTER);
+		startPane = new GridPane();
+		startPane.setAlignment(Pos.CENTER);
+		
+		currentPane = startPane;
 		
 		
 		LoginPane();
 		
-		instance.startScene = new Scene(instance.currentPane, 1920, 1080);
-		instance.currentScene = instance.startScene;
+		startScene = new Scene(currentPane, 1920, 1080);
+		currentScene = startScene;
 		
 		
 		primaryStage.setScene(currentScene);
@@ -61,7 +66,48 @@ public class LaunchStage extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	
+	//This is for logging out and switching back to login page, disconnected from database.
+	protected void StartScene()
+	{
+		startPane = new GridPane();
+		startPane.setAlignment(Pos.CENTER);
+		
+		currentPane = startPane;
+		
+		LoginPane();
 
+		Stage stage = (Stage) currentScene.getWindow();
+		
+		startScene = new Scene(currentPane, 1920, 1080);
+		currentScene = startScene;
+		
+		stage.setScene(currentScene);
+		
+		stage.show();
+	}
+	
+	//This is for switching from successful login to the main scene, starting at the profile page
+	protected void MainScene()
+	{
+		mainPane = new GridPane();
+		mainPane.setAlignment(Pos.CENTER);
+		
+		
+		currentPane = mainPane;
+		//set current pane to be new pane with navigation window and profile page
+		ProfilePane();
+		
+		Stage stage = (Stage) currentScene.getWindow();
+		
+		mainScene = new Scene(mainPane, 1920, 1080);
+		currentScene = mainScene;
+		
+		stage.setScene(currentScene);
+		stage.show();
+		
+	}
 	
 	
 	protected void LoginPane()
@@ -79,6 +125,18 @@ public class LaunchStage extends Application {
 	{
 		currentPane.getChildren().clear();
 		currentPane.getChildren().add(new ForgotPassword());
+	}
+	//yes inefficient to re-make the nav pane every time, will fix later
+	protected void NavPane()
+	{
+		//	currentPane.getChildren().add(new NavPane());
+	}
+	
+	protected void ProfilePane()
+	{
+		currentPane.getChildren().clear();
+		NavPane();
+		currentPane.getChildren().add(new Profile());
 	}
 	
 }
