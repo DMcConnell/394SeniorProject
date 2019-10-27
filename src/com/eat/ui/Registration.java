@@ -152,6 +152,7 @@ public class Registration extends GridPane {
                 	emailTextField.setStyle("-fx-border-color: red");
             		userTextField.setStyle("-fx-border-color: black");
             		pwBox.setStyle("-fx-border-color: black");
+            		pwBox.clear();
                 }
                 else if(username.length() < 1)
             	{
@@ -159,6 +160,7 @@ public class Registration extends GridPane {
             		userTextField.setStyle("-fx-border-color: red");
             		pwBox.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
+            		pwBox.clear();
             	}
             	else if(username.length() > 30)
             	{
@@ -166,6 +168,7 @@ public class Registration extends GridPane {
             		userTextField.setStyle("-fx-border-color: red");
             		pwBox.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
+            		pwBox.clear();
             	}
             	else if(specialUsername)
             	{
@@ -173,6 +176,7 @@ public class Registration extends GridPane {
             		userTextField.setStyle("-fx-border-color: red");
             		pwBox.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
+            		pwBox.clear();
             	}
             	else if(password.length() < 8)
             	{
@@ -180,6 +184,7 @@ public class Registration extends GridPane {
             		pwBox.setStyle("-fx-border-color: red");
             		userTextField.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
+            		pwBox.clear();
             	}
             	else if(password.length() > 30)
             	{
@@ -187,6 +192,7 @@ public class Registration extends GridPane {
             		pwBox.setStyle("-fx-border-color: red");
             		userTextField.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
+            		pwBox.clear();
             	}
             	else //all valid information
             	{
@@ -203,6 +209,7 @@ public class Registration extends GridPane {
                 		userTextField.setStyle("-fx-border-color: black");
                 		pwBox.setStyle("-fx-border-color: black");
                     	emailTextField.setStyle("-fx-border-color: red");
+                		pwBox.clear();
                 	}
                 	if(success)
                 	{
