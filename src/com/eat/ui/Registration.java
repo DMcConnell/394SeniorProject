@@ -21,6 +21,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import com.eat.services.Exceptions.*;
 
 public class Registration extends GridPane {
 
@@ -199,13 +200,13 @@ public class Registration extends GridPane {
             		boolean success = false;
                 	try
                 	{
-                		//com.eat.services.ContactService.login(username, password);
+                		//com.eat.services.ContactService.registerUser(username, password, email);
                 		TEMP_TEST_REGISTER(username, password, email);
                 		success = true;
                 	}
                 	catch (Exception ex)
                 	{
-                		Prefix.setText("There is already an account associated with this email address.");
+                		Prefix.setText(ex.getMessage());
                 		userTextField.setStyle("-fx-border-color: black");
                 		pwBox.setStyle("-fx-border-color: black");
                     	emailTextField.setStyle("-fx-border-color: red");
@@ -213,7 +214,8 @@ public class Registration extends GridPane {
                 	}
                 	if(success)
                 	{
-                		//open profile page, where profile will retrieve the proper information needed. perhaps constructor parameter of username/email.
+                		//open profile page, where profile will retrieve the proper information needed.
+                		LaunchStage.getInstance().MainScene();
                 	}
             	}
             	
@@ -225,7 +227,10 @@ public class Registration extends GridPane {
     
     public void TEMP_TEST_REGISTER(String u, String p, String email) throws Exception
     {
-    	throw new Exception();
+    	if(email.equals("testuser@email.com"))
+    		throw new EmailTakenException();
+    	if(u.equals("testuser"))
+    		throw new UsernameTakenException();
     }
         
 
