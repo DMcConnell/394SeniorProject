@@ -6,22 +6,14 @@ public class CreateUsersTables {
 	
 	public static String createMainTable() {
         return "CREATE TABLE emfUsers" + 
-        		"(username VARCHAR(25), legalname VARCHAR(25), pssword VARCHAR(40),  email VARCHAR(50), " + 
+        		"(username VARCHAR(25), legalname VARCHAR(25), password VARCHAR(40),  email VARCHAR(50), " + 
         		"PRIMARY KEY (username))";
 	}
 	
 	public static String createAllergyTable() {
 		return "CREATE TABLE allergies" + 
 				"(username VARCHAR(25), " + 
-				"peanut INTEGER(1), " + 
-				"milk INTEGER(1)," + 
-				"egg INTEGER(1), " + 
-				"shellfish INTEGER(1), " + 
-				"fish INTEGER(1), " + 
-				"treenuts INTEGER(1), " + 
-				"wheat INTEGER(1), " + 
-				"soy INTEGER(1), " + 
-				"sesame INTEGER(1)," + 
+				"allergies VARCHAR(32)," +
 				"PRIMARY KEY (username), FOREIGN KEY (username) REFERENCES emfUsers(username))";
 	}
 	
