@@ -32,6 +32,8 @@ public class Registration extends GridPane {
 	TextField emailTextField;
 	Label userName;
 	TextField userTextField;
+	Label realName;
+	TextField nameTextField;
 	Label pw;
 	PasswordField pwBox;
 	Button LoginBtn;
@@ -81,17 +83,29 @@ public class Registration extends GridPane {
         userTextField.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         this.add(userTextField, 2, 2);
         
+        //realname fields
+        realName = new Label("First Name:");
+        realName.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        this.add(realName, 1, 3);
+
+        nameTextField = new TextField();
+        nameTextField.setMinWidth(200);
+        nameTextField.setMaxWidth(300);
+        nameTextField.setMinHeight(50);
+        nameTextField.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        this.add(nameTextField, 2, 3);
+        
         //password fields
 
         pw = new Label("Password:");
         pw.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        this.add(pw, 1, 3);
+        this.add(pw, 1, 4);
 
         pwBox = new PasswordField();
         pwBox.setMinWidth(200);
         pwBox.setMaxWidth(300);
         pwBox.setMinHeight(50);
-        this.add(pwBox, 2, 3);
+        this.add(pwBox, 2, 4);
 
         //log in and register buttons
         LoginBtn = new Button("Log in");
@@ -104,7 +118,7 @@ public class Registration extends GridPane {
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         hbBtn.getChildren().add(LoginBtn);
         hbBtn.getChildren().add(RegBtn);
-        this.add(hbBtn, 2, 4);
+        this.add(hbBtn, 2, 5);
         
         
         
@@ -130,6 +144,7 @@ public class Registration extends GridPane {
             public void handle(ActionEvent e) {
             	String email = emailTextField.getText();
             	String username = userTextField.getText();
+            	String realname = nameTextField.getText();
             	String password = pwBox.getText();
             	
                 //CHECK IF VALID USERNAME (letters and numbers only, min length)
@@ -141,9 +156,12 @@ public class Registration extends GridPane {
                 Matcher emailMatcher = emailPattern.matcher(email);
                 boolean specialEmail = !emailMatcher.matches();
             	
-            	Pattern userPattern = Pattern.compile("[^A-Za-z0-9]");
+            	Pattern userPattern = Pattern.compile("[^A-Za-z0-9/-/_]");
                 Matcher userMatcher = userPattern.matcher(username);
                 boolean specialUsername = userMatcher.find();
+                
+                Matcher nameMatcher = userPattern.matcher(realname);
+                boolean specialName = nameMatcher.find();
                 
                 
                
@@ -151,6 +169,7 @@ public class Registration extends GridPane {
                 {
                 	Prefix.setText("Enter a valid email address");
                 	emailTextField.setStyle("-fx-border-color: red");
+            		nameTextField.setStyle("-fx-border-color: black");
             		userTextField.setStyle("-fx-border-color: black");
             		pwBox.setStyle("-fx-border-color: black");
             		pwBox.clear();
@@ -159,6 +178,7 @@ public class Registration extends GridPane {
             	{
             		Prefix.setText("Enter a valid username");
             		userTextField.setStyle("-fx-border-color: red");
+            		nameTextField.setStyle("-fx-border-color: black");
             		pwBox.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
             		pwBox.clear();
@@ -167,6 +187,7 @@ public class Registration extends GridPane {
             	{
             		Prefix.setText("Username cannot be more than 30 characters long");
             		userTextField.setStyle("-fx-border-color: red");
+            		nameTextField.setStyle("-fx-border-color: black");
             		pwBox.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
             		pwBox.clear();
@@ -175,6 +196,34 @@ public class Registration extends GridPane {
             	{
             		Prefix.setText("Username must only contain letters and digits");
             		userTextField.setStyle("-fx-border-color: red");
+            		nameTextField.setStyle("-fx-border-color: black");
+            		pwBox.setStyle("-fx-border-color: black");
+                	emailTextField.setStyle("-fx-border-color: black");
+            		pwBox.clear();
+            	}
+                else if(realname.length() < 1)
+            	{
+            		Prefix.setText("Enter a valid name");
+            		nameTextField.setStyle("-fx-border-color: red");
+            		userTextField.setStyle("-fx-border-color: black");
+            		pwBox.setStyle("-fx-border-color: black");
+                	emailTextField.setStyle("-fx-border-color: black");
+            		pwBox.clear();
+            	}
+            	else if(realname.length() > 30)
+            	{
+            		Prefix.setText("Name cannot be more than 30 characters long");
+            		nameTextField.setStyle("-fx-border-color: red");
+            		userTextField.setStyle("-fx-border-color: black");
+            		pwBox.setStyle("-fx-border-color: black");
+                	emailTextField.setStyle("-fx-border-color: black");
+            		pwBox.clear();
+            	}
+            	else if(specialName)
+            	{
+            		Prefix.setText("Name must only contain letters and digits");
+            		nameTextField.setStyle("-fx-border-color: red");
+            		userTextField.setStyle("-fx-border-color: black");
             		pwBox.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
             		pwBox.clear();
@@ -184,6 +233,7 @@ public class Registration extends GridPane {
             		Prefix.setText("Password must be at least 8 characters long.");
             		pwBox.setStyle("-fx-border-color: red");
             		userTextField.setStyle("-fx-border-color: black");
+            		nameTextField.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
             		pwBox.clear();
             	}
@@ -192,6 +242,7 @@ public class Registration extends GridPane {
             		Prefix.setText("Password cannot be more than 30 characters long");
             		pwBox.setStyle("-fx-border-color: red");
             		userTextField.setStyle("-fx-border-color: black");
+            		nameTextField.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
             		pwBox.clear();
             	}
@@ -200,7 +251,9 @@ public class Registration extends GridPane {
             		boolean success = false;
                 	try
                 	{
-                		//com.eat.services.ContactService.registerUser(username, password, email);
+                		//need an instance of contact service to call
+                		//com.eat.services.ContactService.registerUser(username, password, realname, email);
+                		
                 		TEMP_TEST_REGISTER(username, password, email);
                 		success = true;
                 	}
@@ -208,6 +261,7 @@ public class Registration extends GridPane {
                 	{
                 		Prefix.setText(ex.getMessage());
                 		userTextField.setStyle("-fx-border-color: black");
+                		nameTextField.setStyle("-fx-border-color: black");
                 		pwBox.setStyle("-fx-border-color: black");
                     	emailTextField.setStyle("-fx-border-color: red");
                 		pwBox.clear();
