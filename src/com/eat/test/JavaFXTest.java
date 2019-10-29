@@ -12,10 +12,12 @@ public class JavaFXTest extends Application {
 		Scene scene = new Scene(new Pane());
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		//This was a pain
 	}
 
 	public static void main(String[] args) {
 		launch(args);
 	}
 
+	
 }
