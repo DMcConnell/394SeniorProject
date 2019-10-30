@@ -13,6 +13,7 @@ public class ContactService {
 	DBInteractor db;
 	int i = 0;
 	private String COMMA = ",";
+	private String QUOTE = "'";
 	
 	public ContactService() throws Exception {
         try {
@@ -41,7 +42,8 @@ public class ContactService {
 			throw new Exception("Something was passed wrong to the Contact Service");
 		}
 		String SQL = "INSERT INTO emfUsers(username, legalname, password, email) VALUES (" +
-				username + COMMA + name + COMMA + password + COMMA + email + ")";
+				QUOTE + username + QUOTE + COMMA + QUOTE + name + QUOTE + COMMA + 
+				QUOTE + password + QUOTE + COMMA + QUOTE + email + QUOTE + ")";
 		try {
 			HashMap<String,String> userCheck = getUser(username);
 			if(userCheck.size() != 0) {

@@ -16,6 +16,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.util.LinkedList;
+
+import com.eat.services.ContactService;
+import com.eat.services.IAllergy;
+
 public class Profile extends ScrollPane{
 	
 //	public static void main (String[] args) {
@@ -23,11 +28,9 @@ public class Profile extends ScrollPane{
 //	}
 	
 
-	public Profile () {
+	public Profile (String username) {
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.TOP_CENTER);
-		
-		
 		
 		//Title
 		Label title = new Label("Profile");
@@ -37,7 +40,9 @@ public class Profile extends ScrollPane{
 		grid.setHgap(200);
 		GridPane.setHalignment(title, HPos.CENTER);
 		
-		//Allergies
+		/*----------------Allergies-------------*/
+		LinkedList<String> allergies = LaunchStage.getInstance().getCS().getAllergies(username);
+		
 		Label allergyLabel = new Label("Allergies");
 		allergyLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
 		grid.add(allergyLabel, 0, 1);
@@ -47,14 +52,17 @@ public class Profile extends ScrollPane{
 		Label treeNutLabel = new Label("Tree Nuts:");
 		treeNutLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		treeNutLabel.setTextFill(Color.web("#4278f5"));
+		if (allergies.contains(IAllergy.TREENUTS)) treeNutBox.setSelected(true);
 		grid.add(treeNutLabel, 0, 2);
 		grid.add(treeNutBox, 1, 2);
+
 		
 		//Peanuts
 		CheckBox peanutBox = new CheckBox();
 		Label peanutLabel = new Label("Peanuts:");
 		peanutLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		peanutLabel.setTextFill(Color.web("#429943"));
+		if (allergies.contains(IAllergy.PEANUT)) peanutBox.setSelected(true);
 		grid.add(peanutLabel, 0, 3);
 		grid.add(peanutBox, 1, 3);
 		
@@ -63,6 +71,7 @@ public class Profile extends ScrollPane{
 		Label shellfishLabel = new Label("Shellfish:");
 		shellfishLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		shellfishLabel.setTextFill(Color.web("#4278f5"));
+		if (allergies.contains(IAllergy.SHELLFISH)) shellfishBox.setSelected(true);
 		grid.add(shellfishLabel, 0, 4);
 		grid.add(shellfishBox, 1, 4);
 		
@@ -71,6 +80,7 @@ public class Profile extends ScrollPane{
 		Label milkLabel = new Label("Milk:");
 		milkLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		milkLabel.setTextFill(Color.web("#429943"));
+		if (allergies.contains(IAllergy.MILK)) milkBox.setSelected(true);
 		grid.add(milkLabel, 4, 2);
 		grid.add(milkBox, 5, 2);
 		
@@ -79,6 +89,7 @@ public class Profile extends ScrollPane{
 		Label fishLabel = new Label("Fish:");
 		fishLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		fishLabel.setTextFill(Color.web("#4278f5"));
+		if (allergies.contains(IAllergy.FISH)) fishBox.setSelected(true);
 		grid.add(fishLabel, 4, 3);
 		grid.add(fishBox, 5, 3);
 		
@@ -87,6 +98,7 @@ public class Profile extends ScrollPane{
 		Label wheatLabel = new Label("Wheat:");
 		wheatLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		wheatLabel.setTextFill(Color.web("#429943"));
+		if (allergies.contains(IAllergy.WHEAT)) wheatBox.setSelected(true);
 		grid.add(wheatLabel, 2, 2);
 		grid.add(wheatBox, 3, 2);
 		
@@ -95,6 +107,7 @@ public class Profile extends ScrollPane{
 		Label eggLabel = new Label("Eggs:");
 		eggLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		eggLabel.setTextFill(Color.web("#4278f5"));
+		if (allergies.contains(IAllergy.EGG)) eggBox.setSelected(true);
 		grid.add(eggLabel, 2, 3);
 		grid.add(eggBox, 3, 3);
 		
@@ -103,6 +116,7 @@ public class Profile extends ScrollPane{
 		Label soyLabel = new Label("Soy:");
 		soyLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		soyLabel.setTextFill(Color.web("#429943"));
+		if (allergies.contains(IAllergy.SOY)) soyBox.setSelected(true);
 		grid.add(soyLabel, 2, 4);
 		grid.add(soyBox, 3, 4);
 		
@@ -111,10 +125,11 @@ public class Profile extends ScrollPane{
 		Label sesameLabel = new Label("Sesame:");
 		sesameLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		sesameLabel.setTextFill(Color.web("#4278f5"));
+		if (allergies.contains(IAllergy.SESAME)) sesameBox.setSelected(true);
 		grid.add(sesameLabel, 4, 4);
 		grid.add(sesameBox, 5, 4);
 		
-		//Pantry
+		/*---------------Pantry---------------------*/
 		Label pantryLabel = new Label("Pantry");
 		pantryLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
 		grid.add(pantryLabel, 0, 7);
@@ -669,22 +684,73 @@ public class Profile extends ScrollPane{
 		//Save changes button
 		Button saveButton = new Button("Save Changes");
 		saveButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+		saveButton.setMinHeight(80);
 		grid.add(saveButton, 0, 34);
 		
-		/*---------------------------------------ACTIONS---------------------------------------------------------------
+		
 		
         saveButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent e) {
-                //UPDATE DATABASE TO REFLECT CHANGES MADE, AND THEN DISPLAY THE MESSAGE "CHANGES SAVED"
+            	if (treeNutBox.isSelected()) {
+            		LaunchStage.getInstance().getCS().addAllergies(username, IAllergy.TREENUTS);
+            	}
+            	else {
+            		LaunchStage.getInstance().getCS().removeAllergy(username, IAllergy.TREENUTS);
+            	}
+                if (peanutBox.isSelected()) {
+                	LaunchStage.getInstance().getCS().addAllergies(username, IAllergy.PEANUT);
+                }
+                else {
+                	LaunchStage.getInstance().getCS().removeAllergy(username, IAllergy.PEANUT);
+                }
+                if (shellfishBox.isSelected()) {
+                	LaunchStage.getInstance().getCS().addAllergies(username, IAllergy.SHELLFISH);
+                }
+                else {
+                	LaunchStage.getInstance().getCS().removeAllergy(username, IAllergy.SHELLFISH);
+                }
+                if (milkBox.isSelected()) {
+                	LaunchStage.getInstance().getCS().addAllergies(username, IAllergy.MILK);
+                }
+                else {
+                	LaunchStage.getInstance().getCS().removeAllergy(username, IAllergy.MILK);
+                }
+                if (fishBox.isSelected()) {
+                	LaunchStage.getInstance().getCS().addAllergies(username, IAllergy.FISH);
+                }
+                else {
+                	LaunchStage.getInstance().getCS().removeAllergy(username, IAllergy.FISH);
+                }
+                if (wheatBox.isSelected()) {
+                	LaunchStage.getInstance().getCS().addAllergies(username, IAllergy.WHEAT);
+                }
+                else {
+                	LaunchStage.getInstance().getCS().removeAllergy(username, IAllergy.WHEAT);
+                }
+                if (eggBox.isSelected()) {
+                	LaunchStage.getInstance().getCS().addAllergies(username, IAllergy.EGG);
+                }
+                else {
+                	LaunchStage.getInstance().getCS().removeAllergy(username, IAllergy.EGG);
+                }
+                if (soyBox.isSelected()) {
+                	LaunchStage.getInstance().getCS().addAllergies(username, IAllergy.SOY);
+                }
+                else {
+                	LaunchStage.getInstance().getCS().removeAllergy(username, IAllergy.SOY);
+                }
+                if (sesameBox.isSelected()) {
+                	LaunchStage.getInstance().getCS().addAllergies(username, IAllergy.SESAME);
+                }
+                else {
+                	LaunchStage.getInstance().getCS().removeAllergy(username, IAllergy.SESAME);
+                }
             }
         });
         
-        //TODO NEED A FUNCTION(S) TO HIDE ALLERGENS FROM PANTRY WHEN CERTAIN ALLERGIES ARE SELECTED
-        
-        -------------------------------------------------------------------------------------------------------------*/
-        
+        this.setMinWidth(1700);
 		this.setContent(grid);
 	}
 }

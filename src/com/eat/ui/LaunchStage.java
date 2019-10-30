@@ -1,5 +1,8 @@
 package com.eat.ui;
 
+import com.eat.services.ContactService;
+import com.eat.services.RecipeService;
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -22,9 +25,25 @@ public class LaunchStage extends Application {
 	        if(instance != null) throw new UnsupportedOperationException(
 	                getClass()+" is singleton but constructor called more than once");
 	        instance = this;
+	        try {
+	        	rs = new RecipeService();
+	        	cs = new ContactService();
+	        } catch(Exception e) {
+	        	e.printStackTrace();
+	        }
 	    }
 	}
 	
+	public RecipeService getRecipeService() {
+		return rs;
+	}
+	
+	public ContactService getContactService() {
+		return cs;
+	}
+	
+	private RecipeService rs;
+	private ContactService cs;
 	
 	Scene currentScene;
 	Scene startScene;
