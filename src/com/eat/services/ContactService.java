@@ -50,7 +50,7 @@ public class ContactService {
 				throw new Exception ("User already exists");
 			}
 			
-			db.executeQuery(SQL);
+			db.executeStatement(SQL);
 		} catch(Exception e) {
 			throw e;
 		}
@@ -68,7 +68,7 @@ public class ContactService {
 			HashMap<String,String> retUser = new HashMap<String,String>();
 			while(rs.next()) {
 				retUser.put(IUser.USERNAME, rs.getString("username"));
-				retUser.put(IUser.NAME, rs.getString("name"));
+				retUser.put(IUser.NAME, rs.getString("legalname"));
 				retUser.put(IUser.PASSWORD, rs.getString("password"));
 				retUser.put(IUser.EMAIL, rs.getString("email"));
 			}
