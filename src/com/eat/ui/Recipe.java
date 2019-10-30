@@ -39,7 +39,7 @@ public class Recipe extends ScrollPane{
 
 	public Recipe(int id) {
 		try {
-			HashMap<String,String> recipe = LaunchStage.getInstance().getRS().getRecipe(id);
+			HashMap<String,String> recipe = LaunchStage.getInstance().getRecipeService().getRecipe(id);
 
 			GridPane grid = new GridPane();
 			grid.setAlignment(Pos.TOP_CENTER);
@@ -97,7 +97,7 @@ public class Recipe extends ScrollPane{
 			grid.add(ingredientsTitle, 0, 6);
 
 			//Ingredients
-			LinkedList<Ingredient> ingredientList = LaunchStage.getInstance().getRS().getIngredients(id); //get ingredient list
+			LinkedList<Ingredient> ingredientList = LaunchStage.getInstance().getRecipeService().getIngredients(id); //get ingredient list
 			String ingredientString = "";
 			String amountString;
 			for (int i = 0; i < ingredientList.size(); i++) { //iterate through the list and add each ingredient to a string on seperate line
@@ -115,7 +115,7 @@ public class Recipe extends ScrollPane{
 			grid.add(instructionsTitle, 0, 8);
 			
 			//Instructions
-			HashMap<Integer, String> stepsMap = LaunchStage.getInstance().getRS().getSteps(id);
+			HashMap<Integer, String> stepsMap = LaunchStage.getInstance().getRecipeService().getSteps(id);
 			String instructionsString = "";
 			String stepNumberString;
 			for (int j = 0; j < stepsMap.size(); j++) {
