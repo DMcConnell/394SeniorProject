@@ -42,6 +42,13 @@ public class Test_services {
 			//Expected to print an error
 			e.printStackTrace();
 		}
+		
+		try {
+			cs.login("chad", "steph");
+			System.out.println("Login returned without an error");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String [] args) {

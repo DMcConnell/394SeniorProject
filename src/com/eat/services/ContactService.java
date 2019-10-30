@@ -7,6 +7,9 @@ import java.util.List;
 
 import com.eat.IEatMyFood;
 import com.eat.mysql.DBInteractor;
+import com.eat.services.Exceptions.InvalidCombinationException;
+import com.eat.services.Exceptions.UsernameTakenException;
+import com.eat.support.Support;
 
 public class ContactService {
 	
@@ -14,6 +17,7 @@ public class ContactService {
 	int i = 0;
 	private String COMMA = ",";
 	private String QUOTE = "'";
+	private String loggedInUser = "No one logged in";
 	
 	public ContactService() throws Exception {
         try {
@@ -36,6 +40,11 @@ public class ContactService {
 		}
 	}
 	
+	//
+	public String getSelfID() {
+		return loggedInUser;
+	}
+	
 	//Registers a user if the user does not already exist
 	public HashMap<String,String> registerUser(String username, String password, String name, String email) throws Exception {
 		if(username.equals("") || password.equals("") || name.equals("") || email.equals("") || !email.contains("@")) {
@@ -43,11 +52,11 @@ public class ContactService {
 		}
 		String SQL = "INSERT INTO emfUsers(username, legalname, password, email) VALUES (" +
 				QUOTE + username + QUOTE + COMMA + QUOTE + name + QUOTE + COMMA + 
-				QUOTE + password + QUOTE + COMMA + QUOTE + email + QUOTE + ")";
+				QUOTE + Support.encryptPass(password) + QUOTE + COMMA + QUOTE + email + QUOTE + ")";
 		try {
 			HashMap<String,String> userCheck = getUser(username);
 			if(userCheck.size() != 0) {
-				throw new Exception ("User already exists");
+				throw new UsernameTakenException();
 			}
 			
 			db.executeStatement(SQL);
@@ -85,11 +94,13 @@ public class ContactService {
 		}
 		try {
 			HashMap<String,String> user = getUser(username);
-			if(user.containsKey(IUser.PASSWORD) && user.get(IUser.PASSWORD).equals(password)) {
+			String encryptedPassword = Support.encryptPass(password);
+			if(user.containsKey(IUser.PASSWORD) && user.get(IUser.PASSWORD).equals(encryptedPassword)) {
+				loggedInUser = user.get(IUser.USERNAME);
 				return;
 			}
 			else {
-				throw new Exception("Invalid username or password");
+				throw new InvalidCombinationException();
 			}
 		} catch(Exception e) {
 			throw e;
@@ -118,7 +129,7 @@ public class ContactService {
 	//Adds a single allergy for a given user
 	private void addAllergy (String username, String allergy) throws Exception {
 		String SQL = "INSERT INTO allergies(username, allergies) VALUES (" +
-				username + COMMA + allergy + ")";
+				QUOTE + username +QUOTE +  COMMA + QUOTE + allergy + QUOTE + ")";
 		try {
 			db.executeStatement(SQL);
 		} catch(Exception e) {
@@ -154,4 +165,50 @@ public class ContactService {
 			throw e;
 		}
 	}
+	
+	//Saves a favorite recipeID into favorites table for later recall
+	public void addFavorite(String username, String recipeID) throws Exception {
+		if(username.equals("") || recipeID.equals("")) {
+			throw new Exception("Something was passed wrong to ContactService");
+		}
+		
+		String SQL = "INSERT INTO favorites(username, recipeID) VALUES (" + QUOTE +
+				username + QUOTE + COMMA + QUOTE + recipeID + QUOTE + ")";
+		try {
+			db.executeStatement(SQL);
+		} catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	//Returns a list of favorited recipeIDs
+	public LinkedList<String> getFavorites(String username) throws Exception {
+		try {
+			String SQL = "SELECT * FROM favorites WHERE username = '" + username + "'";
+			ResultSet rs = db.executeQuery(SQL);
+			LinkedList<String> retFavorites = new LinkedList<String>();
+			while(rs.next()) {
+				retFavorites.add(rs.getString("recipeID"));
+			}
+			return retFavorites;
+		} catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	//Removes a favorite from the favorites table
+	public void deleteFavorite(String username, String recipeID) throws Exception {
+		try {
+			List<String> favorites = getFavorites(username);
+			if(!favorites.contains(recipeID)) {
+				return;
+			}
+			String SQL = "DELETE FROM favorites WHERE username='" + username + "' AND " +
+					"recipeID='" + recipeID + "'";
+			db.executeStatement(SQL);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
+
