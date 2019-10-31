@@ -176,4 +176,24 @@ public class RecipeService {
 			throw e;
 		}
 	}
+	
+	public LinkedList<HashMap<String,String>> search(String searchText) throws Exception {
+		String SQL = "SELECT * FROM ingredients WHERE ingredient LIKE '%" + searchText + "%'";
+		String SQL2 = "SELECT * FROM recipes WHERE name LIKE '%" + searchText + "%'";
+		
+		try {
+			ResultSet rs = db.executeQuery(SQL);
+			LinkedList<HashMap<String,String>> retSearch = new LinkedList<HashMap<String,String>>();
+			while(rs.next()) {
+				retSearch.add(getRecipe(Integer.parseInt(rs.getString("recipeID"))));
+			}
+			rs = db.executeQuery(SQL2);
+			while(rs.next()) {
+				retSearch.add(getRecipe(Integer.parseInt(rs.getString("recipeID"))));
+			}
+			return retSearch;
+		} catch(Exception e) {
+			throw e;
+		}
+	}
 }
