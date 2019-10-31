@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -34,8 +35,9 @@ import com.eat.services.IAllergy;
 import com.eat.support.*;
 import com.eat.services.Exceptions.*;
 
-public class UploadRecipe extends GridPane {
+public class UploadRecipe extends ScrollPane {
 
+	GridPane GRID;
 	
 	Text scenetitle;
 	Label Prefix;
@@ -75,67 +77,68 @@ public class UploadRecipe extends GridPane {
 	
     public UploadRecipe()
     {
-        this.setAlignment(Pos.CENTER);
-        this.setHgap(10);
-        this.setVgap(10);
-        this.setPadding(new Insets(20, 20, 20, 20));
-        this.getColumnConstraints().add(new ColumnConstraints(150)); // column 0 is 150 wide
+    	GRID = new GridPane();
+        GRID.setAlignment(Pos.CENTER);
+        GRID.setHgap(10);
+        GRID.setVgap(10);
+        GRID.setPadding(new Insets(20, 20, 20, 20));
+        GRID.getColumnConstraints().add(new ColumnConstraints(150)); // column 0 is 150 wide
 
         scenetitle = new Text("Upload your own recipe.");
         scenetitle.setTextAlignment(TextAlignment.CENTER);
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
-        this.add(scenetitle, 0, 0, 3, 1);
+        GRID.add(scenetitle, 0, 0, 3, 1);
         
         Prefix = new Label("");
         Prefix.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
         Prefix.setWrapText(true);
         Prefix.setTextFill(Color.web("red"));
-        this.add(Prefix, 0, 1, 1, 2);
+        GRID.add(Prefix, 0, 1, 1, 2);
 
         //title fields
         title = new Label("Title:");
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        this.add(title, 1, 1);
+        GRID.add(title, 1, 1);
 
         titleField = new TextField();
         titleField.setMinWidth(200);
         titleField.setMaxWidth(300);
         titleField.setMinHeight(50);
         titleField.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        this.add(titleField, 2, 1);
+        GRID.add(titleField, 2, 1);
         
         //image fields
         image = new Label("Image URL:");
         image.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        this.add(image, 1, 2);
+        GRID.add(image, 1, 2);
 
         imageField = new TextField();
         imageField.setMinWidth(200);
         imageField.setMaxWidth(300);
         imageField.setMinHeight(50);
-        this.add(imageField, 2, 2);
+        GRID.add(imageField, 2, 2);
         
         //author fields
         author = new Label("Author:");
         author.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        this.add(author, 1, 3);
+        GRID.add(author, 1, 3);
 
         authorField = new TextField();
         authorField.setMinWidth(200);
         authorField.setMaxWidth(300);
         authorField.setMinHeight(50);
-        this.add(authorField, 2, 3);
+        GRID.add(authorField, 2, 3);
         
         //blurb fields
         blurb = new Label("Summary:");
         blurb.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        this.add(blurb, 1, 4);
+        GRID.add(blurb, 1, 4);
 
         blurbField = new TextField();
         blurbField.setMinWidth(200);
         blurbField.setMaxWidth(300);
         blurbField.setMinHeight(50);
-        this.add(blurbField, 2, 4);
+        GRID.add(blurbField, 2, 4);
         
         //COMBO BOX FOR ALLERGIES
         ObservableList<String> allergyOptions = 
@@ -153,58 +156,58 @@ public class UploadRecipe extends GridPane {
         
         allergy = new Label("Allergies:");
         allergy.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        this.add(allergy, 1, 5);
+        GRID.add(allergy, 1, 5);
         allergies = new ComboBox<String>(allergyOptions);
         //allergies.setEditable(true);
-        this.add(allergies, 2, 5);
+        GRID.add(allergies, 2, 5);
         allergyAdd = new Button("Add");
-        this.add(allergyAdd, 3, 5);
+        GRID.add(allergyAdd, 3, 5);
         
         //HBox to list out the selected allergies
         allergyList = new HBox();
-        this.add(allergyList, 2, 6);
+        GRID.add(allergyList, 2, 6);
         addedAllergies = new ArrayList<String>();
         
         ingredients = new Label("Ingredients:");
         ingredients.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        this.add(ingredients, 1, 7);
+        GRID.add(ingredients, 1, 7);
         quantity = new Label("quantity");
         quantity.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        this.add(quantity, 2, 7);
+        GRID.add(quantity, 2, 7);
         unit = new Label("unit");
         unit.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        this.add(unit, 3, 7);
+        GRID.add(unit, 3, 7);
         ingredient = new Label("ingredient");
         ingredient.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        this.add(ingredient, 4, 7);
+        GRID.add(ingredient, 4, 7);
         //HBox for ingredients with (num field for quantity, text field for Unit, Combo Box for ingredient name, button for add ingredient)
         quantityField = new TextField();
-        this.add(quantityField, 2, 8);
+        GRID.add(quantityField, 2, 8);
         unitField = new TextField();
-        this.add(unitField, 3, 8);
+        GRID.add(unitField, 3, 8);
         ingredientField = new TextField();
-        this.add(ingredientField, 4, 8);
+        GRID.add(ingredientField, 4, 8);
         addIngredient = new Button("Add");
-        this.add(addIngredient, 5, 8);
+        GRID.add(addIngredient, 5, 8);
         
         addedIngredients = new ArrayList<Ingredient>();
         
         //Vbox of text that combines all the above fields into one string line
         ingredientList = new VBox();
-        this.add(ingredientList, 2, 9);
+        GRID.add(ingredientList, 2, 9);
         
         
         //HBox for instructions with (text field)
         instructions = new Label("Steps (in order):");
         instructions.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        this.add(instructions, 1, 10, 1, 1);
+        GRID.add(instructions, 1, 10, 1, 1);
         instructionsField = new TextField();
-        this.add(instructionsField, 2, 10, 2, 1);
+        GRID.add(instructionsField, 2, 10, 2, 1);
         addInstruction = new Button("Add");
-        this.add(addInstruction, 4, 10);
+        GRID.add(addInstruction, 4, 10);
         //VBox of text, each row numbered.
         instructionsList = new VBox();
-        this.add(instructionsList, 2, 11);
+        GRID.add(instructionsList, 2, 11);
         
         
         addedInstructions = new ArrayList<String>();
@@ -214,7 +217,9 @@ public class UploadRecipe extends GridPane {
         Upload = new Button("UPLOAD");
         Upload.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         Upload.setMinWidth(300);
-        this.add(Upload, 2, 12);
+        GRID.add(Upload, 2, 12);
+        
+        this.setContent(GRID);
         
         
         setActions();

@@ -56,16 +56,6 @@ public class LaunchStage extends Application {
 	BorderPane startPane;
 	BorderPane mainPane;
 	
-	Login login;
-	Registration registration;
-	ForgotPassword forgotPassword;
-	
-	FoodSuggest suggestionPage;
-	
-	Navigation nav;
-	Profile profile;
-	Recipe recipe;
-	
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
