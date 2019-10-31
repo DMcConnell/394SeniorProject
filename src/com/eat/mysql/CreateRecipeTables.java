@@ -6,7 +6,7 @@ public class CreateRecipeTables {
 	
 	public static String createRecipeTable() {
 		return "CREATE TABLE recipes" + 
-				"( recipeID VARCHAR(12), name VARCHAR(255), rating INTEGER(1), summary VARCHAR(255), imagepath VARCHAR(255)," + 
+				"( recipeID VARCHAR(12), name VARCHAR(255), author VARCHAR(32), summary VARCHAR(255), imagepath VARCHAR(255)," + 
 				"servings INTEGER(4), timeReq INTEGER(4), PRIMARY KEY (recipeID) )";
 	}
 	

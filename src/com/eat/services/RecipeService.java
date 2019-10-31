@@ -44,14 +44,14 @@ public class RecipeService {
 	//Will add a recipe to the database and return the newly added recipe
 	//Throws exceptions when name or description are not present or if DBInteractor
 	//fails
-	public Map<String,String> addRecipe(String name, String descrip, File image, double rating, double serving, double timeReq) throws Exception {
+	public Map<String,String> addRecipe(String name, String descrip, File image, String author, double serving, double timeReq) throws Exception {
 		if(name == null || descrip == null) {
 			throw new Exception("Attempting to add corrupted recipe to database");
 		}
 		//need to get uniqueID here
 		//for now a global session counter as placeholder
-		String SQL = "INSERT INTO recipes(recipeID, name, rating, summary, imagepath, serving, timeReq) VALUES ("
-		+ QUOTE + ++i + QUOTE + COMMA + QUOTE + name + QUOTE + COMMA + rating + COMMA + QUOTE + descrip + QUOTE 
+		String SQL = "INSERT INTO recipes(recipeID, name, author, summary, imagepath, serving, timeReq) VALUES ("
+		+ QUOTE + ++i + QUOTE + COMMA + QUOTE + name + QUOTE + COMMA + QUOTE + author + QUOTE + COMMA + QUOTE + descrip + QUOTE 
 		+ COMMA + QUOTE + ((image == null) ? "null" : image.toPath()) + QUOTE + COMMA + serving + COMMA + timeReq + ")";
 		
 		try {
@@ -77,7 +77,7 @@ public class RecipeService {
 				while(rs.next()) {
 					returnMap.put(IRecipe.RECIPEID, rs.getString("recipeID"));
 					returnMap.put(IRecipe.NAME, rs.getString("name"));
-					returnMap.put(IRecipe.RATING, rs.getString("rating"));
+					returnMap.put(IRecipe.AUTHOR, rs.getString("author"));
 					returnMap.put(IRecipe.SUMMARY, rs.getString("summary"));
 					returnMap.put(IRecipe.IMAGEPATH, rs.getString("imagepath"));
 					returnMap.put(IRecipe.SERVING, rs.getString("serving"));
