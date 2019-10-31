@@ -49,6 +49,11 @@ public class Favorites extends ScrollPane {
 
 			LinkedList<String> favoriteIDs = cs.getFavorites(cs.getSelfID());
 			int favoriteNumber = 1;
+			Label noFavorites = new Label("You don't have any favorites!\nClick on the favorite button on a recipe's page to have it show up here.");
+			noFavorites.setFont(Font.font("Tahoma", FontWeight.NORMAL, 18));
+			if (favoriteIDs.size() == 0) {
+				grid.add(noFavorites, 0, 1);
+			}
 
 			for (String id : favoriteIDs) {
 				HBox searchResult = new HBox(20);
@@ -82,8 +87,8 @@ public class Favorites extends ScrollPane {
 						LaunchStage.getInstance().RecipePane(Integer.valueOf(id));
 					}
 				});
-				favoriteNumber++;
 				grid.add(searchResult, 0, favoriteNumber);
+				favoriteNumber++;
 			}
 			this.setMinWidth(1000);
 			this.setContent(grid);
