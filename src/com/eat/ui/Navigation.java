@@ -31,7 +31,7 @@ public class Navigation extends VBox{
 	Button Search;
 	Button UploadRecipe;
 	Button Logout;
-	
+	Button FoodSuggestion;
 	
 	public Navigation()
 	{
@@ -46,8 +46,10 @@ public class Navigation extends VBox{
 		UploadRecipe.setPrefWidth(250);
 		Logout = new Button("Logout");
 		Logout.setPrefWidth(250);
+		FoodSuggestion = new Button("Suggestion");
+		FoodSuggestion.setPrefWidth(250);
 		
-		this.getChildren().addAll(Profile, Favorites, Search, UploadRecipe, Logout);
+		this.getChildren().addAll(Profile, Favorites, Search, UploadRecipe, Logout, FoodSuggestion);
 		
 		setActions();
 	}
@@ -69,6 +71,15 @@ public class Navigation extends VBox{
             public void handle(ActionEvent e) {
                 //REDIRECT TO Favorites PAGE
             	LaunchStage.getInstance().FavoritesPane();
+            }
+        });
+		
+		FoodSuggestion.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+                //REDIRECT TO Favorites PAGE
+            	LaunchStage.getInstance().foodSuggest();
             }
         });
 		
