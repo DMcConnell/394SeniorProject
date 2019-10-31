@@ -186,14 +186,14 @@ public class UploadRecipe extends GridPane {
         
         //HBox for instructions with (text field)
         instructions = new Label("Steps (in order):");
-        this.add(instructions, 2, 10, 1, 2);
+        this.add(instructions, 2, 10, 1, 1);
         instructionsField = new TextField();
-        this.add(instructionsField, 3, 10, 2, 2);
+        this.add(instructionsField, 3, 10, 2, 1);
         addInstruction = new Button("add");
-        this.add(addInstruction, 5, 10, 1, 1);
+        this.add(addInstruction, 4, 10);
         //VBox of text, each row numbered.
         instructionsList = new VBox();
-        this.add(instructionsList, 2, 11, 1, 1);
+        this.add(instructionsList, 2, 11, 1, 5);
         
         addedInstructions = new ArrayList<String>();
         
