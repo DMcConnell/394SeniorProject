@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class LaunchStage extends Application {
@@ -49,22 +50,23 @@ public class LaunchStage extends Application {
 	Scene startScene;
 	Scene mainScene;
 
-	GridPane currentPane;
-	GridPane startPane;
-	GridPane mainPane;
+	BorderPane currentPane;
+	BorderPane startPane;
+	BorderPane mainPane;
 	
 	Login login;
 	Registration registration;
 	ForgotPassword forgotPassword;
 	
+	Navigation nav;
 	Profile profile;
 	Recipe recipe;
 	
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		startPane = new GridPane();
-		startPane.setAlignment(Pos.CENTER);
+		startPane = new BorderPane();
+		//startPane.setAlignment(Pos.CENTER);
 		
 		currentPane = startPane;
 		
@@ -90,8 +92,8 @@ public class LaunchStage extends Application {
 	//This is for logging out and switching back to login page, disconnected from database.
 	protected void StartScene()
 	{
-		startPane = new GridPane();
-		startPane.setAlignment(Pos.CENTER);
+		startPane = new BorderPane();
+		//startPane.setAlignment(Pos.CENTER);
 		
 		currentPane = startPane;
 		
@@ -110,12 +112,13 @@ public class LaunchStage extends Application {
 	//This is for switching from successful login to the main scene, starting at the profile page
 	protected void MainScene()
 	{
-		mainPane = new GridPane();
-		mainPane.setAlignment(Pos.CENTER);
+		mainPane = new BorderPane();
+		//mainPane.setAlignment(Pos.CENTER);
 		
 		
 		currentPane = mainPane;
 		//set current pane to be new pane with navigation window and profile page
+		NavPane();
 		ProfilePane();
 		
 		Stage stage = (Stage) currentScene.getWindow();
@@ -131,37 +134,45 @@ public class LaunchStage extends Application {
 	
 	protected void LoginPane()
 	{
-		currentPane.getChildren().clear();
-		currentPane.getChildren().add(new Login());
+		currentPane.setCenter(new Login());
 	}
 	protected void RegistrationPane()
 	{
-		currentPane.getChildren().clear();
-		currentPane.getChildren().add(new Registration());
+		currentPane.setCenter(new Registration());
 	}
 	
 	protected void ForgotPasswordPane()
 	{
-		currentPane.getChildren().clear();
-		currentPane.getChildren().add(new ForgotPassword());
+		currentPane.setCenter(new ForgotPassword());
 	}
-	//yes inefficient to re-make the nav pane every time, will fix later
+	
 	protected void NavPane()
 	{
-		//	currentPane.getChildren().add(new NavPane());
+		currentPane.setLeft(new Navigation());
 	}
 	
 	protected void ProfilePane()
 	{
-		currentPane.getChildren().clear();
-		NavPane();
-		currentPane.getChildren().add(new Profile());
+		currentPane.setCenter(new Profile());
 	}
 	
 	protected void RecipePane(int id) {
-		currentPane.getChildren().clear();
-		NavPane();
-		currentPane.getChildren().add(new Recipe(id));
+		currentPane.setCenter(new Recipe(id));
+	}
+	
+	protected void FavoritesPane()
+	{
+		currentPane.setCenter(new Favorites());
+	}
+	
+	protected void SearchPane()
+	{
+		//currentPane.setCenter(new Search_view());
+	}
+	
+	protected void UploadRecipePane()
+	{
+		//currentPane.setCenter(new UploadRecipe());
 	}
 	
 }

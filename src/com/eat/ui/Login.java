@@ -176,6 +176,7 @@ public class Login extends GridPane {
                 		userTextField.setStyle("-fx-border-color: red");
                 		pwBox.setStyle("-fx-border-color: red");
                 		pwBox.clear();
+                		success = false;
                 	}
                 	if(success)
                 	{
@@ -209,7 +210,7 @@ public class Login extends GridPane {
     
     public void TEMP_TEST_LOGIN(String u, String p) throws Exception
     {
-    	if(!u.equals("testuser") && !p.equals("password"))
+    	if(!u.equals("testuser") || !p.equals("password"))
     		throw new InvalidCombinationException();
     }
         
