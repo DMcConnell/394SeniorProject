@@ -172,7 +172,7 @@ public class LaunchStage extends Application {
 	
 	protected void UploadRecipePane()
 	{
-		//currentPane.setCenter(new UploadRecipe());
+		currentPane.setCenter(new UploadRecipe());
 	}
 	
 }
