@@ -77,7 +77,7 @@ public class LaunchStage extends Application {
 		
 		LoginPane();
 		
-		startScene = new Scene(currentPane, 1920, 1080);
+		startScene = new Scene(currentPane, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
 		currentScene = startScene;
 		
 		
@@ -104,7 +104,7 @@ public class LaunchStage extends Application {
 
 		Stage stage = (Stage) currentScene.getWindow();
 		
-		startScene = new Scene(currentPane, 1920, 1080);
+		startScene = new Scene(currentPane, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
 		currentScene = startScene;
 		
 		stage.setScene(currentScene);
@@ -129,9 +129,11 @@ public class LaunchStage extends Application {
 		mainScene = new Scene(mainPane, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
 		currentScene = mainScene;
 		
+		
 		stage.setScene(currentScene);
 		stage.show();
 		
+		//stage.setFullScreen(true);
 	}
 	
 	

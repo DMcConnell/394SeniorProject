@@ -16,6 +16,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -49,6 +51,7 @@ public class UploadRecipe extends GridPane {
 	ComboBox<String> allergies;
 	Button allergyAdd;
 	HBox allergyList;
+	Label ingredients;
 	Label quantity;
 	Label unit;
 	Label ingredient;
@@ -149,23 +152,30 @@ public class UploadRecipe extends GridPane {
         	    );
         
         allergy = new Label("Allergies:");
-        this.add(allergy, 2, 5);
+        allergy.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        this.add(allergy, 1, 5);
         allergies = new ComboBox<String>(allergyOptions);
         //allergies.setEditable(true);
-        this.add(allergies, 3, 5);
+        this.add(allergies, 2, 5);
         allergyAdd = new Button("Add");
-        this.add(allergyAdd, 4, 5);
+        this.add(allergyAdd, 3, 5);
         
         //HBox to list out the selected allergies
         allergyList = new HBox();
         this.add(allergyList, 2, 6);
         addedAllergies = new ArrayList<String>();
         
+        ingredients = new Label("Ingredients:");
+        ingredients.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        this.add(ingredients, 1, 7);
         quantity = new Label("quantity");
+        quantity.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         this.add(quantity, 2, 7);
         unit = new Label("unit");
+        unit.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         this.add(unit, 3, 7);
         ingredient = new Label("ingredient");
+        ingredient.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         this.add(ingredient, 4, 7);
         //HBox for ingredients with (num field for quantity, text field for Unit, Combo Box for ingredient name, button for add ingredient)
         quantityField = new TextField();
@@ -186,14 +196,16 @@ public class UploadRecipe extends GridPane {
         
         //HBox for instructions with (text field)
         instructions = new Label("Steps (in order):");
-        this.add(instructions, 2, 10, 1, 1);
+        instructions.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        this.add(instructions, 1, 10, 1, 1);
         instructionsField = new TextField();
-        this.add(instructionsField, 3, 10, 2, 1);
+        this.add(instructionsField, 2, 10, 2, 1);
         addInstruction = new Button("Add");
-        this.add(addInstruction, 5, 10);
+        this.add(addInstruction, 4, 10);
         //VBox of text, each row numbered.
         instructionsList = new VBox();
-        this.add(instructionsList, 2, 11, 1, 5);
+        this.add(instructionsList, 2, 11);
+        
         
         addedInstructions = new ArrayList<String>();
         
@@ -202,7 +214,7 @@ public class UploadRecipe extends GridPane {
         Upload = new Button("UPLOAD");
         Upload.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         Upload.setMinWidth(300);
-        this.add(Upload, 3, 12);
+        this.add(Upload, 2, 12);
         
         
         setActions();
@@ -375,8 +387,10 @@ public class UploadRecipe extends GridPane {
             	}
             	else
             	{
+            		Text t = new Text(s + " ");
+                    t.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
             		addedAllergies.add(s);
-            		allergyList.getChildren().add(new Text(s + " "));
+            		allergyList.getChildren().add(t);
             		allergies.setStyle("-fx-border-color: black");
             	}
             }
@@ -429,12 +443,15 @@ public class UploadRecipe extends GridPane {
                 else
                 {
                 	//add all fields to new ingredient and add that to ingredient list and combine strings and add to VBox
+            		Text t = new Text(q + " " + u + " " + ing + System.lineSeparator());
+                    t.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
                 	Ingredient i = new Ingredient(ing, Float.parseFloat(q), u);
                 	addedIngredients.add(i);
-                	ingredientList.getChildren().add(new Text(q + " " + u + " " + ing + System.lineSeparator()));
+                	ingredientList.getChildren().add(t);
             		quantityField.setStyle("-fx-border-color: black");
             		unitField.setStyle("-fx-border-color: black");
             		ingredientField.setStyle("-fx-border-color: black");
+            		
                 }
             	
             	
@@ -465,8 +482,10 @@ public class UploadRecipe extends GridPane {
             	{
             		//Add instruction to list as string and to VBox
             		instructionCounter++;
+            		Text t = new Text(instructionCounter + ": " + s);
+                    t.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
             		addedInstructions.add(s);
-            		instructionsList.getChildren().add(new Text(instructionCounter + ": " + s));
+            		instructionsList.getChildren().add(t);
             		instructionsField.setStyle("-fx-border-color: black");
             	}
             }
