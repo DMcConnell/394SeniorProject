@@ -47,6 +47,7 @@ public class LaunchStage extends Application {
 	private RecipeService rs;
 	private ContactService cs;
 	
+	
 	Scene currentScene;
 	Scene startScene;
 	Scene mainScene;
@@ -58,6 +59,8 @@ public class LaunchStage extends Application {
 	Login login;
 	Registration registration;
 	ForgotPassword forgotPassword;
+	
+	FoodSuggest suggestionPage;
 	
 	Navigation nav;
 	Profile profile;
@@ -174,5 +177,7 @@ public class LaunchStage extends Application {
 	{
 		currentPane.setCenter(new UploadRecipe());
 	}
-	
+	protected void foodSuggest() {
+		currentPane.setCenter(new FoodSuggest());
+	}
 }
