@@ -60,12 +60,12 @@ public class RecipeService {
 			throw e;
 		}
 		
-		return getRecipe(i);
+		return getRecipe(Integer.toString(i));
 	}
 	
 	//Will return the recipe searched for based on uniqueID, if uniqueID does not exist
 	//will return an empty HashMap
-	public HashMap<String,String> getRecipe(int uniqueID) throws Exception {
+	public HashMap<String,String> getRecipe(String uniqueID) throws Exception {
 		String SQL = "SELECT * FROM recipes WHERE recipeID='" + uniqueID + "'";
 		try {
 			ResultSet rs = db.executeQuery(SQL);
@@ -94,7 +94,7 @@ public class RecipeService {
 	
 	//Will add ingredients into the ingredients database table directly tied to
 	//a recipe via uniqueID
-	public LinkedList<Ingredient> addIngredients(int uniqueID, List<Ingredient> ingredients) throws Exception {
+	public LinkedList<Ingredient> addIngredients(String uniqueID, List<Ingredient> ingredients) throws Exception {
 		Map<String,String> recipe = getRecipe(uniqueID);
 		if(recipe.size() == 0) {
 			throw new Exception("Corrupted recipe passed to addIngredients");
@@ -106,7 +106,7 @@ public class RecipeService {
 	}
 	
 	//Adds each ingredient and it's  related proportion and unit
-	private void addIngredient(int uniqueID, String ingredient, Double amount, String units) throws Exception{
+	private void addIngredient(String uniqueID, String ingredient, Double amount, String units) throws Exception{
 		String SQL = "INSERT INTO ingredients(recipeID, ingredient, proportion, units) VALUES (" +
 				QUOTE + uniqueID + QUOTE + COMMA + QUOTE + ingredient + QUOTE + COMMA + amount + COMMA + QUOTE + units + QUOTE + ")";
 		try {
@@ -117,7 +117,7 @@ public class RecipeService {
 	}
 	
 	//Gets all ingredients for a given recipe based upon recipe's uniqueID
-	public LinkedList<Ingredient> getIngredients(int uniqueID) throws Exception {
+	public LinkedList<Ingredient> getIngredients(String uniqueID) throws Exception {
 		String SQL = "SELECT * FROM ingredients WHERE uniqueID='" + uniqueID + "'";
 		ResultSet rs;
 		try {
@@ -135,11 +135,51 @@ public class RecipeService {
 	}
 	
 	
+	public void addRecipeAllergies(String uniqueID, List<String> allergies) throws Exception {
+		Map<String,String> recipe = getRecipe(uniqueID);
+		if(recipe.size() == 0) {
+			throw new Exception("Recipe does not exist");
+		}
+		
+		try {
+			for(String allergy : allergies) {
+				addRecipeAllergy(uniqueID, allergy);
+			}
+		} catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	private void addRecipeAllergy(String uniqueID, String allergy) throws Exception {
+		String SQL = "INSERT INTO recipeAllergies(recipeID, allergy) VALUES ('" + uniqueID +
+						QUOTE + COMMA + QUOTE + allergy + QUOTE + ")";
+		try {
+			db.executeStatement(SQL);
+		} catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	public LinkedList<String> getRecipeAllergies(String uniqueID) throws Exception {
+		String SQL = "SELECT * FROM recipeAllergies WHERE recipeID = '" + uniqueID + "'";
+		try {
+			ResultSet rs = db.executeQuery(SQL);
+			LinkedList<String> recipeAllergies = new LinkedList<String>();
+			while(rs.next()) {
+				recipeAllergies.add(rs.getString("allergy"));
+			}
+			return recipeAllergies;
+		} catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	
 	//public void editRecipe(int uniqueID, String changedProp, String changedValue) throws Exception {}
 	//public LinkedList<Ingredient> editIngredients(int uniqueID, List<Ingredient>) throws Exception {}
 	//public Map<Integer, Step> editSteps(int uniqueID, Map<Integer,String> newSteps) throws Exception {}
 	
-	public HashMap<Integer,String> addSteps(int uniqueID, Map<Integer,String> steps) throws Exception {
+	public HashMap<Integer,String> addSteps(String uniqueID, Map<Integer,String> steps) throws Exception {
 		Map<String,String> recipe = getRecipe(uniqueID);
 		if(recipe.size() == 0) {
 			throw new Exception("Corrupted recipe passed to addIngredients");
@@ -151,7 +191,7 @@ public class RecipeService {
 		
 	}
 	
-	private void addStep(int uniqueID, Integer stepNum, String direction) throws Exception {
+	private void addStep(String uniqueID, Integer stepNum, String direction) throws Exception {
 		String SQL = "INSERT INTO directions(recipeID, stepNum, direction) VALUES (" +
 				QUOTE + uniqueID + QUOTE + COMMA + stepNum + COMMA + QUOTE + direction + QUOTE + ")";
 		try {
@@ -161,7 +201,7 @@ public class RecipeService {
 		}
 	}
 	
-	public HashMap<Integer, String> getSteps(int uniqueID) throws Exception {
+	public HashMap<Integer, String> getSteps(String uniqueID) throws Exception {
 		String SQL = "SELECT * FROM directions WHERE uniqueID = '" + uniqueID + "' ORDER BY stepNum ASC";
 		ResultSet rs;
 		try {
@@ -185,11 +225,11 @@ public class RecipeService {
 			ResultSet rs = db.executeQuery(SQL);
 			LinkedList<HashMap<String,String>> retSearch = new LinkedList<HashMap<String,String>>();
 			while(rs.next()) {
-				retSearch.add(getRecipe(Integer.parseInt(rs.getString("recipeID"))));
+				retSearch.add(getRecipe(rs.getString("recipeID")));
 			}
 			rs = db.executeQuery(SQL2);
 			while(rs.next()) {
-				retSearch.add(getRecipe(Integer.parseInt(rs.getString("recipeID"))));
+				retSearch.add(getRecipe(rs.getString("recipeID")));
 			}
 			return retSearch;
 		} catch(Exception e) {

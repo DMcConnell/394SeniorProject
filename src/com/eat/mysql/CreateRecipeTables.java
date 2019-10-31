@@ -22,6 +22,12 @@ public class CreateRecipeTables {
 				+ "units VARCHAR(16), FOREIGN KEY (recipeID) REFERENCES recipes(recipeID))";
 	}
 	
+	public static String createRecipeAllergyTable() {
+		return "CREATE TABLE recipeAllergies" +
+				"( recipeID VARCHAR(12), allergy VARCHAR(32), FOREIGN KEY (recipeID) " +
+				"REFERENCES recipes(recipeID))";
+	}
+	
 	public static String createFavoritesTable() {
 		return "CREATE TABLE favorites " + 
 				"(entryID INTEGER(20), " + 
@@ -161,6 +167,15 @@ public class CreateRecipeTables {
         System.out.print("Creating favorites table... ");
         try {
         	db.executeStatement(CreateRecipeTables.createFavoritesTable());
+        	System.out.println("Success");
+        } catch(Exception e) {
+        	System.out.println("Failed");
+        	e.printStackTrace();
+        }
+        
+        System.out.print("Creating recipeAllergies table... ");
+        try {
+        	db.executeStatement(CreateRecipeTables.createRecipeAllergyTable());
         	System.out.println("Success");
         } catch(Exception e) {
         	System.out.println("Failed");
