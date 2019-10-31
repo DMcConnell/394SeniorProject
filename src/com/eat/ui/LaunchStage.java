@@ -167,7 +167,7 @@ public class LaunchStage extends Application {
 	
 	protected void SearchPane()
 	{
-		//currentPane.setCenter(new Search_view());
+		currentPane.setCenter(new Search_view());
 	}
 	
 	protected void UploadRecipePane()
