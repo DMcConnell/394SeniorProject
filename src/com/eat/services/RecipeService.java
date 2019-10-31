@@ -18,6 +18,7 @@ public class RecipeService {
 	DBInteractor db;
 	int i = 0;
 	private String COMMA = ",";
+	private String QUOTE = "'";
 	
 	public RecipeService() throws Exception {
         try {
@@ -49,7 +50,9 @@ public class RecipeService {
 		}
 		//need to get uniqueID here
 		//for now a global session counter as placeholder
-		String SQL = "INSERT INTO recipes(recipeID, name, rating, summary, imagepath, serving, timeReq) VALUES (" + ++i + COMMA + name + COMMA + rating + COMMA + descrip + COMMA + ((image == null) ? "null" : image.toPath()) + COMMA + serving + COMMA + timeReq + ")";
+		String SQL = "INSERT INTO recipes(recipeID, name, rating, summary, imagepath, serving, timeReq) VALUES ("
+		+ QUOTE + ++i + QUOTE + COMMA + QUOTE + name + QUOTE + COMMA + rating + COMMA + QUOTE + descrip + QUOTE 
+		+ COMMA + QUOTE + ((image == null) ? "null" : image.toPath()) + QUOTE + COMMA + serving + COMMA + timeReq + ")";
 		
 		try {
 			db.executeStatement(SQL);
@@ -105,7 +108,7 @@ public class RecipeService {
 	//Adds each ingredient and it's  related proportion and unit
 	private void addIngredient(int uniqueID, String ingredient, Double amount, String units) throws Exception{
 		String SQL = "INSERT INTO ingredients(recipeID, ingredient, proportion, units) VALUES (" +
-				uniqueID + COMMA + ingredient + COMMA + amount + COMMA + units + ")";
+				QUOTE + uniqueID + QUOTE + COMMA + QUOTE + ingredient + QUOTE + COMMA + amount + COMMA + QUOTE + units + QUOTE + ")";
 		try {
 			db.executeStatement(SQL);
 		} catch(Exception e) {
@@ -150,7 +153,7 @@ public class RecipeService {
 	
 	private void addStep(int uniqueID, Integer stepNum, String direction) throws Exception {
 		String SQL = "INSERT INTO directions(recipeID, stepNum, direction) VALUES (" +
-				uniqueID + COMMA + stepNum + COMMA + direction + ")";
+				QUOTE + uniqueID + QUOTE + COMMA + stepNum + COMMA + QUOTE + direction + QUOTE + ")";
 		try {
 			db.executeStatement(SQL);
 		} catch(Exception e) {

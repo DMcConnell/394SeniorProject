@@ -20,8 +20,8 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
-
 import javafx.scene.layout.HBox;
+
 import com.eat.services.RecipeService;
 import com.eat.services.IRecipe;
 import com.eat.support.Ingredient;
@@ -131,7 +131,18 @@ public class Recipe extends ScrollPane{
 			this.setMinWidth(1000);
 			this.setContent(grid);
 			
-			
+			favoriteButton.setOnAction(new EventHandler<ActionEvent>() {
+				
+				@Override
+				public void handle(ActionEvent e) {
+					try {
+						LaunchStage.getInstance().getContactService().addFavorite(LaunchStage.getInstance().getContactService().getSelfID(), String.valueOf(id));
+					}
+					catch (Exception ex) {
+						System.out.println(ex);
+					}
+				}
+			});
 
 
 		}

@@ -158,4 +158,10 @@ public class LaunchStage extends Application {
 		currentPane.getChildren().add(new Profile());
 	}
 	
+	protected void RecipePane(int id) {
+		currentPane.getChildren().clear();
+		NavPane();
+		currentPane.getChildren().add(new Recipe(id));
+	}
+	
 }

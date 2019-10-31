@@ -6,19 +6,19 @@ public class CreateRecipeTables {
 	
 	public static String createRecipeTable() {
 		return "CREATE TABLE recipes" + 
-				"( recipeID INTEGER(12), name VARCHAR(255), rating INTEGER(1), summary VARCHAR(255), imagepath VARCHAR(255)," + 
+				"( recipeID VARCHAR(12), name VARCHAR(255), rating INTEGER(1), summary VARCHAR(255), imagepath VARCHAR(255)," + 
 				"servings INTEGER(4), timeReq INTEGER(4), PRIMARY KEY (recipeID) )";
 	}
 	
 	public static String createDirectionsTable() {
 		return "CREATE TABLE directions" +
-				"( recipeID INTEGER(12), stepNum INTEGER(2), direction VARCHAR(255),"
+				"( recipeID VARCHAR(12), stepNum INTEGER(2), direction VARCHAR(255),"
 				+ "FOREIGN KEY (recipeID) REFERENCES recipes(recipeID))";
 	}
 	
 	public static String createIngredientsTable() {
 		return "CREATE TABLE ingredients" +
-				"( recipeID INTEGER(12), ingredient VARCHAR(16), proportion DECIMAL(8),"
+				"( recipeID VARCHAR(12), ingredient VARCHAR(16), proportion DECIMAL(8),"
 				+ "units VARCHAR(16), FOREIGN KEY (recipeID) REFERENCES recipes(recipeID))";
 	}
 	
@@ -26,7 +26,7 @@ public class CreateRecipeTables {
 		return "CREATE TABLE favorites " + 
 				"(entryID INTEGER(20), " + 
 				"username VARCHAR(25), " + 
-				"recipeID INTEGER(12)," + 
+				"recipeID VARCHAR(12)," + 
 				"FOREIGN KEY (username) REFERENCES emfUsers(username), " + 
 				"FOREIGN KEY (recipeID) REFERENCES recipes(recipeID))";
 	}
