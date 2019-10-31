@@ -46,25 +46,30 @@ public class Favorites extends ScrollPane {
 
 			RecipeService rs = LaunchStage.getInstance().getRecipeService();
 			ContactService cs = LaunchStage.getInstance().getContactService();
-
+			
+			//Get list of favorite IDs
 			LinkedList<String> favoriteIDs = cs.getFavorites(cs.getSelfID());
-			int favoriteNumber = 1;
+			int favoriteNumber = 1; // number for positioning the results
+			
+			//Text to display when the user has no favorites
 			Label noFavorites = new Label("You don't have any favorites!\nClick on the favorite button on a recipe's page to have it show up here.");
 			noFavorites.setFont(Font.font("Tahoma", FontWeight.NORMAL, 18));
 			if (favoriteIDs.size() == 0) {
 				grid.add(noFavorites, 0, 1);
 			}
-
-			for (String id : favoriteIDs) {
+			//Iterate through favorites list
+			for (String id : favoriteIDs) { 
+				//Each searchResult will be one HBox
 				HBox searchResult = new HBox(20);
-				HashMap<String,String> recipe = rs.getRecipe(Integer.parseInt(id));
+				HashMap<String,String> recipe = rs.getRecipe(id);
 
 				Image recipeImage = new Image(recipe.get(IRecipe.IMAGEPATH));
 				ImageView recipeImageView = new ImageView(recipeImage);
 				recipeImageView.setFitHeight(150);
 				recipeImageView.setFitWidth(200);
 				searchResult.getChildren().add(recipeImageView);
-
+				
+				//Title and Summary will be in a VBox which will be put into the HBox
 				VBox recipeText = new VBox(5);
 
 				Label recipeName = new Label(recipe.get(IRecipe.NAME));
@@ -78,17 +83,19 @@ public class Favorites extends ScrollPane {
 
 				recipeText.getChildren().add(recipeName);
 				recipeText.getChildren().add(recipeSummary);
-
+				
+				
 				searchResult.getChildren().add(recipeText);
-				searchResult.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				searchResult.setOnMouseClicked(new EventHandler<MouseEvent>() { //Can click on entire HBox
 
 					@Override
 					public void handle(MouseEvent e) {
+						//Transfer user to Recipe Page
 						LaunchStage.getInstance().RecipePane(Integer.valueOf(id));
 					}
 				});
-				grid.add(searchResult, 0, favoriteNumber);
-				favoriteNumber++;
+				grid.add(searchResult, 0, favoriteNumber); //add recipe to grid at the current position
+				favoriteNumber++; //increment position
 			}
 			this.setMinWidth(1000);
 			this.setContent(grid);

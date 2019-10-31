@@ -45,7 +45,8 @@ public class Search_view extends ScrollPane {
 			Label title = new Label("Search Recipe");
 			title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 50));
 			mainGrid.add(title, 0, 0);
-
+			
+			//Search bar will be an HBox with both the textfield and the button
 			HBox searchBar = new HBox(10);
 
 			TextField searchField = new TextField();
@@ -65,7 +66,8 @@ public class Search_view extends ScrollPane {
 			mainGrid.add(searchBar, 0, 1);
 			GridPane resultGrid = new GridPane();
 			mainGrid.add(resultGrid, 0, 2);
-
+			
+			//Eventhandler to display results of the search
 			EventHandler<ActionEvent> fetchResults = new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
@@ -113,8 +115,10 @@ public class Search_view extends ScrollPane {
 					}
 				}
 			};
+			//Press enter on searchField or click searchButton to display results
 			searchButton.setOnAction(fetchResults);
 			searchField.setOnAction(fetchResults);
+			
 			this.setContent(mainGrid);
 		}
 		catch (Exception exc) {
