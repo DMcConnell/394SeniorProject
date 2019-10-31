@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class LaunchStage extends Application {
@@ -78,7 +79,6 @@ public class LaunchStage extends Application {
 		
 		
 		primaryStage.setScene(currentScene);
-		
 		primaryStage.show();
 		
 	}
@@ -123,7 +123,7 @@ public class LaunchStage extends Application {
 		
 		Stage stage = (Stage) currentScene.getWindow();
 		
-		mainScene = new Scene(mainPane, 1920, 1080);
+		mainScene = new Scene(mainPane, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
 		currentScene = mainScene;
 		
 		stage.setScene(currentScene);
