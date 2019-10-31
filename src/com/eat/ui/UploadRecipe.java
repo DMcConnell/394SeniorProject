@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -44,11 +45,12 @@ public class UploadRecipe extends GridPane {
 	Label author;
 	TextField authorField;
 	Label blurb;
-	TextField blurbField;
+	TextArea blurbField;
 	Label allergy;
 	ComboBox<String> allergies;
 	Button allergyAdd;
 	HBox allergyList;
+	Label ingredients;
 	Label quantity;
 	Label unit;
 	Label ingredient;
@@ -112,6 +114,7 @@ public class UploadRecipe extends GridPane {
         imageField.setMinHeight(50);
         this.add(imageField, 2, 2);
         
+        /*
         //author fields
         author = new Label("Author:");
         author.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
@@ -122,17 +125,19 @@ public class UploadRecipe extends GridPane {
         authorField.setMaxWidth(300);
         authorField.setMinHeight(50);
         this.add(authorField, 2, 3);
+         */
+        
         
         //blurb fields
         blurb = new Label("Summary:");
         blurb.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        this.add(blurb, 1, 4);
+        this.add(blurb, 1, 3);
 
-        blurbField = new TextField();
+        blurbField = new TextArea();
         blurbField.setMinWidth(200);
-        blurbField.setMaxWidth(300);
+        //blurbField.setMaxWidth(300);
         blurbField.setMinHeight(50);
-        this.add(blurbField, 2, 4);
+        this.add(blurbField, 2, 3, 3, 2);
         
         //COMBO BOX FOR ALLERGIES
         ObservableList<String> allergyOptions = 
@@ -149,23 +154,30 @@ public class UploadRecipe extends GridPane {
         	    );
         
         allergy = new Label("Allergies:");
-        this.add(allergy, 2, 5);
+        allergy.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        this.add(allergy, 1, 5);
         allergies = new ComboBox<String>(allergyOptions);
         //allergies.setEditable(true);
-        this.add(allergies, 3, 5);
+        this.add(allergies, 2, 5);
         allergyAdd = new Button("Add");
-        this.add(allergyAdd, 4, 5);
+        this.add(allergyAdd, 3, 5);
         
         //HBox to list out the selected allergies
         allergyList = new HBox();
         this.add(allergyList, 2, 6);
         addedAllergies = new ArrayList<String>();
         
+        ingredients = new Label("Ingredients:");
+        ingredients.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        this.add(ingredients, 1, 7);
         quantity = new Label("quantity");
+        quantity.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         this.add(quantity, 2, 7);
         unit = new Label("unit");
+        unit.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         this.add(unit, 3, 7);
         ingredient = new Label("ingredient");
+        ingredient.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         this.add(ingredient, 4, 7);
         //HBox for ingredients with (num field for quantity, text field for Unit, Combo Box for ingredient name, button for add ingredient)
         quantityField = new TextField();
@@ -186,14 +198,15 @@ public class UploadRecipe extends GridPane {
         
         //HBox for instructions with (text field)
         instructions = new Label("Steps (in order):");
-        this.add(instructions, 2, 10, 1, 2);
+        instructions.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        this.add(instructions, 1, 10, 1, 2);
         instructionsField = new TextField();
-        this.add(instructionsField, 3, 10, 2, 2);
+        this.add(instructionsField, 2, 10, 2, 2);
         addInstruction = new Button("add");
-        this.add(addInstruction, 5, 10);
+        this.add(addInstruction, 4, 10);
         //VBox of text, each row numbered.
         instructionsList = new VBox();
-        this.add(instructionsList, 2, 11);
+        this.add(instructionsList, 2, 11, 1, 5);
         
         addedInstructions = new ArrayList<String>();
         
@@ -202,7 +215,7 @@ public class UploadRecipe extends GridPane {
         Upload = new Button("UPLOAD");
         Upload.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         Upload.setMinWidth(300);
-        this.add(Upload, 3, 12);
+        this.add(Upload, 2, 12);
         
         
         setActions();
@@ -231,7 +244,7 @@ public class UploadRecipe extends GridPane {
             	
             	pattern = Pattern.compile("^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]");
             	matcher = pattern.matcher(i);
-            	boolean specialI = matcher.find();
+            	boolean specialI = !matcher.matches();
             	
             	if(t.length() < 1)
             	{
@@ -256,6 +269,30 @@ public class UploadRecipe extends GridPane {
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: black");
             		imageField.setStyle("-fx-border-color: black");
+            	}
+            	else if(i.length() < 1)
+            	{
+            		Prefix.setText("Enter an image URL");
+            		titleField.setStyle("-fx-border-color: black");
+            		authorField.setStyle("-fx-border-color: black");
+            		blurbField.setStyle("-fx-border-color: black");
+            		imageField.setStyle("-fx-border-color: red");
+            	}
+            	else if(i.length() > 256)
+            	{
+            		Prefix.setText("Image URL max length is 256 characters");
+            		titleField.setStyle("-fx-border-color: black");
+            		authorField.setStyle("-fx-border-color: black");
+            		blurbField.setStyle("-fx-border-color: black");
+            		imageField.setStyle("-fx-border-color: red");
+            	}
+            	else if(specialI)
+            	{
+            		Prefix.setText("Enter a valid URL");
+            		titleField.setStyle("-fx-border-color: black");
+            		authorField.setStyle("-fx-border-color: black");
+            		blurbField.setStyle("-fx-border-color: black");
+            		imageField.setStyle("-fx-border-color: red");
             	}
             	else if(a.length() < 1)
             	{
@@ -305,30 +342,6 @@ public class UploadRecipe extends GridPane {
             		blurbField.setStyle("-fx-border-color: red");
             		imageField.setStyle("-fx-border-color: black");
             	}
-            	else if(i.length() < 1)
-            	{
-            		Prefix.setText("Enter an image URL");
-            		titleField.setStyle("-fx-border-color: black");
-            		authorField.setStyle("-fx-border-color: black");
-            		blurbField.setStyle("-fx-border-color: black");
-            		imageField.setStyle("-fx-border-color: red");
-            	}
-            	else if(i.length() > 256)
-            	{
-            		Prefix.setText("Image URL max length is 256 characters");
-            		titleField.setStyle("-fx-border-color: black");
-            		authorField.setStyle("-fx-border-color: black");
-            		blurbField.setStyle("-fx-border-color: black");
-            		imageField.setStyle("-fx-border-color: red");
-            	}
-            	else if(specialI)
-            	{
-            		Prefix.setText("Enter a valid URL");
-            		titleField.setStyle("-fx-border-color: black");
-            		authorField.setStyle("-fx-border-color: black");
-            		blurbField.setStyle("-fx-border-color: black");
-            		imageField.setStyle("-fx-border-color: red");
-            	}
             	else //all valid information
             	{
             		int id = 0;
@@ -376,7 +389,9 @@ public class UploadRecipe extends GridPane {
             	else
             	{
             		addedAllergies.add(s);
-            		allergyList.getChildren().add(new Text(s + " "));
+            		Text t = new Text(s + " ");
+            		t.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+            		allergyList.getChildren().add(t);
             		allergies.setStyle("-fx-border-color: black");
             	}
             }
@@ -431,7 +446,9 @@ public class UploadRecipe extends GridPane {
                 	//add all fields to new ingredient and add that to ingredient list and combine strings and add to VBox
                 	Ingredient i = new Ingredient(ing, Float.parseFloat(q), u);
                 	addedIngredients.add(i);
-                	ingredientList.getChildren().add(new Text(q + " " + u + " " + ing + System.lineSeparator()));
+            		Text t = new Text(q + " " + u + " " + ing + System.lineSeparator());
+            		t.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+                	ingredientList.getChildren().add(t);
             		quantityField.setStyle("-fx-border-color: black");
             		unitField.setStyle("-fx-border-color: black");
             		ingredientField.setStyle("-fx-border-color: black");
@@ -448,7 +465,7 @@ public class UploadRecipe extends GridPane {
             	//CHECK ALL FIELDS TO HAVE PROPER FORMAT
             	
             	String s = instructionsField.getText();
-            	Pattern pattern = Pattern.compile("[^A-Za-z0-9.,:?]");
+            	Pattern pattern = Pattern.compile("[^A-Za-z0-9.,:? ]");
                 Matcher matcher = pattern.matcher(s);
                 boolean special = matcher.find();
             	if(s.length() < 1)
@@ -466,7 +483,9 @@ public class UploadRecipe extends GridPane {
             		//Add instruction to list as string and to VBox
             		instructionCounter++;
             		addedInstructions.add(s);
-            		instructionsList.getChildren().add(new Text(instructionCounter + ": " + s));
+            		Text t = new Text(instructionCounter + ": " + s);
+            		t.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+            		instructionsList.getChildren().add(t);
             		instructionsField.setStyle("-fx-border-color: black");
             	}
             }
