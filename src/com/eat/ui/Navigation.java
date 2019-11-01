@@ -35,21 +35,30 @@ public class Navigation extends VBox{
 	
 	public Navigation()
 	{
-		this.setSpacing(175);
+		int numpages = 0;
 		Profile = new Button("Profile");
 		Profile.setPrefWidth(250);
+		numpages++;
 		Favorites = new Button("My Favorites");
 		Favorites.setPrefWidth(250);
+		numpages++;
 		Search = new Button("Search Recipes");
 		Search.setPrefWidth(250);
+		numpages++;
 		UploadRecipe = new Button("Upload Recipe");
 		UploadRecipe.setPrefWidth(250);
-		Logout = new Button("Logout");
-		Logout.setPrefWidth(250);
+		numpages++;
 		FoodSuggestion = new Button("Suggestion");
 		FoodSuggestion.setPrefWidth(250);
+		numpages++;
+		Logout = new Button("Logout");
+		Logout.setPrefWidth(250);
+		numpages++;
 		
-		this.getChildren().addAll(Profile, Favorites, Search, UploadRecipe, Logout, FoodSuggestion);
+
+		this.setSpacing(LaunchStage.getInstance().getScreenHeight() / (numpages+1));
+		
+		this.getChildren().addAll(Profile, Favorites, Search, UploadRecipe, FoodSuggestion, Logout);
 		
 		setActions();
 	}
@@ -107,6 +116,7 @@ public class Navigation extends VBox{
             public void handle(ActionEvent e) {
                 //Log Out
             	//LaunchStage.getInstance().getContactService().logout();
+            	LaunchStage.getInstance().StartScene();
             }
         });
 	}

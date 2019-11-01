@@ -43,9 +43,19 @@ public class LaunchStage extends Application {
 	public ContactService getContactService() {
 		return cs;
 	}
+	public double getScreenWidth() {
+		return ScreenWidth;
+	}
+	
+	public double getScreenHeight() {
+		return ScreenHeight;
+	}
 	
 	private RecipeService rs;
 	private ContactService cs;
+	
+	private double ScreenWidth;
+	private double ScreenHeight;
 	
 	
 	Scene currentScene;
@@ -59,6 +69,10 @@ public class LaunchStage extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		
+		ScreenWidth = Screen.getPrimary().getBounds().getWidth();
+		ScreenHeight = Screen.getPrimary().getBounds().getHeight();
+		
 		startPane = new BorderPane();
 		//startPane.setAlignment(Pos.CENTER);
 		
@@ -67,7 +81,7 @@ public class LaunchStage extends Application {
 		
 		LoginPane();
 		
-		startScene = new Scene(currentPane, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
+		startScene = new Scene(currentPane, ScreenWidth, ScreenHeight);
 		currentScene = startScene;
 		
 		
@@ -94,7 +108,7 @@ public class LaunchStage extends Application {
 
 		Stage stage = (Stage) currentScene.getWindow();
 		
-		startScene = new Scene(currentPane, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
+		startScene = new Scene(currentPane, ScreenWidth, ScreenHeight);
 		currentScene = startScene;
 		
 		stage.setScene(currentScene);
@@ -116,7 +130,7 @@ public class LaunchStage extends Application {
 		
 		Stage stage = (Stage) currentScene.getWindow();
 		
-		mainScene = new Scene(mainPane, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
+		mainScene = new Scene(mainPane, ScreenWidth, ScreenHeight);
 		currentScene = mainScene;
 		
 		

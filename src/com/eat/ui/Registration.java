@@ -252,9 +252,9 @@ public class Registration extends GridPane {
                 	try
                 	{
                 		//need an instance of contact service to call
-                		//com.eat.services.ContactService.registerUser(username, password, realname, email);
+                		LaunchStage.getInstance().getContactService().registerUser(username, password, realname, email);
                 		
-                		TEMP_TEST_REGISTER(username, password, email);
+                		//TEMP_TEST_REGISTER(username, password, email);
                 		success = true;
                 	}
                 	catch (Exception ex)

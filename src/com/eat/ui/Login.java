@@ -166,8 +166,8 @@ public class Login extends GridPane {
             		boolean success = false;
                 	try
                 	{
-                		//com.eat.services.ContactService.login(username, password);
-                		TEMP_TEST_LOGIN(username, password);
+                		LaunchStage.getInstance().getContactService().login(username, password);
+                		//TEMP_TEST_LOGIN(username, password);
                 		success = true;
                 	}
                 	catch (Exception ex)

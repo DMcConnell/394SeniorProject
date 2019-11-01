@@ -27,11 +27,16 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.eat.services.IAllergy;
+import com.eat.services.IRecipe;
 import com.eat.support.*;
 import com.eat.services.Exceptions.*;
 
@@ -43,6 +48,10 @@ public class UploadRecipe extends ScrollPane {
 	Label Prefix;
 	Label title;
 	TextField titleField;
+	Label servings;
+	TextField servingsField;
+	Label time;
+	TextField timeField;
 	Label image;
 	TextField imageField;
 	Label author;
@@ -70,9 +79,9 @@ public class UploadRecipe extends ScrollPane {
 	
 	Button Upload;
 	
-	ArrayList<String> addedAllergies;
-	ArrayList<Ingredient> addedIngredients;
-	ArrayList<String> addedInstructions;
+	List<String> addedAllergies;
+	List<Ingredient> addedIngredients;
+	Map<Integer, String> addedInstructions;
 	
 	
     public UploadRecipe()
@@ -83,62 +92,93 @@ public class UploadRecipe extends ScrollPane {
         GRID.setVgap(10);
         GRID.setPadding(new Insets(20, 20, 20, 20));
         GRID.getColumnConstraints().add(new ColumnConstraints(150)); // column 0 is 150 wide
+        
+        int vLevel = 0;
 
         scenetitle = new Text("Upload your own recipe.");
         scenetitle.setTextAlignment(TextAlignment.CENTER);
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
-        GRID.add(scenetitle, 0, 0, 3, 1);
+        GRID.add(scenetitle, 0, vLevel, 3, 1);
+        vLevel++;
         
         Prefix = new Label("");
         Prefix.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
         Prefix.setWrapText(true);
         Prefix.setTextFill(Color.web("red"));
-        GRID.add(Prefix, 0, 1, 1, 2);
+        GRID.add(Prefix, 0, vLevel, 1, 2);
 
         //title fields
         title = new Label("Title:");
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        GRID.add(title, 1, 1);
+        GRID.add(title, 1, vLevel);
 
         titleField = new TextField();
         titleField.setMinWidth(200);
         titleField.setMaxWidth(300);
         titleField.setMinHeight(50);
         titleField.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        GRID.add(titleField, 2, 1);
+        GRID.add(titleField, 2, vLevel);
+        vLevel++;
         
         //image fields
         image = new Label("Image URL:");
         image.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        GRID.add(image, 1, 2);
+        GRID.add(image, 1, vLevel);
 
         imageField = new TextField();
         imageField.setMinWidth(200);
         imageField.setMaxWidth(300);
         imageField.setMinHeight(50);
-        GRID.add(imageField, 2, 2);
+        GRID.add(imageField, 2, vLevel);
+        vLevel++;
         
         //author fields
         author = new Label("Author:");
         author.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        GRID.add(author, 1, 3);
+        GRID.add(author, 1, vLevel);
 
         authorField = new TextField();
         authorField.setMinWidth(200);
         authorField.setMaxWidth(300);
         authorField.setMinHeight(50);
-        GRID.add(authorField, 2, 3);
+        GRID.add(authorField, 2, vLevel);
+        vLevel++;
+        
+     	//servings fields
+        servings = new Label("Number of Servings:");
+        servings.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        GRID.add(servings, 1, vLevel);
+
+        servingsField = new TextField();
+        servingsField.setMinWidth(200);
+        servingsField.setMaxWidth(300);
+        servingsField.setMinHeight(50);
+        GRID.add(servingsField, 2, vLevel);
+        vLevel++;
+        
+        //time fields
+        time = new Label("Cook Time (minutes):");
+        time.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+        GRID.add(time, 1, vLevel);
+
+        timeField = new TextField();
+        timeField.setMinWidth(200);
+        timeField.setMaxWidth(300);
+        timeField.setMinHeight(50);
+        GRID.add(timeField, 2, vLevel);
+        vLevel++;
         
         //blurb fields
         blurb = new Label("Summary:");
         blurb.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        GRID.add(blurb, 1, 4);
+        GRID.add(blurb, 1, vLevel);
 
         blurbField = new TextField();
         blurbField.setMinWidth(200);
         blurbField.setMaxWidth(300);
         blurbField.setMinHeight(50);
-        GRID.add(blurbField, 2, 4);
+        GRID.add(blurbField, 2, vLevel);
+        vLevel++;
         
         //COMBO BOX FOR ALLERGIES
         ObservableList<String> allergyOptions = 
@@ -156,68 +196,79 @@ public class UploadRecipe extends ScrollPane {
         
         allergy = new Label("Allergies:");
         allergy.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        GRID.add(allergy, 1, 5);
+        GRID.add(allergy, 1, vLevel);
         allergies = new ComboBox<String>(allergyOptions);
         //allergies.setEditable(true);
-        GRID.add(allergies, 2, 5);
+        GRID.add(allergies, 2, vLevel);
         allergyAdd = new Button("Add");
-        GRID.add(allergyAdd, 3, 5);
+        GRID.add(allergyAdd, 3, vLevel);
+        vLevel++;
         
         //HBox to list out the selected allergies
         allergyList = new HBox();
-        GRID.add(allergyList, 2, 6);
+        GRID.add(allergyList, 2, vLevel);
+        vLevel++;
+        
         addedAllergies = new ArrayList<String>();
         
         ingredients = new Label("Ingredients:");
         ingredients.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        GRID.add(ingredients, 1, 7);
+        GRID.add(ingredients, 1, vLevel);
         quantity = new Label("quantity");
         quantity.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        GRID.add(quantity, 2, 7);
+        GRID.add(quantity, 2, vLevel);
         unit = new Label("unit");
         unit.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        GRID.add(unit, 3, 7);
+        GRID.add(unit, 3, vLevel);
         ingredient = new Label("ingredient");
         ingredient.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        GRID.add(ingredient, 4, 7);
+        GRID.add(ingredient, 4, vLevel);
+        vLevel++;
+        
         //HBox for ingredients with (num field for quantity, text field for Unit, Combo Box for ingredient name, button for add ingredient)
         quantityField = new TextField();
-        GRID.add(quantityField, 2, 8);
+        GRID.add(quantityField, 2, vLevel);
         unitField = new TextField();
-        GRID.add(unitField, 3, 8);
+        GRID.add(unitField, 3, vLevel);
         ingredientField = new TextField();
-        GRID.add(ingredientField, 4, 8);
+        GRID.add(ingredientField, 4, vLevel);
         addIngredient = new Button("Add");
-        GRID.add(addIngredient, 5, 8);
+        GRID.add(addIngredient, 5, vLevel);
+        vLevel++;
         
         addedIngredients = new ArrayList<Ingredient>();
         
         //Vbox of text that combines all the above fields into one string line
         ingredientList = new VBox();
-        GRID.add(ingredientList, 2, 9);
+        GRID.add(ingredientList, 2, vLevel);
+        vLevel++;
         
         
         //HBox for instructions with (text field)
         instructions = new Label("Steps (in order):");
         instructions.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        GRID.add(instructions, 1, 10, 1, 1);
+        GRID.add(instructions, 1, vLevel, 1, 1);
         instructionsField = new TextField();
-        GRID.add(instructionsField, 2, 10, 2, 1);
+        GRID.add(instructionsField, 2, vLevel, 2, 1);
         addInstruction = new Button("Add");
-        GRID.add(addInstruction, 4, 10);
+        GRID.add(addInstruction, 4, vLevel);
+        vLevel++;
+        
         //VBox of text, each row numbered.
         instructionsList = new VBox();
-        GRID.add(instructionsList, 2, 11);
+        GRID.add(instructionsList, 2, vLevel);
+        vLevel++;
         
         
-        addedInstructions = new ArrayList<String>();
+        addedInstructions = new HashMap<Integer, String>();
         
         
         //upload button
         Upload = new Button("UPLOAD");
         Upload.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         Upload.setMinWidth(300);
-        GRID.add(Upload, 2, 12);
+        GRID.add(Upload, 2, vLevel);
+        vLevel++;
         
         this.setContent(GRID);
         
@@ -236,6 +287,9 @@ public class UploadRecipe extends ScrollPane {
             	String a = authorField.getText();
             	String b = blurbField.getText();
             	
+            	String time = timeField.getText();
+            	String servings = servingsField.getText();
+            	
             	Pattern pattern = Pattern.compile("[^A-Za-z0-9.,?!-]");
             	Matcher matcher = pattern.matcher(t);
             	boolean specialT = matcher.find();
@@ -250,10 +304,31 @@ public class UploadRecipe extends ScrollPane {
             	matcher = pattern.matcher(i);
             	boolean specialI = matcher.find();
             	
+            	boolean specialTime = false;
+            	boolean specialServing = false;
+            	double dTime = 0;
+            	double dServings = 0;
+            	try
+                {
+                	dTime = Float.parseFloat(time);
+                }
+                catch (NumberFormatException ex) {
+                	specialTime = true;
+                }
+            	try
+                {
+                	dServings = Float.parseFloat(servings);
+                }
+                catch (NumberFormatException ex) {
+                	specialServing = true;
+                }
+            	
             	if(t.length() < 1)
             	{
             		Prefix.setText("Enter a title");
             		titleField.setStyle("-fx-border-color: red");
+            		timeField.setStyle("-fx-border-color: black");
+            		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: black");
             		imageField.setStyle("-fx-border-color: black");
@@ -262,6 +337,8 @@ public class UploadRecipe extends ScrollPane {
             	{
             		Prefix.setText("Title max is 30 characters");
             		titleField.setStyle("-fx-border-color: red");
+            		timeField.setStyle("-fx-border-color: black");
+            		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: black");
             		imageField.setStyle("-fx-border-color: black");
@@ -270,6 +347,68 @@ public class UploadRecipe extends ScrollPane {
             	{
             		Prefix.setText("Do not use special characters in your title");
             		titleField.setStyle("-fx-border-color: red");
+            		timeField.setStyle("-fx-border-color: black");
+            		servingsField.setStyle("-fx-border-color: black");
+            		authorField.setStyle("-fx-border-color: black");
+            		blurbField.setStyle("-fx-border-color: black");
+            		imageField.setStyle("-fx-border-color: black");
+            	}
+            	else if(time.length() < 1)
+            	{
+            		Prefix.setText("Enter a time");
+            		titleField.setStyle("-fx-border-color: black");
+            		timeField.setStyle("-fx-border-color: red");
+            		servingsField.setStyle("-fx-border-color: black");
+            		authorField.setStyle("-fx-border-color: black");
+            		blurbField.setStyle("-fx-border-color: black");
+            		imageField.setStyle("-fx-border-color: black");
+            	}
+            	else if(time.length() > 30)
+            	{
+            		Prefix.setText("Time max is 30 characters");
+            		titleField.setStyle("-fx-border-color: black");
+            		timeField.setStyle("-fx-border-color: red");
+            		servingsField.setStyle("-fx-border-color: black");
+            		authorField.setStyle("-fx-border-color: black");
+            		blurbField.setStyle("-fx-border-color: black");
+            		imageField.setStyle("-fx-border-color: black");
+            	}
+            	else if(specialTime)
+            	{
+            		Prefix.setText("Use decimal format for time");
+            		titleField.setStyle("-fx-border-color: black");
+            		timeField.setStyle("-fx-border-color: red");
+            		servingsField.setStyle("-fx-border-color: black");
+            		authorField.setStyle("-fx-border-color: black");
+            		blurbField.setStyle("-fx-border-color: black");
+            		imageField.setStyle("-fx-border-color: black");
+            	}
+            	else if(servings.length() < 1)
+            	{
+            		Prefix.setText("Enter number of servings");
+            		titleField.setStyle("-fx-border-color: black");
+            		timeField.setStyle("-fx-border-color: black");
+            		servingsField.setStyle("-fx-border-color: red");
+            		authorField.setStyle("-fx-border-color: black");
+            		blurbField.setStyle("-fx-border-color: black");
+            		imageField.setStyle("-fx-border-color: black");
+            	}
+            	else if(servings.length() > 30)
+            	{
+            		Prefix.setText("Servings max is 30 characters");
+            		titleField.setStyle("-fx-border-color: black");
+            		timeField.setStyle("-fx-border-color: black");
+            		servingsField.setStyle("-fx-border-color: red");
+            		authorField.setStyle("-fx-border-color: black");
+            		blurbField.setStyle("-fx-border-color: black");
+            		imageField.setStyle("-fx-border-color: black");
+            	}
+            	else if(specialServing)
+            	{
+            		Prefix.setText("Use decimal format for servings");
+            		titleField.setStyle("-fx-border-color: black");
+            		timeField.setStyle("-fx-border-color: black");
+            		servingsField.setStyle("-fx-border-color: red");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: black");
             		imageField.setStyle("-fx-border-color: black");
@@ -278,6 +417,8 @@ public class UploadRecipe extends ScrollPane {
             	{
             		Prefix.setText("Enter an author name");
             		titleField.setStyle("-fx-border-color: black");
+            		timeField.setStyle("-fx-border-color: black");
+            		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: red");
             		blurbField.setStyle("-fx-border-color: black");
             		imageField.setStyle("-fx-border-color: black");
@@ -286,6 +427,8 @@ public class UploadRecipe extends ScrollPane {
             	{
             		Prefix.setText("Author name max is 30 characters");
             		titleField.setStyle("-fx-border-color: black");
+            		timeField.setStyle("-fx-border-color: black");
+            		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: red");
             		blurbField.setStyle("-fx-border-color: black");
             		imageField.setStyle("-fx-border-color: black");
@@ -294,6 +437,8 @@ public class UploadRecipe extends ScrollPane {
             	{
             		Prefix.setText("Do not use special characters in your author name");
             		titleField.setStyle("-fx-border-color: black");
+            		timeField.setStyle("-fx-border-color: black");
+            		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: red");
             		blurbField.setStyle("-fx-border-color: black");
             		imageField.setStyle("-fx-border-color: black");
@@ -302,6 +447,8 @@ public class UploadRecipe extends ScrollPane {
             	{
             		Prefix.setText("Enter a summary");
             		titleField.setStyle("-fx-border-color: black");
+            		timeField.setStyle("-fx-border-color: black");
+            		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: red");
             		imageField.setStyle("-fx-border-color: black");
@@ -310,6 +457,8 @@ public class UploadRecipe extends ScrollPane {
             	{
             		Prefix.setText("Summary max length is 250 characters");
             		titleField.setStyle("-fx-border-color: black");
+            		timeField.setStyle("-fx-border-color: black");
+            		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: red");
             		imageField.setStyle("-fx-border-color: black");
@@ -318,6 +467,8 @@ public class UploadRecipe extends ScrollPane {
             	{
             		Prefix.setText("Do not use special characters in your summary");
             		titleField.setStyle("-fx-border-color: black");
+            		timeField.setStyle("-fx-border-color: black");
+            		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: red");
             		imageField.setStyle("-fx-border-color: black");
@@ -326,6 +477,8 @@ public class UploadRecipe extends ScrollPane {
             	{
             		Prefix.setText("Enter an image URL");
             		titleField.setStyle("-fx-border-color: black");
+            		timeField.setStyle("-fx-border-color: black");
+            		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: black");
             		imageField.setStyle("-fx-border-color: red");
@@ -334,6 +487,8 @@ public class UploadRecipe extends ScrollPane {
             	{
             		Prefix.setText("Image URL max length is 256 characters");
             		titleField.setStyle("-fx-border-color: black");
+            		timeField.setStyle("-fx-border-color: black");
+            		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: black");
             		imageField.setStyle("-fx-border-color: red");
@@ -342,19 +497,30 @@ public class UploadRecipe extends ScrollPane {
             	{
             		Prefix.setText("Enter a valid URL");
             		titleField.setStyle("-fx-border-color: black");
+            		timeField.setStyle("-fx-border-color: black");
+            		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: black");
             		imageField.setStyle("-fx-border-color: red");
             	}
             	else //all valid information
             	{
+            		/*
             		int id = 0;
             		boolean success = false;
                 	try
                 	{
                 		
-                		//Recipe r = uploadRecipe();
-                		//id = r.getID();
+                		String recipeID = LaunchStage.getInstance().getRecipeService().addRecipe(t, b, new File(i), a, dServings, dTime).get(IRecipe.RECIPEID);
+                		//add ingredients
+                		LaunchStage.getInstance().getRecipeService().addIngredients(recipeID, addedIngredients);
+                		//add allergies
+                		LaunchStage.getInstance().getRecipeService().addRecipeAllergies(recipeID, addedAllergies);
+                		//add steps
+                		LaunchStage.getInstance().getRecipeService().addSteps(recipeID, addedInstructions);
+                		//favorite it
+                		LaunchStage.getInstance().getContactService().addFavorite(LaunchStage.getInstance().getContactService().getSelfID(), recipeID);
+                		
                 		success = true;
                 	}
                 	catch (Exception ex)
@@ -366,6 +532,7 @@ public class UploadRecipe extends ScrollPane {
                 		//open profile page, where profile will retrieve the proper information needed.
                 		LaunchStage.getInstance().RecipePane(id);
                 	}
+                	*/
             	}
             	
             }
@@ -489,7 +656,7 @@ public class UploadRecipe extends ScrollPane {
             		instructionCounter++;
             		Text t = new Text(instructionCounter + ": " + s);
                     t.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
-            		addedInstructions.add(s);
+            		addedInstructions.put(instructionCounter, s);
             		instructionsList.getChildren().add(t);
             		instructionsField.setStyle("-fx-border-color: black");
             	}
