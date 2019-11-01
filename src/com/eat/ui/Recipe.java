@@ -20,9 +20,10 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
-
 import javafx.scene.layout.HBox;
+
 import com.eat.services.RecipeService;
+import com.eat.services.ContactService;
 import com.eat.services.IRecipe;
 import com.eat.support.Ingredient;
 
@@ -37,9 +38,11 @@ public class Recipe extends ScrollPane{
 	Label instructions;
 
 
-	public Recipe(int id) {
+	public Recipe(int idInt) {
 		try {
+			String id = String.valueOf(idInt);
 			HashMap<String,String> recipe = LaunchStage.getInstance().getRecipeService().getRecipe(id);
+			ContactService cs = LaunchStage.getInstance().getContactService();
 
 			GridPane grid = new GridPane();
 			grid.setAlignment(Pos.TOP_CENTER);
@@ -50,7 +53,13 @@ public class Recipe extends ScrollPane{
 			recipeName.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
 
 			//Favorite Button
-			Button favoriteButton = new Button("Favorite");
+			Button favoriteButton = new Button();
+			if (cs.getFavorites(cs.getSelfID()).contains(String.valueOf(id))) {
+				favoriteButton.setText("<3");
+			}
+			else {
+				favoriteButton.setText("Favorite");
+			}
 			favoriteButton.setMinHeight(50);
 			favoriteButton.setMinWidth(140);
 			favoriteButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
@@ -70,8 +79,13 @@ public class Recipe extends ScrollPane{
 			grid.add(recipeImageView, 0, 1);
 
 			//Summary Title
+			HBox summaryAndAuthor = new HBox(20);
+			
 			Label summaryTitle = new Label("Summary");
 			summaryTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
+			
+			Label author = new Label(recipe.get(IRecipe.AUTHOR));
+			author.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 			grid.add(summaryTitle, 0, 2);
 
 			//Prep Time
@@ -116,13 +130,12 @@ public class Recipe extends ScrollPane{
 			
 			//Instructions
 			HashMap<Integer, String> stepsMap = LaunchStage.getInstance().getRecipeService().getSteps(id);
-			String instructionsString = "";
-			String stepNumberString;
-			for (int j = 0; j < stepsMap.size(); j++) {
+			String instructionsString = ""; //holds all of the instructions
+			String stepNumberString; //keeps track of step number
+			for (int j = 0; j < stepsMap.size(); j++) { //for loop to build the instruction string
 				stepNumberString = String.valueOf(j+1);
 				instructionsString += stepNumberString + ". " + stepsMap.get(j) + "\n";
 			}
-			
 			instructions = new Label(instructionsString);
 			instructions.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 			instructions.setWrapText(true);
@@ -131,7 +144,27 @@ public class Recipe extends ScrollPane{
 			this.setMinWidth(1000);
 			this.setContent(grid);
 			
-			
+			favoriteButton.setOnAction(new EventHandler<ActionEvent>() {
+				
+				@Override
+				public void handle(ActionEvent e) {
+					try {
+						if (cs.getFavorites(cs.getSelfID()).contains(String.valueOf(id))) {
+							//Remove from favorites if it is already in
+							LaunchStage.getInstance().getContactService().deleteFavorite(LaunchStage.getInstance().getContactService().getSelfID(), String.valueOf(id));
+							favoriteButton.setText("Favorite");
+						}
+						else {
+							//Add to favorites if it is not already in
+							LaunchStage.getInstance().getContactService().addFavorite(LaunchStage.getInstance().getContactService().getSelfID(), String.valueOf(id));
+							favoriteButton.setText("<3");
+						}
+					}
+					catch (Exception ex) {
+						System.out.println(ex);
+					}
+				}
+			});
 
 
 		}

@@ -6,27 +6,33 @@ public class CreateRecipeTables {
 	
 	public static String createRecipeTable() {
 		return "CREATE TABLE recipes" + 
-				"( recipeID INTEGER(12), name VARCHAR(255), rating INTEGER(1), summary VARCHAR(255), imagepath VARCHAR(255)," + 
+				"( recipeID VARCHAR(12), name VARCHAR(255), author VARCHAR(32), summary VARCHAR(255), imagepath VARCHAR(255)," + 
 				"servings INTEGER(4), timeReq INTEGER(4), PRIMARY KEY (recipeID) )";
 	}
 	
 	public static String createDirectionsTable() {
 		return "CREATE TABLE directions" +
-				"( recipeID INTEGER(12), stepNum INTEGER(2), direction VARCHAR(255),"
+				"( recipeID VARCHAR(12), stepNum INTEGER(2), direction VARCHAR(255),"
 				+ "FOREIGN KEY (recipeID) REFERENCES recipes(recipeID))";
 	}
 	
 	public static String createIngredientsTable() {
 		return "CREATE TABLE ingredients" +
-				"( recipeID INTEGER(12), ingredient VARCHAR(16), proportion DECIMAL(8),"
+				"( recipeID VARCHAR(12), ingredient VARCHAR(16), proportion DECIMAL(8),"
 				+ "units VARCHAR(16), FOREIGN KEY (recipeID) REFERENCES recipes(recipeID))";
+	}
+	
+	public static String createRecipeAllergyTable() {
+		return "CREATE TABLE recipeAllergies" +
+				"( recipeID VARCHAR(12), allergy VARCHAR(32), FOREIGN KEY (recipeID) " +
+				"REFERENCES recipes(recipeID))";
 	}
 	
 	public static String createFavoritesTable() {
 		return "CREATE TABLE favorites " + 
 				"(entryID INTEGER(20), " + 
 				"username VARCHAR(25), " + 
-				"recipeID INTEGER(12)," + 
+				"recipeID VARCHAR(12)," + 
 				"FOREIGN KEY (username) REFERENCES emfUsers(username), " + 
 				"FOREIGN KEY (recipeID) REFERENCES recipes(recipeID))";
 	}
@@ -161,6 +167,15 @@ public class CreateRecipeTables {
         System.out.print("Creating favorites table... ");
         try {
         	db.executeStatement(CreateRecipeTables.createFavoritesTable());
+        	System.out.println("Success");
+        } catch(Exception e) {
+        	System.out.println("Failed");
+        	e.printStackTrace();
+        }
+        
+        System.out.print("Creating recipeAllergies table... ");
+        try {
+        	db.executeStatement(CreateRecipeTables.createRecipeAllergyTable());
         	System.out.println("Success");
         } catch(Exception e) {
         	System.out.println("Failed");

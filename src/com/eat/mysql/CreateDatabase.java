@@ -22,7 +22,7 @@ public class CreateDatabase {
 	        }
 	        
 	        System.out.println("Dropping tables... ");
-	        db.executeStatement("DROP TABLE `ingredients`, `directions`, `allergies`, `favorites`, `pantry`, `recipes`, `emfUsers`;");
+	        db.executeStatement("DROP TABLE `ingredients`, `recipeAllergies`, `directions`, `allergies`, `favorites`, `pantry`, `recipes`, `emfUsers`;");
 	        System.out.println("All tables dropped.\n");
         } catch(Exception e) {
         	e.printStackTrace();

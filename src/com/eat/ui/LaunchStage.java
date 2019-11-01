@@ -8,6 +8,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class LaunchStage extends Application {
@@ -45,38 +47,31 @@ public class LaunchStage extends Application {
 	private RecipeService rs;
 	private ContactService cs;
 	
+	
 	Scene currentScene;
 	Scene startScene;
 	Scene mainScene;
 
-	GridPane currentPane;
-	GridPane startPane;
-	GridPane mainPane;
-	
-	Login login;
-	Registration registration;
-	ForgotPassword forgotPassword;
-	
-	Profile profile;
-	Recipe recipe;
+	BorderPane currentPane;
+	BorderPane startPane;
+	BorderPane mainPane;
 	
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		startPane = new GridPane();
-		startPane.setAlignment(Pos.CENTER);
+		startPane = new BorderPane();
+		//startPane.setAlignment(Pos.CENTER);
 		
 		currentPane = startPane;
 		
 		
 		LoginPane();
 		
-		startScene = new Scene(currentPane, 1920, 1080);
+		startScene = new Scene(currentPane, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
 		currentScene = startScene;
 		
 		
 		primaryStage.setScene(currentScene);
-		
 		primaryStage.show();
 		
 	}
@@ -90,8 +85,8 @@ public class LaunchStage extends Application {
 	//This is for logging out and switching back to login page, disconnected from database.
 	protected void StartScene()
 	{
-		startPane = new GridPane();
-		startPane.setAlignment(Pos.CENTER);
+		startPane = new BorderPane();
+		//startPane.setAlignment(Pos.CENTER);
 		
 		currentPane = startPane;
 		
@@ -99,7 +94,7 @@ public class LaunchStage extends Application {
 
 		Stage stage = (Stage) currentScene.getWindow();
 		
-		startScene = new Scene(currentPane, 1920, 1080);
+		startScene = new Scene(currentPane, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
 		currentScene = startScene;
 		
 		stage.setScene(currentScene);
@@ -110,52 +105,71 @@ public class LaunchStage extends Application {
 	//This is for switching from successful login to the main scene, starting at the profile page
 	protected void MainScene()
 	{
-		mainPane = new GridPane();
-		mainPane.setAlignment(Pos.CENTER);
+		mainPane = new BorderPane();
+		//mainPane.setAlignment(Pos.CENTER);
 		
 		
 		currentPane = mainPane;
 		//set current pane to be new pane with navigation window and profile page
+		NavPane();
 		ProfilePane();
 		
 		Stage stage = (Stage) currentScene.getWindow();
 		
-		mainScene = new Scene(mainPane, 1920, 1080);
+		mainScene = new Scene(mainPane, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
 		currentScene = mainScene;
+		
 		
 		stage.setScene(currentScene);
 		stage.show();
 		
+		//stage.setFullScreen(true);
 	}
 	
 	
 	protected void LoginPane()
 	{
-		currentPane.getChildren().clear();
-		currentPane.getChildren().add(new Login());
+		currentPane.setCenter(new Login());
 	}
 	protected void RegistrationPane()
 	{
-		currentPane.getChildren().clear();
-		currentPane.getChildren().add(new Registration());
+		currentPane.setCenter(new Registration());
 	}
 	
 	protected void ForgotPasswordPane()
 	{
-		currentPane.getChildren().clear();
-		currentPane.getChildren().add(new ForgotPassword());
+		currentPane.setCenter(new ForgotPassword());
 	}
-	//yes inefficient to re-make the nav pane every time, will fix later
+	
 	protected void NavPane()
 	{
-		//	currentPane.getChildren().add(new NavPane());
+		currentPane.setLeft(new Navigation());
 	}
 	
 	protected void ProfilePane()
 	{
-		currentPane.getChildren().clear();
-		NavPane();
-		currentPane.getChildren().add(new Profile());
+		currentPane.setCenter(new Profile());
 	}
 	
+	protected void RecipePane(int id) {
+		currentPane.setCenter(new Recipe(id));
+	}
+	
+	protected void FavoritesPane()
+	{
+		currentPane.setCenter(new Favorites());
+	}
+	
+	protected void SearchPane()
+	{
+		currentPane.setCenter(new Search_view());
+	}
+	
+	protected void UploadRecipePane()
+	{
+		currentPane.setCenter(new UploadRecipe());
+	}
+	protected void foodSuggest() {
+		currentPane.setCenter(new FoodSuggest());
+	}
 }
