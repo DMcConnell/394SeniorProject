@@ -44,7 +44,7 @@ public class Profile extends ScrollPane{
 
 			/*----------------Allergies-------------*/
 			ContactService cs = LaunchStage.getInstance().getContactService();
-			String username = cs.getSelfID();
+			String username = LaunchStage.getInstance().getContactService().getSelfID();
 			LinkedList<String> allergies = cs.getAllergies(username);
 
 			Label allergyLabel = new Label("Allergies");
@@ -378,7 +378,7 @@ public class Profile extends ScrollPane{
 
 			//Cauliflower
 			CheckBox cauliflowerBox = new CheckBox();
-			Label cauliflowerLabel = new Label("Elk:");
+			Label cauliflowerLabel = new Label("Cauliflower:");
 			cauliflowerLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 			grid.add(cauliflowerLabel, 2, 19);
 			grid.add(cauliflowerBox, 3, 19);
@@ -697,62 +697,65 @@ public class Profile extends ScrollPane{
 
 				@Override
 				public void handle(ActionEvent e) {
-
 					try {
+						LinkedList<String> newAllergies = new LinkedList<String>();
+						
 						if (treeNutBox.isSelected()) {
-							cs.addAllergies(username, new LinkedList<String>(Arrays.asList(IAllergy.TREENUTS)));
+							newAllergies.add(IAllergy.TREENUTS);
 						}
 						else {
 							cs.removeAllergy(username, IAllergy.TREENUTS);
 						}
 						if (peanutBox.isSelected()) {
-							cs.addAllergies(username, new LinkedList<String>(Arrays.asList(IAllergy.PEANUT)));
+							newAllergies.add(IAllergy.PEANUT);
 						}
 						else {
 							cs.removeAllergy(username, IAllergy.PEANUT);
 						}
 						if (shellfishBox.isSelected()) {
-							cs.addAllergies(username, new LinkedList<String>(Arrays.asList(IAllergy.SHELLFISH)));
+							newAllergies.add(IAllergy.SHELLFISH);
 						}
 						else {
 							cs.removeAllergy(username, IAllergy.SHELLFISH);
 						}
 						if (milkBox.isSelected()) {
-							cs.addAllergies(username, new LinkedList<String>(Arrays.asList(IAllergy.MILK)));
+							newAllergies.add(IAllergy.MILK);
 						}
 						else {
 							cs.removeAllergy(username, IAllergy.MILK);
 						}
 						if (fishBox.isSelected()) {
-							cs.addAllergies(username, new LinkedList<String>(Arrays.asList(IAllergy.FISH)));
+							newAllergies.add(IAllergy.FISH);
 						}
 						else {
 							cs.removeAllergy(username, IAllergy.FISH);
 						}
 						if (wheatBox.isSelected()) {
-							cs.addAllergies(username, new LinkedList<String>(Arrays.asList(IAllergy.WHEAT)));
+							newAllergies.add(IAllergy.WHEAT);
 						}
 						else {
 							cs.removeAllergy(username, IAllergy.WHEAT);
 						}
 						if (eggBox.isSelected()) {
-							cs.addAllergies(username, new LinkedList<String>(Arrays.asList(IAllergy.EGG)));
+							newAllergies.add(IAllergy.EGG);
 						}
 						else {
 							cs.removeAllergy(username, IAllergy.EGG);
 						}
 						if (soyBox.isSelected()) {
-							cs.addAllergies(username, new LinkedList<String>(Arrays.asList(IAllergy.SOY)));
+							newAllergies.add(IAllergy.SOY);
 						}
 						else {
 							cs.removeAllergy(username, IAllergy.SOY);
 						}
 						if (sesameBox.isSelected()) {
-							cs.addAllergies(username, new LinkedList<String>(Arrays.asList(IAllergy.SESAME)));
+							newAllergies.add(IAllergy.SESAME);
 						}
 						else {
 							cs.removeAllergy(username, IAllergy.SESAME);
 						}
+						
+						cs.addAllergies(username, newAllergies);
 					}
 					catch (Exception ex) {
 						System.out.println(ex);
