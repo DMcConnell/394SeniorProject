@@ -16,7 +16,6 @@ import com.eat.support.Ingredient;
 public class RecipeService {
 	
 	DBInteractor db;
-	int i = 0;
 	private String COMMA = ",";
 	private String QUOTE = "'";
 	
@@ -41,6 +40,17 @@ public class RecipeService {
 		}
 	}
 	
+	private int getIndex() throws Exception {
+		String SQL = "SELECT recipeID from recipes ORDER BY recipeID DESC";
+		try {
+			ResultSet rs = db.executeQuery(SQL);
+			rs.next();
+			return rs.getInt("recipeID") + 1;
+		} catch(Exception e) {
+			throw e;
+		}
+	}
+	
 	//Will add a recipe to the database and return the newly added recipe
 	//Throws exceptions when name or description are not present or if DBInteractor
 	//fails
@@ -48,10 +58,9 @@ public class RecipeService {
 		if(name == null || descrip == null) {
 			throw new Exception("Attempting to add corrupted recipe to database");
 		}
-		//need to get uniqueID here
-		//for now a global session counter as placeholder
-		String SQL = "INSERT INTO recipes(recipeID, name, author, summary, imagepath, serving, timeReq) VALUES ("
-		+ QUOTE + ++i + QUOTE + COMMA + QUOTE + name + QUOTE + COMMA + QUOTE + author + QUOTE + COMMA + QUOTE + descrip + QUOTE 
+		String recipeID = Integer.toString(getIndex());
+		String SQL = "INSERT INTO recipes(recipeID, name, author, summary, imagepath, servings, timeReq) VALUES ("
+		+ QUOTE + recipeID + QUOTE + COMMA + QUOTE + name + QUOTE + COMMA + QUOTE + author + QUOTE + COMMA + QUOTE + descrip + QUOTE 
 		+ COMMA + QUOTE + ((image == null) ? "null" : image.toPath()) + QUOTE + COMMA + serving + COMMA + timeReq + ")";
 		
 		try {
@@ -60,7 +69,7 @@ public class RecipeService {
 			throw e;
 		}
 		
-		return getRecipe(Integer.toString(i));
+		return getRecipe(recipeID);
 	}
 	
 	//Will return the recipe searched for based on uniqueID, if uniqueID does not exist
@@ -80,7 +89,7 @@ public class RecipeService {
 					returnMap.put(IRecipe.AUTHOR, rs.getString("author"));
 					returnMap.put(IRecipe.SUMMARY, rs.getString("summary"));
 					returnMap.put(IRecipe.IMAGEPATH, rs.getString("imagepath"));
-					returnMap.put(IRecipe.SERVING, rs.getString("serving"));
+					returnMap.put(IRecipe.SERVING, rs.getString("servings"));
 					returnMap.put(IRecipe.TIMEREQ, rs.getString("timeReq"));
 				}
 				return returnMap;
