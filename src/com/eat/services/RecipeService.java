@@ -236,9 +236,10 @@ public class RecipeService {
 			while(rs.next()) {
 				retSearch.add(getRecipe(rs.getString("recipeID")));
 			}
-			rs = db.executeQuery(SQL2);
-			while(rs.next()) {
-				retSearch.add(getRecipe(rs.getString("recipeID")));
+			rs.close();
+			ResultSet rs2 = db.executeQuery(SQL2);
+			while(rs2.next()) {
+				retSearch.add(getRecipe(rs2.getString("recipeID")));
 			}
 			return retSearch;
 		} catch(Exception e) {
