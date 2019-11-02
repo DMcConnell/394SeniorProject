@@ -14,7 +14,7 @@ public class CreateUsersTables {
 		return "CREATE TABLE allergies" + 
 				"(username VARCHAR(25), " + 
 				"allergies VARCHAR(32)," +
-				"PRIMARY KEY (username), FOREIGN KEY (username) REFERENCES emfUsers(username))";
+				"PRIMARY KEY (username, allergies), FOREIGN KEY (username) REFERENCES emfUsers(username))";
 	}
 	
 	public CreateUsersTables () {
