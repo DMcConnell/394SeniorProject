@@ -44,9 +44,7 @@ public class RecipeService {
 		String SQL = "SELECT recipeID from recipes ORDER BY recipeID DESC";
 		try {
 			ResultSet rs = db.executeQuery(SQL);
-			System.out.println("ResultSet Size: " + rs.getFetchSize());
-			if(rs.getFetchSize() == 0) return 0;
-			rs.next();
+			if(!rs.next()) return 0;
 			return rs.getInt("recipeID") + 1;
 		} catch(Exception e) {
 			throw e;
@@ -61,7 +59,6 @@ public class RecipeService {
 			throw new Exception("Attempting to add corrupted recipe to database");
 		}
 		String recipeID = Integer.toString(getIndex());
-		System.out.println(recipeID);
 		String SQL = "INSERT INTO recipes(recipeID, name, author, summary, imagepath, servings, timeReq) VALUES ("
 		+ QUOTE + recipeID + QUOTE + COMMA + QUOTE + name + QUOTE + COMMA + QUOTE + author + QUOTE + COMMA + QUOTE + descrip + QUOTE 
 		+ COMMA + QUOTE + ((image == null) ? "null" : image.toPath()) + QUOTE + COMMA + serving + COMMA + timeReq + ")";
