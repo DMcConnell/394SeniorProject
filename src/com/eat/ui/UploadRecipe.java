@@ -290,7 +290,7 @@ public class UploadRecipe extends ScrollPane {
             	String time = timeField.getText();
             	String servings = servingsField.getText();
             	
-            	Pattern pattern = Pattern.compile("[^A-Za-z0-9.,?!-]");
+            	Pattern pattern = Pattern.compile("[^A-Za-z0-9.,?! ]");
             	Matcher matcher = pattern.matcher(t);
             	boolean specialT = matcher.find();
             	matcher = pattern.matcher(a);
@@ -577,7 +577,7 @@ public class UploadRecipe extends ScrollPane {
             	String q = quantityField.getText();
             	String u = unitField.getText();
             	
-            	Pattern pattern = Pattern.compile("[^A-Za-z]");
+            	Pattern pattern = Pattern.compile("[^A-Za-z ]");
                 Matcher matcher = pattern.matcher(ing);
                 boolean specialIng = matcher.find();
                 matcher = pattern.matcher(u);
@@ -637,7 +637,7 @@ public class UploadRecipe extends ScrollPane {
             	//CHECK ALL FIELDS TO HAVE PROPER FORMAT
             	
             	String s = instructionsField.getText();
-            	Pattern pattern = Pattern.compile("[^A-Za-z0-9.,:?]");
+            	Pattern pattern = Pattern.compile("[^A-Za-z0-9.,:? ]");
                 Matcher matcher = pattern.matcher(s);
                 boolean special = matcher.find();
             	if(s.length() < 1)
