@@ -96,9 +96,21 @@ public class LaunchStage extends Application {
 	}
 	
 	
+	private void resetServices() {
+		try {
+			rs.close();
+			cs.close();
+			rs = new RecipeService();
+			cs = new ContactService();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	//This is for logging out and switching back to login page, disconnected from database.
 	protected void StartScene()
 	{
+		resetServices();
 		startPane = new BorderPane();
 		//startPane.setAlignment(Pos.CENTER);
 		
