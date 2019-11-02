@@ -72,11 +72,13 @@ public class Recipe extends ScrollPane{
 			grid.add(title, 0, 0);
 
 			//Recipe Image
+			/*
 			Image recipeImage = new Image(recipe.get(IRecipe.IMAGEPATH));
 			recipeImageView = new ImageView(recipeImage);
 			recipeImageView.setFitHeight(600);
 			recipeImageView.setFitWidth(900);
 			grid.add(recipeImageView, 0, 1);
+			*/
 
 			//Summary Title
 			HBox summaryAndAuthor = new HBox(20);
@@ -97,9 +99,11 @@ public class Recipe extends ScrollPane{
 			serving = new Label("Serves "+ String.valueOf(recipe.get(IRecipe.SERVING)) + " people");
 			serving.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 			grid.add(serving, 0, 4);
+			
+			//Allergies
 
 			//Summary
-			summary = new Label(IRecipe.SUMMARY);
+			summary = new Label(recipe.get(IRecipe.SUMMARY));
 			summary.setMaxWidth(900);
 			summary.setWrapText(true);
 			summary.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
@@ -132,8 +136,8 @@ public class Recipe extends ScrollPane{
 			HashMap<Integer, String> stepsMap = LaunchStage.getInstance().getRecipeService().getSteps(id);
 			String instructionsString = ""; //holds all of the instructions
 			String stepNumberString; //keeps track of step number
-			for (int j = 0; j < stepsMap.size(); j++) { //for loop to build the instruction string
-				stepNumberString = String.valueOf(j+1);
+			for (int j = 1; j < stepsMap.size() + 1; j++) { //for loop to build the instruction string
+				stepNumberString = String.valueOf(j);
 				instructionsString += stepNumberString + ". " + stepsMap.get(j) + "\n";
 			}
 			instructions = new Label(instructionsString);

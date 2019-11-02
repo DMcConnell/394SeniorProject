@@ -77,13 +77,13 @@ public class Search_view extends ScrollPane {
 						int resultNumber = 0;
 						for (HashMap<String,String> result : results) {
 							HBox searchResult = new HBox(20);
-
+							/*
 							Image recipeImage = new Image(result.get(IRecipe.IMAGEPATH));
 							ImageView recipeImageView = new ImageView(recipeImage);
 							recipeImageView.setFitHeight(150);
 							recipeImageView.setFitWidth(200);
 							searchResult.getChildren().add(recipeImageView);
-
+							*/
 							VBox recipeText = new VBox(5);
 
 							Label recipeName = new Label(result.get(IRecipe.NAME));
@@ -111,7 +111,7 @@ public class Search_view extends ScrollPane {
 						}
 					}
 					catch (Exception ex) {
-						System.out.println(ex);
+						ex.printStackTrace();
 					}
 				}
 			};

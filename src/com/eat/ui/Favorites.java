@@ -62,13 +62,13 @@ public class Favorites extends ScrollPane {
 				//Each searchResult will be one HBox
 				HBox searchResult = new HBox(20);
 				HashMap<String,String> recipe = rs.getRecipe(id);
-
+				/*
 				Image recipeImage = new Image(recipe.get(IRecipe.IMAGEPATH));
 				ImageView recipeImageView = new ImageView(recipeImage);
 				recipeImageView.setFitHeight(150);
 				recipeImageView.setFitWidth(200);
 				searchResult.getChildren().add(recipeImageView);
-				
+				*/
 				//Title and Summary will be in a VBox which will be put into the HBox
 				VBox recipeText = new VBox(5);
 

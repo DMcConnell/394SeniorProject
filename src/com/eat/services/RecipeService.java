@@ -236,7 +236,7 @@ public class RecipeService {
 			while(rs.next()) {
 				//System.out.println(rs.getString("recipes.recipeID") + "\t" + rs.getString("recipes.name") + "\t" + rs.getString("ingredients.ingredient"));
 				ids.add(rs.getString("recipes.recipeID"));
-				System.out.println(ids);
+				//System.out.println(ids);
 			}
 			for(String id : ids) { retSearch.add(getRecipe(id)); }
 			return retSearch;
