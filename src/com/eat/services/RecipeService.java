@@ -44,8 +44,7 @@ public class RecipeService {
 		String SQL = "SELECT recipeID from recipes ORDER BY recipeID DESC";
 		try {
 			ResultSet rs = db.executeQuery(SQL);
-			if(rs.getFetchSize() == 0) return 0;
-			rs.next();
+			if(!rs.next()) return 0;
 			return rs.getInt("recipeID") + 1;
 		} catch(Exception e) {
 			throw e;
