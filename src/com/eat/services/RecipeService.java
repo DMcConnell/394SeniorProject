@@ -227,20 +227,18 @@ public class RecipeService {
 	}
 	
 	public LinkedList<HashMap<String,String>> search(String searchText) throws Exception {
-		String SQL = "SELECT * FROM ingredients WHERE ingredient LIKE '%" + searchText + "%'";
-		String SQL2 = "SELECT * FROM recipes WHERE name LIKE '%" + searchText + "%'";
-		
+		String SQL = "Select recipes.recipeID, recipes.name, ingredients.ingredient from recipes inner join ingredients on (recipes.recipeID = ingredients.recipeID)" +
+						"where recipes.name like '%" + searchText + "%' OR ingredients.ingredient LIKE '%" + searchText + "%'"; 
 		try {
-			ResultSet rs = db.executeQuery(SQL);
+			ResultSet rs = db .executeQuery(SQL);
 			LinkedList<HashMap<String,String>> retSearch = new LinkedList<HashMap<String,String>>();
+			List<String> ids = new LinkedList<String>();
 			while(rs.next()) {
-				retSearch.add(getRecipe(rs.getString("recipeID")));
+				//System.out.println(rs.getString("recipes.recipeID") + "\t" + rs.getString("recipes.name") + "\t" + rs.getString("ingredients.ingredient"));
+				ids.add(rs.getString("recipes.recipeID"));
+				System.out.println(ids);
 			}
-			rs.close();
-			ResultSet rs2 = db.executeQuery(SQL2);
-			while(rs2.next()) {
-				retSearch.add(getRecipe(rs2.getString("recipeID")));
-			}
+			for(String id : ids) { retSearch.add(getRecipe(id)); }
 			return retSearch;
 		} catch(Exception e) {
 			throw e;
