@@ -134,7 +134,7 @@ public class RecipeService {
 			
 			LinkedList<Ingredient> ret = new LinkedList<Ingredient>();
 			while(rs.next()) {
-				Ingredient ing = new Ingredient(rs.getString("ingredient"), rs.getDouble("proportion"), rs.getString("unit"));
+				Ingredient ing = new Ingredient(rs.getString("ingredient"), rs.getDouble("proportion"), rs.getString("units"));
 				ret.add(ing);
 			}
 			return ret;
