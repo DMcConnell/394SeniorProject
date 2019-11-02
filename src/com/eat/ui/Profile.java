@@ -1,23 +1,20 @@
 package com.eat.ui;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
 
 import java.util.LinkedList;
-import java.util.Arrays;
 
 import com.eat.services.ContactService;
 import com.eat.services.IAllergy;
@@ -39,7 +36,7 @@ public class Profile extends ScrollPane{
 			title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 70));
 			grid.add(title, 2, 0);
 			grid.setVgap(20);
-			grid.setHgap(200);
+			grid.setHgap(40);
 			GridPane.setHalignment(title, HPos.CENTER);
 
 			/*----------------Allergies-------------*/
@@ -49,7 +46,7 @@ public class Profile extends ScrollPane{
 
 			Label allergyLabel = new Label("Allergies");
 			allergyLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
-			grid.add(allergyLabel, 0, 1);
+			grid.add(allergyLabel, 2, 1);
 
 			//Tree nuts
 			CheckBox treeNutBox = new CheckBox();
@@ -136,7 +133,7 @@ public class Profile extends ScrollPane{
 			/*---------------Pantry---------------------*/
 			Label pantryLabel = new Label("Pantry");
 			pantryLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
-			grid.add(pantryLabel, 0, 7);
+			grid.add(pantryLabel, 2, 7);
 
 			//Steak
 			CheckBox steakBox = new CheckBox();
@@ -689,7 +686,7 @@ public class Profile extends ScrollPane{
 			Button saveButton = new Button("Save Changes");
 			saveButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 			saveButton.setMinHeight(80);
-			grid.add(saveButton, 0, 34);
+			grid.add(saveButton, 2, 34);
 
 
 
@@ -763,7 +760,7 @@ public class Profile extends ScrollPane{
 				}
 			});
 
-			this.setMinWidth(1700);
+			//this.setMinWidth(1700);
 			this.setContent(grid);
 		}
 		catch (Exception e) {

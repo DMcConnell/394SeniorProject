@@ -127,7 +127,7 @@ public class RecipeService {
 	
 	//Gets all ingredients for a given recipe based upon recipe's uniqueID
 	public LinkedList<Ingredient> getIngredients(String uniqueID) throws Exception {
-		String SQL = "SELECT * FROM ingredients WHERE uniqueID='" + uniqueID + "'";
+		String SQL = "SELECT * FROM ingredients WHERE recipeID='" + uniqueID + "'";
 		ResultSet rs;
 		try {
 			rs = db.executeQuery(SQL);
@@ -211,7 +211,7 @@ public class RecipeService {
 	}
 	
 	public HashMap<Integer, String> getSteps(String uniqueID) throws Exception {
-		String SQL = "SELECT * FROM directions WHERE uniqueID = '" + uniqueID + "' ORDER BY stepNum ASC";
+		String SQL = "SELECT * FROM directions WHERE recipeID = '" + uniqueID + "' ORDER BY stepNum ASC";
 		ResultSet rs;
 		try {
 			rs = db.executeQuery(SQL);

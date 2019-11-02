@@ -70,8 +70,8 @@ public class LaunchStage extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-		ScreenWidth = Screen.getPrimary().getBounds().getWidth();
-		ScreenHeight = Screen.getPrimary().getBounds().getHeight();
+		ScreenWidth = Screen.getPrimary().getBounds().getWidth() * .85;
+		ScreenHeight = Screen.getPrimary().getBounds().getHeight() * .85;
 		
 		startPane = new BorderPane();
 		//startPane.setAlignment(Pos.CENTER);
