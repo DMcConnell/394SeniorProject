@@ -695,6 +695,7 @@ public class Profile extends ScrollPane{
 				@Override
 				public void handle(ActionEvent e) {
 					try {
+						/*--------------------------ALLERGIES---------------------------------------*/
 						LinkedList<String> newAllergies = new LinkedList<String>();
 						
 						if (treeNutBox.isSelected()) {
@@ -753,6 +754,484 @@ public class Profile extends ScrollPane{
 						}
 						
 						cs.addAllergies(username, newAllergies);
+						/*-------------------------------------------------------------------------*/
+						
+						/*----------------------------------PANTRY--------------------------------*/
+						/*
+						LinkedList<String> newPantry = new LinkedList<String>();
+						
+						if (steakBox.isSelected()) {
+							//newPantry.add(IPantry.STEAK);
+						}
+						else {
+							//cs.removePantryItem(IPantry.STEAK);
+						}
+						
+						if (beefBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (turkeyBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (grndTurkeyBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (chickenBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (eggPantryBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (salmonBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (tunaBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (catfishBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (lobsterBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (crabBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (veelBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (grndChickenBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (calbotBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (lambBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (porkBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (tofuBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (deerBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (elkBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (ostrichBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (shellfishPantryBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (plantBasedMeatBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (tomatoBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (peaBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (greenPepperBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (redPepperBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (orangePepperBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (bananaPepperBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (kidneyBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (lentilBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (blackBeanBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (chickPeaBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (pintoBeanBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (cabbageBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (cauliflowerBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (spinachBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (kaleBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (celeryBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (broccoliBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (carrotBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (aniseBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (basilBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (chamomileBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (dillBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (oreganoBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (parsleyBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (rosemaryBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (sageBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (lettuceBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (arugulaBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (mushroomBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (onionBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (garlicBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (leekBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (beetBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (jalapenoBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (paprikaBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (tabascoBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (gingerBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (cayenneBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (radishBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (sweetPotatoBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (potatoBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (butternutSquashBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (cucumberBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (blackPepperBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (tableSaltBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (seaSaltBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (nutmegBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (rotiniBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (spaghettiBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (ravioliBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (angelHairBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (lasagneBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (cavatappiBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (rigatoniBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (linguineBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						if (penneBox.isSelected()) {
+							
+						}
+						else {
+							
+						}
+						//cs.updatePantry(username, newPantry);
+						
+						*/
 					}
 					catch (Exception ex) {
 						System.out.println(ex);

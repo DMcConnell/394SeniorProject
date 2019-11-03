@@ -81,14 +81,17 @@ public class Recipe extends ScrollPane{
 			*/
 
 			//Summary Title
-			HBox summaryAndAuthor = new HBox(20);
+			HBox summaryAndAuthor = new HBox(571);
 			
 			Label summaryTitle = new Label("Summary");
 			summaryTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
 			
-			Label author = new Label(recipe.get(IRecipe.AUTHOR));
+			Label author = new Label("By: " + recipe.get(IRecipe.AUTHOR));
 			author.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-			grid.add(summaryTitle, 0, 2);
+			
+			summaryAndAuthor.getChildren().add(summaryTitle);
+			summaryAndAuthor.getChildren().add(author);
+			grid.add(summaryAndAuthor, 0, 2);
 
 			//Prep Time
 			time = new Label("Prep Time: " + String.valueOf(recipe.get(IRecipe.TIMEREQ)) + " minutes");
@@ -101,18 +104,29 @@ public class Recipe extends ScrollPane{
 			grid.add(serving, 0, 4);
 			
 			//Allergies
+			Label recipeAllergies = new Label();
+			String allergyString = "Allergies: ";
+			for (String allergy : LaunchStage.getInstance().getRecipeService().getRecipeAllergies(id)) {
+				allergyString += allergy + " ";
+				if (cs.getAllergies(cs.getSelfID()).contains(allergy)) {
+					recipeAllergies.setStyle("-fx-text-fill: red");
+				}
+			}
+			recipeAllergies.setText(allergyString);
+			recipeAllergies.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+			grid.add(recipeAllergies, 0, 5);
 
 			//Summary
 			summary = new Label(recipe.get(IRecipe.SUMMARY));
 			summary.setMaxWidth(900);
 			summary.setWrapText(true);
 			summary.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-			grid.add(summary, 0, 5);
+			grid.add(summary, 0, 6);
 
 			//Ingredients title
 			Label ingredientsTitle = new Label("Ingredients");
 			ingredientsTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
-			grid.add(ingredientsTitle, 0, 6);
+			grid.add(ingredientsTitle, 0, 7);
 
 			//Ingredients
 			LinkedList<Ingredient> ingredientList = LaunchStage.getInstance().getRecipeService().getIngredients(id); //get ingredient list
@@ -125,12 +139,12 @@ public class Recipe extends ScrollPane{
 			ingredients = new Label(ingredientString);
 			ingredients.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 			ingredients.setWrapText(true);
-			grid.add(ingredients, 0, 7);
+			grid.add(ingredients, 0, 8);
 
 			//Instructions title
 			Label instructionsTitle = new Label("Instructions");
 			instructionsTitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
-			grid.add(instructionsTitle, 0, 8);
+			grid.add(instructionsTitle, 0, 9);
 			
 			//Instructions
 			HashMap<Integer, String> stepsMap = LaunchStage.getInstance().getRecipeService().getSteps(id);
@@ -143,7 +157,7 @@ public class Recipe extends ScrollPane{
 			instructions = new Label(instructionsString);
 			instructions.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 			instructions.setWrapText(true);
-			grid.add(instructions, 0, 9);
+			grid.add(instructions, 0, 10);
 			
 			this.setMinWidth(1000);
 			this.setContent(grid);
