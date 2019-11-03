@@ -107,6 +107,60 @@ public class ContactService {
 		}
 	}
 	
+	public void addPantryItems (String username, List<String> pantryItems) throws Exception {
+		try {
+			HashMap<String,String> user = getUser(username);
+			if(user.size() == 0) {
+				throw new Exception("User does not exist");
+			}
+			List<String> pantry = getPantryItems(username);
+			for(String pantryItem : pantryItems) {
+				if(!pantry.contains(pantryItem)) {
+					addPantryItem(username, pantryItem);
+				}
+			}
+		} catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	private void addPantryItem (String username, String pantryItem) throws Exception {
+		try {
+			String SQL = "INSERT INTO pantry(username, pantryItem) VALUES (" +
+						QUOTE + username + QUOTE + COMMA + QUOTE + pantryItem + QUOTE + ")";
+			db.executeStatement(SQL);
+		} catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	private LinkedList<String> getPantryItems (String username) throws Exception {
+		String SQL = "SELECT * FROM pantry WHERE username = '" + username + "'";
+		try {
+			ResultSet rs = db.executeQuery(SQL);
+			LinkedList<String> pantryItems = new LinkedList<String>();
+			while(rs.next()) {
+				pantryItems.add(rs.getString("pantryItem"));
+			}
+			return pantryItems;
+		} catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	public void deletePantryItem(String username, String pantryItem) throws Exception {
+		List<String> pantryItems = getPantryItems(username);
+		try {
+			if(pantryItems.contains(pantryItem)) {
+				String SQL = "DELETE FROM pantry WHERE username = '" + username + "' AND " +
+							"pantryItem = '" + pantryItem + "'";
+				db.executeStatement(SQL);
+			}	
+		} catch(Exception e) {
+			throw e;
+		}
+	}
+	
 	//Adds a list of allergies for a given user
 	public void addAllergies (String username, List<String> allergies) throws Exception {
 		try {
@@ -121,7 +175,7 @@ public class ContactService {
 				}
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			throw e;
 		}
 		
 	}

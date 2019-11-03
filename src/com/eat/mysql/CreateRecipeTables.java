@@ -28,6 +28,11 @@ public class CreateRecipeTables {
 				"REFERENCES recipes(recipeID))";
 	}
 	
+	public static String createPantryTable() {
+		return "CREATE TABLE pantry (username VARCHAR(25), pantryItem VARCHAR(64), "
+				+ "PRIMARY KEY (username, pantryItem))";
+	}
+	
 	public static String createFavoritesTable() {
 		return "CREATE TABLE favorites " + 
 				"(entryID INTEGER(20), " + 
@@ -37,7 +42,7 @@ public class CreateRecipeTables {
 				"FOREIGN KEY (recipeID) REFERENCES recipes(recipeID))";
 	}
 	
-	public static String createPantryTable() {
+	public static String createPantryTable1() {
 		return "CREATE TABLE pantry (" + 
 				"username VARCHAR(25)," + 
 				"steak INTEGER(1)," + 
