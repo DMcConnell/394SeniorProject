@@ -507,13 +507,12 @@ public class UploadRecipe extends ScrollPane {
             	}*/
             	else //all valid information
             	{
-            		
-            		int id = 0;
+            		String recipeID = "";
             		boolean success = false;
                 	try
                 	{
                 		
-                		String recipeID = LaunchStage.getInstance().getRecipeService().addRecipe(t, b, null, a, dServings, dTime).get(IRecipe.RECIPEID);
+                		recipeID = LaunchStage.getInstance().getRecipeService().addRecipe(t, b, null, a, dServings, dTime).get(IRecipe.RECIPEID);
                 		//add ingredients
                 		LaunchStage.getInstance().getRecipeService().addIngredients(recipeID, addedIngredients);
                 		//add allergies
@@ -531,6 +530,7 @@ public class UploadRecipe extends ScrollPane {
                 	}
                 	if(success)
                 	{
+                		int id = Integer.parseInt(recipeID);
                 		//open profile page, where profile will retrieve the proper information needed.
                 		LaunchStage.getInstance().RecipePane(id);
                 	}
@@ -639,7 +639,7 @@ public class UploadRecipe extends ScrollPane {
             	//CHECK ALL FIELDS TO HAVE PROPER FORMAT
             	
             	String s = instructionsField.getText();
-            	Pattern pattern = Pattern.compile("[^A-Za-z0-9.,:? ]");
+            	Pattern pattern = Pattern.compile("[^A-Za-z0-9.,:?- ]");
                 Matcher matcher = pattern.matcher(s);
                 boolean special = matcher.find();
             	if(s.length() < 1)
