@@ -510,10 +510,10 @@ public class UploadRecipe extends ScrollPane {
             		
             		int id = 0;
             		boolean success = false;
+            		String recipeID = "0";
                 	try
                 	{
-                		
-                		String recipeID = LaunchStage.getInstance().getRecipeService().addRecipe(t, b, null, a, dServings, dTime).get(IRecipe.RECIPEID);
+                		recipeID = LaunchStage.getInstance().getRecipeService().addRecipe(t, b, null, a, dServings, dTime).get(IRecipe.RECIPEID);
                 		//add ingredients
                 		LaunchStage.getInstance().getRecipeService().addIngredients(recipeID, addedIngredients);
                 		//add allergies
@@ -532,7 +532,7 @@ public class UploadRecipe extends ScrollPane {
                 	if(success)
                 	{
                 		//open profile page, where profile will retrieve the proper information needed.
-                		LaunchStage.getInstance().RecipePane(id);
+                		LaunchStage.getInstance().RecipePane(Integer.parseInt(recipeID));
                 	}
                 	
             	}

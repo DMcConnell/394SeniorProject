@@ -115,7 +115,7 @@ public class RecipeService {
 	}
 	
 	//Adds each ingredient and it's  related proportion and unit
-	private void addIngredient(String uniqueID, String ingredient, Double amount, String units) throws Exception{
+	private void addIngredient(String uniqueID, String ingredient, double amount, String units) throws Exception{
 		String SQL = "INSERT INTO ingredients(recipeID, ingredient, proportion, units) VALUES (" +
 				QUOTE + uniqueID + QUOTE + COMMA + QUOTE + ingredient + QUOTE + COMMA + amount + COMMA + QUOTE + units + QUOTE + ")";
 		try {
