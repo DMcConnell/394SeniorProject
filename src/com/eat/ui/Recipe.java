@@ -43,6 +43,7 @@ public class Recipe extends ScrollPane{
 			String id = String.valueOf(idInt);
 			HashMap<String,String> recipe = LaunchStage.getInstance().getRecipeService().getRecipe(id);
 			ContactService cs = LaunchStage.getInstance().getContactService();
+			String username = cs.getSelfID();
 
 			GridPane grid = new GridPane();
 			grid.setAlignment(Pos.TOP_CENTER);
@@ -99,16 +100,17 @@ public class Recipe extends ScrollPane{
 			grid.add(time, 0, 3);
 
 			//Serving Size
-			serving = new Label("Serves "+ String.valueOf(recipe.get(IRecipe.SERVING)) + " people");
+			serving = new Label("Makes "+ String.valueOf(recipe.get(IRecipe.SERVING)) + " servings");
 			serving.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 			grid.add(serving, 0, 4);
 			
 			//Allergies
 			Label recipeAllergies = new Label();
 			String allergyString = "Allergies: ";
-			for (String allergy : LaunchStage.getInstance().getRecipeService().getRecipeAllergies(id)) {
+			LinkedList<String> recipeAllergiesList = LaunchStage.getInstance().getRecipeService().getRecipeAllergies(id);
+			for (String allergy : recipeAllergiesList) {
 				allergyString += allergy + " ";
-				if (cs.getAllergies(cs.getSelfID()).contains(allergy)) {
+				if (cs.getAllergies(username).contains(allergy)) {
 					recipeAllergies.setStyle("-fx-text-fill: red");
 				}
 			}
@@ -134,7 +136,8 @@ public class Recipe extends ScrollPane{
 			String amountString;
 			for (int i = 0; i < ingredientList.size(); i++) { //iterate through the list and add each ingredient to a string on seperate line
 				amountString = String.valueOf(ingredientList.get(i).getAmount());
-				ingredientString += amountString + ingredientList.get(i).getUnit() + " " + ingredientList.get(i).getName() +"\n";
+				//System.out.println(ingredientList.get(i).getAmount());
+				ingredientString += amountString + " " + ingredientList.get(i).getUnit() + " " + ingredientList.get(i).getName() +"\n";
 			}
 			ingredients = new Label(ingredientString);
 			ingredients.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
