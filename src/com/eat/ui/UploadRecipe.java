@@ -147,6 +147,7 @@ public class UploadRecipe extends ScrollPane {
         
      	//servings fields
         servings = new Label("Number of Servings:");
+        servings.setWrapText(true);
         servings.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         GRID.add(servings, 0, vLevel);
 
@@ -159,6 +160,7 @@ public class UploadRecipe extends ScrollPane {
         
         //time fields
         time = new Label("Cook Time (minutes):");
+        time.setWrapText(true);
         time.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         GRID.add(time, 0, vLevel);
 
@@ -507,10 +509,8 @@ public class UploadRecipe extends ScrollPane {
             	}*/
             	else //all valid information
             	{
-            		
-            		int id = 0;
+            		String recipeID = "";
             		boolean success = false;
-            		String recipeID = "0";
                 	try
                 	{
                 		recipeID = LaunchStage.getInstance().getRecipeService().addRecipe(t, b, null, a, dServings, dTime).get(IRecipe.RECIPEID);
@@ -531,8 +531,9 @@ public class UploadRecipe extends ScrollPane {
                 	}
                 	if(success)
                 	{
+                		int id = Integer.parseInt(recipeID);
                 		//open profile page, where profile will retrieve the proper information needed.
-                		LaunchStage.getInstance().RecipePane(Integer.parseInt(recipeID));
+                		LaunchStage.getInstance().RecipePane(id);
                 	}
                 	
             	}

@@ -36,6 +36,7 @@ public class Favorites extends ScrollPane {
 
 	public Favorites() {
 		try {
+			String resultDivider = "_________________________________________________________________________";
 			GridPane grid = new GridPane();
 			grid.setAlignment(Pos.TOP_CENTER);
 			grid.setVgap(30);
@@ -76,8 +77,8 @@ public class Favorites extends ScrollPane {
 				recipeName.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
 				recipeName.setAlignment(Pos.TOP_CENTER);
 
-				Label recipeSummary = new Label(recipe.get(IRecipe.SUMMARY));
-				recipeSummary.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));
+				Label recipeSummary = new Label(recipe.get(IRecipe.SUMMARY) + "\n" + resultDivider);
+				recipeSummary.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 				recipeSummary.setMaxWidth(800);
 				recipeSummary.setWrapText(true);
 

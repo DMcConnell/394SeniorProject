@@ -38,6 +38,7 @@ import java.util.HashMap;
 public class Search_view extends ScrollPane {     
 	public Search_view() {
 		try {
+			String resultDivider = "_________________________________________________________________________";
 			GridPane mainGrid = new GridPane();
 			mainGrid.setAlignment(Pos.TOP_CENTER);
 			mainGrid.setVgap(30);
@@ -95,8 +96,8 @@ public class Search_view extends ScrollPane {
 							recipeName.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
 							recipeName.setAlignment(Pos.TOP_CENTER);
 
-							Label recipeSummary = new Label(result.get(IRecipe.SUMMARY));
-							recipeSummary.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));
+							Label recipeSummary = new Label(result.get(IRecipe.SUMMARY) + "\n" + resultDivider);
+							recipeSummary.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 							recipeSummary.setMaxWidth(800);
 							recipeSummary.setWrapText(true);
 
