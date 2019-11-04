@@ -75,6 +75,11 @@ public class Search_view extends ScrollPane {
 						resultGrid.getChildren().clear();
 						LinkedList<HashMap<String,String>> results = rs.search(searchField.getText());
 						int resultNumber = 0;
+						if (results.size() == 0) {
+							Label noResultsLabel = new Label("No results found.");
+							noResultsLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));
+							resultGrid.add(noResultsLabel, 0, 0);
+						}
 						for (HashMap<String,String> result : results) {
 							HBox searchResult = new HBox(20);
 							/*
