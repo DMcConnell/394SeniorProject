@@ -134,7 +134,7 @@ public class ContactService {
 		}
 	}
 	
-	private LinkedList<String> getPantryItems (String username) throws Exception {
+	public LinkedList<String> getPantryItems (String username) throws Exception {
 		String SQL = "SELECT * FROM pantry WHERE username = '" + username + "'";
 		try {
 			ResultSet rs = db.executeQuery(SQL);
