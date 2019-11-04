@@ -147,6 +147,7 @@ public class UploadRecipe extends ScrollPane {
         
      	//servings fields
         servings = new Label("Number of Servings:");
+        servings.setWrapText(true);
         servings.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         GRID.add(servings, 0, vLevel);
 
@@ -159,6 +160,7 @@ public class UploadRecipe extends ScrollPane {
         
         //time fields
         time = new Label("Cook Time (minutes):");
+        time.setWrapText(true);
         time.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         GRID.add(time, 0, vLevel);
 
