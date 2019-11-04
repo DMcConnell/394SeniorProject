@@ -235,7 +235,10 @@ public class RecipeService {
 			List<String> ids = new LinkedList<String>();
 			while(rs.next()) {
 				//System.out.println(rs.getString("recipes.recipeID") + "\t" + rs.getString("recipes.name") + "\t" + rs.getString("ingredients.ingredient"));
-				ids.add(rs.getString("recipes.recipeID"));
+				String recipeID = rs.getString("recipes.recipeID");
+				if(!ids.contains(recipeID)) {
+					ids.add(recipeID);
+				}
 				//System.out.println(ids);
 			}
 			for(String id : ids) { retSearch.add(getRecipe(id)); }
