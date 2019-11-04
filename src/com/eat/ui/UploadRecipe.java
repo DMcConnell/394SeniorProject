@@ -292,7 +292,7 @@ public class UploadRecipe extends ScrollPane {
             	String time = timeField.getText();
             	String servings = servingsField.getText();
             	
-            	Pattern pattern = Pattern.compile("[^A-Za-z0-9.,?!' ]");
+            	Pattern pattern = Pattern.compile("[^A-Za-z0-9.,?! ]");
             	Matcher matcher = pattern.matcher(t);
             	boolean specialT = matcher.find();
             	matcher = pattern.matcher(a);
