@@ -63,7 +63,9 @@ public class ContactService {
 		} catch(Exception e) {
 			throw e;
 		}
-		return getUser(username);
+		HashMap<String,String > regUser = getUser(username);
+		loggedInUser = regUser.get(IUser.USERNAME);
+		return regUser;
 	}
 	
 	//Gets all information for a user
