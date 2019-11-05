@@ -45,6 +45,8 @@ import com.eat.services.IRecipe;
 import com.eat.services.Exceptions.*;
 
 public class FoodSuggest extends ScrollPane{
+	
+	//create the objects for the Pane the button the title and label to hold the Recipe
 
 	Button suggestButton;
 	Label recipeTitle;//still need to position these in grid pane
@@ -64,11 +66,7 @@ public class FoodSuggest extends ScrollPane{
 		}
 		catch(Exception e)
 		{}
-		
-	
-		
-			//retype this
-			
+				
 				
 		   // Text scenetitle = new Text("Dont know what creation to make today?");
 
@@ -98,11 +96,15 @@ public class FoodSuggest extends ScrollPane{
 			@Override
 			public void handle(ActionEvent e) {
 				
+				
+				//here is where we included our logic to randomly finding the recipe to present
 				int totalRecipes = favorites.size();
 				
 				Random recipeGen = new Random();
-				int id = recipeGen.nextInt(totalRecipes)+1;
+				int id = recipeGen.nextInt(totalRecipes);
 				
+				
+				//present this recipe to the user
 				LaunchStage.getInstance().RecipePane(id);
 		    }
         });

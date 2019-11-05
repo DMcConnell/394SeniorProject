@@ -17,6 +17,10 @@ public class Support {
     private static SecretKeySpec secretKey;
     private static byte[] key;
  
+    
+    
+    //set key Function allows us to later make a secret ket to encryt the string with
+    //Set key uses built in MessageDIggest function converts the string into UTF-8 and sets the KeySpec to AES type encryption
     public static void setKey(String myKey)
     {
         MessageDigest sha = null;
@@ -35,13 +39,21 @@ public class Support {
         }
     }
  
+    
+    //Here we take the String we are encrypting and the secret key we create with the function above create a CIPHER 
+    //which is built into Java for encryption purposes
     public static String encrypt(String strToEncrypt, String secret)
     {
         try
         {
             setKey(secret);
+            //create a Cipher to get the instance of how we will be encrypting mode AES
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            
+            //initialize into Encrypt mode and input the secret key we created
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            
+            //the actual action of encryption done here with cipher.dofinal, we later cast this result intoa string and return it
             return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
         }
         catch (Exception e)
@@ -51,6 +63,8 @@ public class Support {
         return null;
     }
  
+    
+   
     public static String decrypt(String strToDecrypt, String secret)
     {
         try
@@ -67,6 +81,8 @@ public class Support {
         return null;
     }
 
+    
+    //using function before we create a final string to hold our secret String for encryption and Decrypt process
 
 public static String encryptPass(String Password) {
 	final String secretKey = "Arm@dillo_%62Tiger457Team!";
