@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project EatMyFood">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <!--define folder properties-->
+    <property name="dir.buildfile" value="."/>
+    <property name="dir.workspace" value="/Users/duncanmcconnell/Documents/DePaul/CSC 394/workspace"/>
+    <property name="dir.jarfile" value="${dir.buildfile}/build"/>
+    <target name="create_run_jar">
+        <jar destfile="${dir.jarfile}/EatMyFood.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="com.eat.ui.LaunchStage"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="${dir.buildfile}/bin"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/lib/mysql-connector-java-8.0.17.jar"/>
+        </jar>
+    </target>
+</project>
