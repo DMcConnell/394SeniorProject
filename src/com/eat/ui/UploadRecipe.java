@@ -650,6 +650,11 @@ public class UploadRecipe extends ScrollPane {
             		Prefix.setText("Please enter a valid instruction.");
             		instructionsField.setStyle("-fx-border-color: red");
             	}
+            	else if(s.length() > 250)
+            	{
+            		Prefix.setText("Instruction limit is 250 characters.");
+            		instructionsField.setStyle("-fx-border-color: red");
+            	}
             	else if(special)
             	{
             		Prefix.setText("Please do not use special characters in the instructions.");
