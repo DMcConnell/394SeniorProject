@@ -101,7 +101,7 @@ public class FoodSuggest extends ScrollPane{
 				int totalRecipes = favorites.size();
 				
 				Random recipeGen = new Random();
-				int id = recipeGen.nextInt(totalRecipes)+1;
+				int id = recipeGen.nextInt(totalRecipes);
 				
 				LaunchStage.getInstance().RecipePane(id);
 		    }

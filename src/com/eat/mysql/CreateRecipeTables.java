@@ -18,7 +18,7 @@ public class CreateRecipeTables {
 	
 	public static String createIngredientsTable() {
 		return "CREATE TABLE ingredients" +
-				"( recipeID VARCHAR(12), ingredient VARCHAR(16), proportion DECIMAL(8,3),"
+				"( recipeID VARCHAR(12), ingredient VARCHAR(64), proportion DECIMAL(8,3),"
 				+ "units VARCHAR(16), FOREIGN KEY (recipeID) REFERENCES recipes(recipeID))";
 	}
 	
