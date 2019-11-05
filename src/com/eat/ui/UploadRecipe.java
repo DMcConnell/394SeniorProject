@@ -244,6 +244,7 @@ public class UploadRecipe extends ScrollPane {
         
         //Vbox of text that combines all the above fields into one string line
         ingredientList = new VBox();
+        ingredientList.setMaxWidth(300);
         GRID.add(ingredientList, 1, vLevel);
         vLevel++;
         
@@ -260,7 +261,8 @@ public class UploadRecipe extends ScrollPane {
         
         //VBox of text, each row numbered.
         instructionsList = new VBox();
-        GRID.add(instructionsList, 1, vLevel);
+        instructionsList.setPrefWidth(300);
+        GRID.add(instructionsList, 1, vLevel, 2, 1);
         vLevel++;
         
         
@@ -659,6 +661,7 @@ public class UploadRecipe extends ScrollPane {
             		instructionCounter++;
             		Text t = new Text(instructionCounter + ": " + s);
                     t.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
+                    t.setWrappingWidth(400);
             		addedInstructions.put(instructionCounter, s);
             		instructionsList.getChildren().add(t);
             		instructionsField.setStyle("-fx-border-color: black");
