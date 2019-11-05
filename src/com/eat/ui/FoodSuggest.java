@@ -105,7 +105,7 @@ public class FoodSuggest extends ScrollPane{
 				
 				
 				//present this recipe to the user
-				LaunchStage.getInstance().RecipePane(id);
+				LaunchStage.getInstance().RecipePane(Integer.parseInt(favorites.get(id)));
 		    }
         });
     
