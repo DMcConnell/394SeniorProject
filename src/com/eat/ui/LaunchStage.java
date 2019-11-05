@@ -6,8 +6,14 @@ import com.eat.services.RecipeService;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -66,6 +72,8 @@ public class LaunchStage extends Application {
 	BorderPane startPane;
 	BorderPane mainPane;
 	
+	BackgroundImage logo;
+	
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -73,13 +81,15 @@ public class LaunchStage extends Application {
 		ScreenWidth = Screen.getPrimary().getBounds().getWidth() * .85;
 		ScreenHeight = Screen.getPrimary().getBounds().getHeight() * .85;
 		
+		//logo = new BackgroundImage(new Image("file:EMF1.jpeg"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+		
 		startPane = new BorderPane();
-		//startPane.setAlignment(Pos.CENTER);
 		
 		currentPane = startPane;
 		
-		
 		LoginPane();
+		
+		//currentPane.setBackground(new Background(logo));
 		
 		startScene = new Scene(currentPane, ScreenWidth, ScreenHeight);
 		currentScene = startScene;
@@ -93,6 +103,11 @@ public class LaunchStage extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	protected BackgroundImage getBackgroundImage()
+	{
+		return logo;
 	}
 	
 	
