@@ -78,6 +78,9 @@ public class LaunchStage extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
+		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("EMF1.png")));
+		primaryStage.setTitle("Eat My Food! - V 1.0.0");
+		
 		ScreenWidth = Screen.getPrimary().getBounds().getWidth() * .85;
 		ScreenHeight = Screen.getPrimary().getBounds().getHeight() * .85;
 		
@@ -93,7 +96,6 @@ public class LaunchStage extends Application {
 		
 		startScene = new Scene(currentPane, ScreenWidth, ScreenHeight);
 		currentScene = startScene;
-		
 		
 		primaryStage.setScene(currentScene);
 		primaryStage.show();
