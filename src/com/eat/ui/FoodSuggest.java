@@ -52,6 +52,7 @@ public class FoodSuggest extends ScrollPane{
 	Label recipeTitle;//still need to position these in grid pane
 	Label recipeSteps;
 	List<String> favorites;
+	
 
 	//suggest a recipe from the myfavorites
 //here we pass the parameter of the username as a string into the function
@@ -97,18 +98,59 @@ public class FoodSuggest extends ScrollPane{
 			public void handle(ActionEvent e) {
 				
 				
+				int maxScore=0;
+				double maxRatio=0;
+				String maxID = favorites.get(0);
+				
+				//go through get a ratio 
+			
 				//here is where we included our logic to randomly finding the recipe to present
-				int totalRecipes = favorites.size();
+				List<String> PantryItems;
+				try {
+					PantryItems= LaunchStage.getInstance().getContactService().
+						getPantryItems(LaunchStage.getInstance().getContactService().getSelfID()); 
+				} catch(Exception e1) {
+					//e1.printStackTrace();
+					LaunchStage.getInstance().RecipePane(Integer.parseInt(maxID));
+					return;
+				}
 				
-				Random recipeGen = new Random();
-				int id = recipeGen.nextInt(totalRecipes);
-				
+				for(int i = 0; i < favorites.size(); i++) {
+					List<Ingredient> Ingredients;
+					List<String> finalIngredients = new LinkedList<String>();
+					try {
+						Ingredients = LaunchStage.getInstance().getRecipeService().getIngredients(favorites.get(i));
+						for(Ingredient ingredient : Ingredients) {
+							finalIngredients.add(ingredient.getName());
+						}
+					} catch(Exception e2) {
+						//LaunchStage.getInstance().RecipePane(Integer.parseInt(maxID));
+						break;
+					}
+					int score=0;
+					double ratio;
+
+					
+						for( int a= 0; a< PantryItems.size(); a++) {							
+							A: for(String ingredient : finalIngredients) {
+								if(ingredient.contains(PantryItems.get(a))) {
+									score++;
+									break A;
+								}
+							}
+						}
+					ratio =score/Ingredients.size();
+						
+					if (ratio> maxRatio) 
+						{maxRatio=ratio; maxID = favorites.get(i);}
+
+				}
+			
 				
 				//present this recipe to the user
-				LaunchStage.getInstance().RecipePane(Integer.parseInt(favorites.get(id)));
-		    }
-        });
-    
-}	}
-		
+				LaunchStage.getInstance().RecipePane(Integer.parseInt((maxID)));
+			}
+		});
+	}
+}
 	
