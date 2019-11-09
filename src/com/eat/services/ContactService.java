@@ -89,6 +89,17 @@ public class ContactService {
 		}
 	}
 	
+	public HashMap<String,String> getUserFromEmail(String email) throws Exception {
+		String SQL = "SELECT * FROM emfUsers where email='" + email + "'";
+		try {
+			ResultSet rs = db.executeQuery(SQL);
+			return getUser(rs.getString("email"));
+			
+		} catch(Exception e) {
+			throw e;
+		}
+	}
+	
 	//Login a user, throws an exception if login fails
 	public void login(String username, String password) throws Exception {
 		if(username.equals("") || password.equals("")) {
