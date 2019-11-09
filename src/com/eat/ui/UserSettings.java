@@ -36,10 +36,10 @@ public class UserSettings extends GridPane {
 	Label realName;
 	Label nameTextField;
 	Label userName;
-	TextField userTextField;
+	Label userTextField;
 	Label pw;
 	PasswordField pwBox;
-	Button changeUsername;
+	//Button changeUsername;
 	Button changePWord;
 	
 	String EMAIL = "";
@@ -106,18 +106,18 @@ public class UserSettings extends GridPane {
         userName.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         this.add(userName, 1, 3);
         
-        userTextField = new TextField(USERNAME);
+        userTextField = new Label(USERNAME);
         userTextField.setMinWidth(200);
         userTextField.setMaxWidth(300);
         userTextField.setMinHeight(50);
         userTextField.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         this.add(userTextField, 2, 3);
-        
+        /*
         changeUsername = new Button("Change");
         changeUsername.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         changeUsername.setMinWidth(145);
         this.add(changeUsername, 3, 3);
-        
+        */
         //password fields
         pw = new Label("Password:");
         pw.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
@@ -140,6 +140,7 @@ public class UserSettings extends GridPane {
     public void setActions()
     {
     	/*------------------------------------------------------ACTIONS------------------------------------------------------*/
+    	/*
         changeUsername.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -212,7 +213,8 @@ public class UserSettings extends GridPane {
                 
             }
         });
-        
+        */
+    	
         changePWord.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
