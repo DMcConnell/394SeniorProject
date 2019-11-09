@@ -8,7 +8,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
- 
+import java.util.Random;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
  
@@ -16,7 +17,8 @@ public class Support {
  
     private static SecretKeySpec secretKey;
     private static byte[] key;
- 
+	private static String allowedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
     
     
     //set key Function allows us to later make a secret ket to encryt the string with
@@ -97,11 +99,28 @@ public static String decryptPass (String EncryptedPassword) {
 	return Support.decrypt(EncryptedPassword, secretKey);
 	}
 
+
+public static String generatePassword() {
+	StringBuilder newPassword = new StringBuilder();
+	Random randomCharIndex = new Random();
+	char character ;
+	int i =0;
+	for (i =0; i<8; i++) {
+		character = allowedCharacters.charAt(randomCharIndex.nextInt(allowedCharacters.length()));
+		newPassword.append(character);
+	}
+	
+return newPassword.toString();}
+
 public static void main(String[]args) {
 	String a = encryptPass("ILikeDonuts");
 	System.out.println(a);
 	String b = decryptPass(a);
     System.out.println(b);
+    System.out.println("\n\n");
+
+	
+    System.out.println(generatePassword());
 
 }
 
