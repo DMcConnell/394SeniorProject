@@ -132,6 +132,7 @@ public class ContactService {
 			String SQL = "UPDATE emfUsers SET username = '" + newUsername + "' "
 					+ "WHERE username = '"  + oldUsername + "'";
 			db.executeStatement(SQL);
+			loggedInUser = newUsername;
 		} catch (Exception e) {
 			throw e;
 		}
@@ -146,7 +147,7 @@ public class ContactService {
 			if(!Support.encryptPass(oldPassword).equals(user.get(IUser.PASSWORD))) {
 				throw new Exception("Old password was incorrect");
 			}
-			String SQL = "UPDATE emfUsers SET passowrd = '" + Support.encryptPass(newPassword) +
+			String SQL = "UPDATE emfUsers SET password = '" + Support.encryptPass(newPassword) +
 					"' WHERE username = '" + username + "'";
 			db.executeStatement(SQL);
 		} catch(Exception e) {
@@ -160,7 +161,7 @@ public class ContactService {
 			if(user.size() == 0) {
 				throw new Exception("User does not exist");
 			}
-			String SQL = "UPDATE emfUsers SET passowrd = '" + Support.encryptPass(newPassword) +
+			String SQL = "UPDATE emfUsers SET password = '" + Support.encryptPass(newPassword) +
 					"' WHERE username = '" + username + "'";
 			db.executeStatement(SQL);
 		} catch(Exception e) {
