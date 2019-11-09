@@ -127,28 +127,15 @@ public class ForgotPassword extends GridPane {
                 	try
                 	{
                 		//Here need to send email to services, see if a user with this email exists
-                		boolean emailExists = false;
                 		String message = "Here is a a temporary password for you to log in: \n";
                 		HashMap<String, String> user = LaunchStage.getInstance().getContactService().getUserFromEmail(email);
-                		if(user != null)
-                		{
-                			emailExists = true;
-                		}
                 		
-                		
-                		if(emailExists)
-                		{
-                    		//here services needs to create a new random password and set it on the database, and return it to apply here
-                    		String tmpPword = Support.generatePassword();
-                    		LaunchStage.getInstance().getContactService().forgotPassword(user.get(IUser.USERNAME), tmpPword);
-                    		
-                			LaunchStage.getInstance().getEmailService().sendEmail(email, "EatMyFood Password Recovery", message + tmpPword);
-                			success = true;
-                		}
-                		else
-                		{
-                			throw new Exception();
-                		}
+                    	//here services needs to create a new random password and set it on the database, and return it to apply here
+                    	String tmpPword = Support.generatePassword();
+                    	LaunchStage.getInstance().getContactService().forgotPassword(user.get(IUser.USERNAME), tmpPword);
+                    	
+                		LaunchStage.getInstance().getEmailService().sendEmail(email, "EatMyFood Password Recovery", message + tmpPword);
+                		success = true;
                 			
                 	}
                 	catch (Exception ex)
