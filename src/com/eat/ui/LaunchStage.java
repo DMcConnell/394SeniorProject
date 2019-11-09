@@ -212,6 +212,10 @@ public class LaunchStage extends Application {
 	{
 		currentPane.setCenter(new UploadRecipe());
 	}
+	protected void UserSettingsPane()
+	{
+		currentPane.setCenter(new UserSettings());
+	}
 	protected void foodSuggest() {
 		currentPane.setCenter(new FoodSuggest());
 	}
