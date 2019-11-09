@@ -121,14 +121,30 @@ public class ForgotPassword extends GridPane {
             		boolean success = false;
                 	try
                 	{
-                		//com.eat.services.ContactService.login(username, password);
-                		TEMP_TEST_RECOVER(email);
-                		success = true;
+                		//Here need to send email to services, see if a user with this email exists
+                		boolean emailExists = true;
+                		
+                		String message = "I do not know your password, services will be up soon to give you a new temporary password: \n";
+                		
+                		if(emailExists)
+                		{
+                    		//here services needs to create a new random password and set it on the database, and return it to apply here
+                    		String tmpPword = "temporary password";
+                    		
+                			LaunchStage.getInstance().getEmailService().sendEmail(email, "EatMyFood Password Recovery", message + tmpPword);
+                			success = true;
+                		}
+                		else
+                		{
+                			throw new Exception();
+                		}
+                			
                 	}
                 	catch (Exception ex)
                 	{
-                		Prefix.setText("An email will has been sent to the address.");
+                		Prefix.setText("An email will be sent to the address.");
                     	emailTextField.setStyle("-fx-border-color: black");
+                    	success = false;
                 	}
                 	if(success)
                 	{

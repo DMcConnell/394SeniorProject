@@ -32,6 +32,7 @@ public class Navigation extends VBox{
 	Button UploadRecipe;
 	Button Logout;
 	Button FoodSuggestion;
+	Button Settings;
 	
 	public Navigation()
 	{
@@ -51,6 +52,9 @@ public class Navigation extends VBox{
 		FoodSuggestion = new Button("Suggestion");
 		FoodSuggestion.setPrefWidth(250);
 		numpages++;
+		Settings = new Button("User Settings");
+		Settings.setPrefWidth(250);
+		numpages++;
 		Logout = new Button("Logout");
 		Logout.setPrefWidth(250);
 		numpages++;
@@ -58,7 +62,7 @@ public class Navigation extends VBox{
 
 		this.setSpacing(LaunchStage.getInstance().getScreenHeight() / (numpages+1));
 		
-		this.getChildren().addAll(Profile, Favorites, Search, UploadRecipe, FoodSuggestion, Logout);
+		this.getChildren().addAll(Profile, Favorites, Search, UploadRecipe, FoodSuggestion, Settings, Logout);
 		
 		setActions();
 	}
@@ -107,6 +111,15 @@ public class Navigation extends VBox{
             public void handle(ActionEvent e) {
                 //REDIRECT TO UploadRecipe PAGE
             	LaunchStage.getInstance().UploadRecipePane();
+            }
+        });
+		
+		Settings.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+                //REDIRECT TO UploadRecipe PAGE
+            	LaunchStage.getInstance().UserSettingsPane();
             }
         });
 		

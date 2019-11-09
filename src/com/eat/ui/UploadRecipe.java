@@ -337,6 +337,7 @@ public class UploadRecipe extends ScrollPane {
             		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: black");
+            		titleField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
             	else if(t.length() > 50)
@@ -347,6 +348,7 @@ public class UploadRecipe extends ScrollPane {
             		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: black");
+            		titleField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
             	else if(specialT)
@@ -357,6 +359,7 @@ public class UploadRecipe extends ScrollPane {
             		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: black");
+            		titleField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
             	else if(time.length() < 1)
@@ -367,16 +370,18 @@ public class UploadRecipe extends ScrollPane {
             		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: black");
+            		timeField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
-            	else if(time.length() > 30)
+            	else if(time.length() > 4)
             	{
-            		Prefix.setText("Time max is 30 characters");
+            		Prefix.setText("Time max is 4 digits");
             		titleField.setStyle("-fx-border-color: black");
             		timeField.setStyle("-fx-border-color: red");
             		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: black");
+            		timeField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
             	else if(specialTime)
@@ -387,6 +392,7 @@ public class UploadRecipe extends ScrollPane {
             		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: black");
+            		timeField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
             	else if(servings.length() < 1)
@@ -397,16 +403,18 @@ public class UploadRecipe extends ScrollPane {
             		servingsField.setStyle("-fx-border-color: red");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: black");
+            		servingsField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
-            	else if(servings.length() > 30)
+            	else if(servings.length() > 4)
             	{
-            		Prefix.setText("Servings max is 30 characters");
+            		Prefix.setText("Servings max is 4 digits");
             		titleField.setStyle("-fx-border-color: black");
             		timeField.setStyle("-fx-border-color: black");
             		servingsField.setStyle("-fx-border-color: red");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: black");
+            		servingsField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
             	else if(specialServing)
@@ -417,6 +425,7 @@ public class UploadRecipe extends ScrollPane {
             		servingsField.setStyle("-fx-border-color: red");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: black");
+            		servingsField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
             	else if(a.length() < 1)
@@ -427,16 +436,18 @@ public class UploadRecipe extends ScrollPane {
             		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: red");
             		blurbField.setStyle("-fx-border-color: black");
+            		authorField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
-            	else if(a.length() > 50)
+            	else if(a.length() > 32)
             	{
-            		Prefix.setText("Author name max is 50 characters");
+            		Prefix.setText("Author name max is 32 characters");
             		titleField.setStyle("-fx-border-color: black");
             		timeField.setStyle("-fx-border-color: black");
             		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: red");
             		blurbField.setStyle("-fx-border-color: black");
+            		authorField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
             	else if(specialA)
@@ -447,6 +458,7 @@ public class UploadRecipe extends ScrollPane {
             		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: red");
             		blurbField.setStyle("-fx-border-color: black");
+            		authorField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
             	else if(b.length() < 1)
@@ -457,6 +469,7 @@ public class UploadRecipe extends ScrollPane {
             		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: red");
+            		blurbField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
             	else if(b.length() > 250)
@@ -467,6 +480,7 @@ public class UploadRecipe extends ScrollPane {
             		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: red");
+            		blurbField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
             	else if(specialB)
@@ -477,6 +491,7 @@ public class UploadRecipe extends ScrollPane {
             		servingsField.setStyle("-fx-border-color: black");
             		authorField.setStyle("-fx-border-color: black");
             		blurbField.setStyle("-fx-border-color: red");
+            		blurbField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
             	/*else if(i.length() < 1)
@@ -573,65 +588,27 @@ public class UploadRecipe extends ScrollPane {
             }
         });
         
+        ingredientField.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+            	AddNewIngredient();
+            }
+        });
+        
         addIngredient.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent e) {
-            	//CHECK ALL FIELDS ESPECIALLY Q TO HAVE PROPER FORMAT
-            	String ing = ingredientField.getText();
-            	String q = quantityField.getText();
-            	String u = unitField.getText();
-            	
-            	Pattern pattern = Pattern.compile("[^A-Za-z ]");
-                Matcher matcher = pattern.matcher(ing);
-                boolean specialIng = matcher.find();
-                matcher = pattern.matcher(u);
-                boolean specialU = matcher.find();
-                boolean specialQ = false;
-                try
-                {
-                	Float.parseFloat(q);
-                }
-                catch (NumberFormatException ex) {
-                	specialQ = true;
-                }
-                
-                if(specialQ)
-                {
-                	Prefix.setText("Please use decimal format for quantity.");
-            		quantityField.setStyle("-fx-border-color: red");
-            		unitField.setStyle("-fx-border-color: black");
-            		ingredientField.setStyle("-fx-border-color: black");
-                }
-                else if(specialU)
-                {
-                	Prefix.setText("Please use only letters for the unit.");
-            		quantityField.setStyle("-fx-border-color: black");
-            		unitField.setStyle("-fx-border-color: red");
-            		ingredientField.setStyle("-fx-border-color: black");
-                }
-                else if(specialIng)
-                {
-                	Prefix.setText("Please use only letters for the ingredient.");
-            		quantityField.setStyle("-fx-border-color: black");
-            		unitField.setStyle("-fx-border-color: black");
-            		ingredientField.setStyle("-fx-border-color: red");
-                }
-                else
-                {
-                	//add all fields to new ingredient and add that to ingredient list and combine strings and add to VBox
-            		Text t = new Text(q + " " + u + " " + ing + System.lineSeparator());
-                    t.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
-                	Ingredient i = new Ingredient(ing, Float.parseFloat(q), u);
-                	addedIngredients.add(i);
-                	ingredientList.getChildren().add(t);
-            		quantityField.setStyle("-fx-border-color: black");
-            		unitField.setStyle("-fx-border-color: black");
-            		ingredientField.setStyle("-fx-border-color: black");
-            		
-                }
-            	
-            	
+            	AddNewIngredient();
+            }
+        });
+        
+        instructionsField.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+            	AddNewInstruction();
             }
         });
         
@@ -639,47 +616,161 @@ public class UploadRecipe extends ScrollPane {
 
             @Override
             public void handle(ActionEvent e) {
-            	//CHECK ALL FIELDS TO HAVE PROPER FORMAT
-            	
-            	String s = instructionsField.getText();
-            	Pattern pattern = Pattern.compile("[^A-Za-z0-9.,:? ]");
-                Matcher matcher = pattern.matcher(s);
-                boolean special = matcher.find();
-            	if(s.length() < 1)
-            	{
-            		Prefix.setText("Please enter a valid instruction.");
-            		instructionsField.setStyle("-fx-border-color: red");
-            	}
-            	else if(s.length() > 250)
-            	{
-            		Prefix.setText("Instruction limit is 250 characters.");
-            		instructionsField.setStyle("-fx-border-color: red");
-            	}
-            	else if(special)
-            	{
-            		Prefix.setText("Please do not use special characters in the instructions.");
-            		instructionsField.setStyle("-fx-border-color: red");
-            	}
-            	else
-            	{
-            		//Add instruction to list as string and to VBox
-            		instructionCounter++;
-            		Text t = new Text(instructionCounter + ": " + s);
-                    t.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
-                    t.setWrappingWidth(400);
-            		addedInstructions.put(instructionCounter, s);
-            		instructionsList.getChildren().add(t);
-            		instructionsField.setStyle("-fx-border-color: black");
-            	}
+            	AddNewInstruction();
             }
         });
     }
     
-    
-    public void TEMP_TEST_LOGIN(String u, String p) throws Exception
+    void AddNewIngredient()
     {
-    	if(!u.equals("testuser") && !p.equals("password"))
-    		throw new InvalidCombinationException();
+    	//CHECK ALL FIELDS ESPECIALLY Q TO HAVE PROPER FORMAT
+    	String ing = ingredientField.getText();
+    	String q = quantityField.getText();
+    	String u = unitField.getText();
+    	
+    	Pattern pattern = Pattern.compile("[^A-Za-z ]");
+        Matcher matcher = pattern.matcher(ing);
+        boolean specialIng = matcher.find();
+        matcher = pattern.matcher(u);
+        boolean specialU = matcher.find();
+        boolean specialQ = false;
+        try
+        {
+        	Float.parseFloat(q);
+        }
+        catch (NumberFormatException ex) {
+        	specialQ = true;
+        }
+        if(q.length() < 1)
+        {
+        	Prefix.setText("Please enter a quantity");
+    		quantityField.setStyle("-fx-border-color: red");
+    		unitField.setStyle("-fx-border-color: black");
+    		ingredientField.setStyle("-fx-border-color: black");
+    		quantityField.requestFocus();
+        }
+        else if (q.length() > 4)
+        {
+        	Prefix.setText("Quantity limit is 4 digits");
+    		quantityField.setStyle("-fx-border-color: red");
+    		unitField.setStyle("-fx-border-color: black");
+    		ingredientField.setStyle("-fx-border-color: black");
+    		quantityField.requestFocus();
+        }
+        else if(specialQ)
+        {
+        	Prefix.setText("Please use decimal format for quantity");
+    		quantityField.setStyle("-fx-border-color: red");
+    		unitField.setStyle("-fx-border-color: black");
+    		ingredientField.setStyle("-fx-border-color: black");
+    		quantityField.requestFocus();
+        }
+        else if(u.length() < 1)
+        {
+        	Prefix.setText("Please enter a unit");
+    		quantityField.setStyle("-fx-border-color: black");
+    		unitField.setStyle("-fx-border-color: red");
+    		ingredientField.setStyle("-fx-border-color: black");
+    		unitField.requestFocus();
+        }
+        else if(u.length() > 32)
+        {
+        	Prefix.setText("Unit limit is 32 characters");
+    		quantityField.setStyle("-fx-border-color: black");
+    		unitField.setStyle("-fx-border-color: red");
+    		ingredientField.setStyle("-fx-border-color: black");
+    		unitField.requestFocus();
+        }
+        else if(specialU)
+        {
+        	Prefix.setText("Please use only letters for the unit");
+    		quantityField.setStyle("-fx-border-color: black");
+    		unitField.setStyle("-fx-border-color: red");
+    		ingredientField.setStyle("-fx-border-color: black");
+    		unitField.requestFocus();
+        }
+        else if(ing.length() < 1)
+        {
+        	Prefix.setText("Please enter an ingredient");
+    		quantityField.setStyle("-fx-border-color: black");
+    		unitField.setStyle("-fx-border-color: black");
+    		ingredientField.setStyle("-fx-border-color: red");
+    		ingredientField.requestFocus();
+        }
+        else if(ing.length() > 64)
+        {
+        	Prefix.setText("Ingredient limit is 64 characters");
+    		quantityField.setStyle("-fx-border-color: black");
+    		unitField.setStyle("-fx-border-color: black");
+    		ingredientField.setStyle("-fx-border-color: red");
+    		ingredientField.requestFocus();
+        }
+        else if(specialIng)
+        {
+        	Prefix.setText("Please use only letters for the ingredient");
+    		quantityField.setStyle("-fx-border-color: black");
+    		unitField.setStyle("-fx-border-color: black");
+    		ingredientField.setStyle("-fx-border-color: red");
+    		ingredientField.requestFocus();
+        }
+        else
+        {
+        	//add all fields to new ingredient and add that to ingredient list and combine strings and add to VBox
+    		Text t = new Text(q + " " + u + " " + ing + System.lineSeparator());
+            t.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
+        	Ingredient i = new Ingredient(ing, Float.parseFloat(q), u);
+        	addedIngredients.add(i);
+        	ingredientList.getChildren().add(t);
+    		quantityField.setStyle("-fx-border-color: black");
+    		unitField.setStyle("-fx-border-color: black");
+    		ingredientField.setStyle("-fx-border-color: black");
+    		
+    		quantityField.setText("");
+    		unitField.setText("");
+    		ingredientField.setText("");
+    		quantityField.requestFocus();
+    		
+        }
+    }
+    
+    void AddNewInstruction()
+    {
+    	//CHECK ALL FIELDS TO HAVE PROPER FORMAT
+    	
+    	String s = instructionsField.getText();
+    	Pattern pattern = Pattern.compile("[^A-Za-z0-9.,:? ]");
+        Matcher matcher = pattern.matcher(s);
+        boolean special = matcher.find();
+    	if(s.length() < 1)
+    	{
+    		Prefix.setText("Please enter a valid instruction.");
+    		instructionsField.setStyle("-fx-border-color: red");
+    	}
+    	else if(s.length() > 250)
+    	{
+    		Prefix.setText("Instruction limit is 250 characters.");
+    		instructionsField.setStyle("-fx-border-color: red");
+    	}
+    	else if(special)
+    	{
+    		Prefix.setText("Please do not use special characters in the instructions.");
+    		instructionsField.setStyle("-fx-border-color: red");
+    	}
+    	else
+    	{
+    		//Add instruction to list as string and to VBox
+    		instructionCounter++;
+    		Text t = new Text(instructionCounter + ": " + s);
+            t.setFont(Font.font("Tahoma", FontWeight.NORMAL, 15));
+            t.setWrappingWidth(400);
+    		addedInstructions.put(instructionCounter, s);
+    		instructionsList.getChildren().add(t);
+    		instructionsField.setStyle("-fx-border-color: black");
+    		
+    		instructionsField.setText("");
+    		instructionsField.requestFocus();
+    		
+    	}
     }
         
 

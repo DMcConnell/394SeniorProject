@@ -1,6 +1,7 @@
 package com.eat.ui;
 
 import com.eat.services.ContactService;
+import com.eat.services.EmailService;
 import com.eat.services.RecipeService;
 
 import javafx.application.Application;
@@ -36,6 +37,8 @@ public class LaunchStage extends Application {
 	        try {
 	        	rs = new RecipeService();
 	        	cs = new ContactService();
+	        	es = new EmailService();
+	        	es.init();
 	        } catch(Exception e) {
 	        	e.printStackTrace();
 	        }
@@ -49,6 +52,11 @@ public class LaunchStage extends Application {
 	public ContactService getContactService() {
 		return cs;
 	}
+	public EmailService getEmailService()
+	{
+		return es;
+	}
+	
 	public double getScreenWidth() {
 		return ScreenWidth;
 	}
@@ -59,6 +67,7 @@ public class LaunchStage extends Application {
 	
 	private RecipeService rs;
 	private ContactService cs;
+	private EmailService es;
 	
 	private double ScreenWidth;
 	private double ScreenHeight;
@@ -211,6 +220,10 @@ public class LaunchStage extends Application {
 	protected void UploadRecipePane()
 	{
 		currentPane.setCenter(new UploadRecipe());
+	}
+	protected void UserSettingsPane()
+	{
+		currentPane.setCenter(new UserSettings());
 	}
 	protected void foodSuggest() {
 		currentPane.setCenter(new FoodSuggest());

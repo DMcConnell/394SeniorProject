@@ -109,6 +109,55 @@ public class ContactService {
 		}
 	}
 	
+	public void changeUsername(String oldUsername, String newUsername) throws Exception {
+		if(oldUsername.equals("") || newUsername.equals("")) {
+			throw new Exception("Something went wrong being passed to services");
+		}
+		try {
+			HashMap<String,String> user = getUser(newUsername);
+			if(user.size() != 0) {
+				throw new Exception("This username has already been taken");
+			}
+			String SQL = "UPDATE emfUsers SET username = '" + newUsername + "' "
+					+ "WHERE username = '"  + oldUsername + "'";
+			db.executeStatement(SQL);
+			loggedInUser = newUsername;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	public void changePassword(String username, String oldPassword, String newPassword) throws Exception {
+		try {
+			HashMap<String,String> user = getUser(username);
+			if(user.size() == 0) {
+				throw new Exception("User does not exist");
+			}
+			if(!Support.encryptPass(oldPassword).equals(user.get(IUser.PASSWORD))) {
+				throw new Exception("Old password was incorrect");
+			}
+			String SQL = "UPDATE emfUsers SET password = '" + Support.encryptPass(newPassword) +
+					"' WHERE username = '" + username + "'";
+			db.executeStatement(SQL);
+		} catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	public void forgotPassword(String username, String newPassword) throws Exception {
+		try {
+			HashMap<String,String> user = getUser(username);
+			if(user.size() == 0) {
+				throw new Exception("User does not exist");
+			}
+			String SQL = "UPDATE emfUsers SET password = '" + Support.encryptPass(newPassword) +
+					"' WHERE username = '" + username + "'";
+			db.executeStatement(SQL);
+		} catch(Exception e) {
+			throw e;
+		}
+	}
+	
 	public void addPantryItems (String username, List<String> pantryItems) throws Exception {
 		try {
 			HashMap<String,String> user = getUser(username);
