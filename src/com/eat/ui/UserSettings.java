@@ -188,9 +188,8 @@ public class UserSettings extends GridPane {
                 	boolean success = false;
                 	try
                 	{
-                		//cs.CHANGEUSERNAME(username)
                 		success = true;
-                		throw new Exception("CHANGE USERNAME NOT YET IMPLEMENTED");
+                		cs.changeUsername(cs.getSelfID(), username);
                 	}
                 	catch (Exception ex)
                 	{
@@ -242,9 +241,8 @@ public class UserSettings extends GridPane {
                 	try
                 	{
                 		//Change Password
-                		//cs.CHANGEPASSWORD(pwBox.getText())
                 		success = true;
-                		throw new Exception("CHANGE PASSWORD NOT YET IMPLEMENTED");
+                		cs.forgotPassword(cs.getSelfID(), password);
                 	}
                 	catch (Exception ex)
                 	{
