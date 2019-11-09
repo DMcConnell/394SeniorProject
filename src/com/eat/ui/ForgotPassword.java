@@ -19,8 +19,13 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.eat.services.IUser;
+import com.eat.support.Support;
 
 public class ForgotPassword extends GridPane {
 
@@ -122,14 +127,20 @@ public class ForgotPassword extends GridPane {
                 	try
                 	{
                 		//Here need to send email to services, see if a user with this email exists
-                		boolean emailExists = true;
+                		boolean emailExists = false;
+                		String message = "Here is a a temporary password for you to log in: \n";
+                		HashMap<String, String> user = LaunchStage.getInstance().getContactService().getUserFromEmail(email);
+                		if(user != null)
+                		{
+                			emailExists = true;
+                		}
                 		
-                		String message = "I do not know your password, services will be up soon to give you a new temporary password: \n";
                 		
                 		if(emailExists)
                 		{
                     		//here services needs to create a new random password and set it on the database, and return it to apply here
-                    		String tmpPword = "temporary password";
+                    		String tmpPword = Support.generatePassword();
+                    		LaunchStage.getInstance().getContactService().forgotPassword(user.get(IUser.USERNAME), tmpPword);
                     		
                 			LaunchStage.getInstance().getEmailService().sendEmail(email, "EatMyFood Password Recovery", message + tmpPword);
                 			success = true;
@@ -143,6 +154,7 @@ public class ForgotPassword extends GridPane {
                 	catch (Exception ex)
                 	{
                 		Prefix.setText("An email will be sent to the address.");
+                		ex.printStackTrace();
                     	emailTextField.setStyle("-fx-border-color: black");
                     	success = false;
                 	}
