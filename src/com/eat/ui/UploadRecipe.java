@@ -373,9 +373,9 @@ public class UploadRecipe extends ScrollPane {
             		timeField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
-            	else if(time.length() > 30)
+            	else if(time.length() > 4)
             	{
-            		Prefix.setText("Time max is 30 characters");
+            		Prefix.setText("Time max is 4 digits");
             		titleField.setStyle("-fx-border-color: black");
             		timeField.setStyle("-fx-border-color: red");
             		servingsField.setStyle("-fx-border-color: black");
@@ -406,9 +406,9 @@ public class UploadRecipe extends ScrollPane {
             		servingsField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
-            	else if(servings.length() > 30)
+            	else if(servings.length() > 4)
             	{
-            		Prefix.setText("Servings max is 30 characters");
+            		Prefix.setText("Servings max is 4 digits");
             		titleField.setStyle("-fx-border-color: black");
             		timeField.setStyle("-fx-border-color: black");
             		servingsField.setStyle("-fx-border-color: red");
@@ -439,9 +439,9 @@ public class UploadRecipe extends ScrollPane {
             		authorField.requestFocus();
             		//imageField.setStyle("-fx-border-color: black");
             	}
-            	else if(a.length() > 50)
+            	else if(a.length() > 32)
             	{
-            		Prefix.setText("Author name max is 50 characters");
+            		Prefix.setText("Author name max is 32 characters");
             		titleField.setStyle("-fx-border-color: black");
             		timeField.setStyle("-fx-border-color: black");
             		servingsField.setStyle("-fx-border-color: black");
@@ -641,27 +641,77 @@ public class UploadRecipe extends ScrollPane {
         catch (NumberFormatException ex) {
         	specialQ = true;
         }
-        
-        if(specialQ)
+        if(q.length() < 1)
         {
-        	Prefix.setText("Please use decimal format for quantity.");
+        	Prefix.setText("Please enter a quantity");
     		quantityField.setStyle("-fx-border-color: red");
     		unitField.setStyle("-fx-border-color: black");
     		ingredientField.setStyle("-fx-border-color: black");
+    		quantityField.requestFocus();
         }
-        else if(specialU)
+        else if (q.length() > 4)
         {
-        	Prefix.setText("Please use only letters for the unit.");
+        	Prefix.setText("Quantity limit is 4 digits");
+    		quantityField.setStyle("-fx-border-color: red");
+    		unitField.setStyle("-fx-border-color: black");
+    		ingredientField.setStyle("-fx-border-color: black");
+    		quantityField.requestFocus();
+        }
+        else if(specialQ)
+        {
+        	Prefix.setText("Please use decimal format for quantity");
+    		quantityField.setStyle("-fx-border-color: red");
+    		unitField.setStyle("-fx-border-color: black");
+    		ingredientField.setStyle("-fx-border-color: black");
+    		quantityField.requestFocus();
+        }
+        else if(u.length() < 1)
+        {
+        	Prefix.setText("Please enter a unit");
     		quantityField.setStyle("-fx-border-color: black");
     		unitField.setStyle("-fx-border-color: red");
     		ingredientField.setStyle("-fx-border-color: black");
+    		unitField.requestFocus();
         }
-        else if(specialIng)
+        else if(u.length() > 32)
         {
-        	Prefix.setText("Please use only letters for the ingredient.");
+        	Prefix.setText("Unit limit is 32 characters");
+    		quantityField.setStyle("-fx-border-color: black");
+    		unitField.setStyle("-fx-border-color: red");
+    		ingredientField.setStyle("-fx-border-color: black");
+    		unitField.requestFocus();
+        }
+        else if(specialU)
+        {
+        	Prefix.setText("Please use only letters for the unit");
+    		quantityField.setStyle("-fx-border-color: black");
+    		unitField.setStyle("-fx-border-color: red");
+    		ingredientField.setStyle("-fx-border-color: black");
+    		unitField.requestFocus();
+        }
+        else if(ing.length() < 1)
+        {
+        	Prefix.setText("Please enter an ingredient");
     		quantityField.setStyle("-fx-border-color: black");
     		unitField.setStyle("-fx-border-color: black");
     		ingredientField.setStyle("-fx-border-color: red");
+    		ingredientField.requestFocus();
+        }
+        else if(ing.length() > 64)
+        {
+        	Prefix.setText("Ingredient limit is 64 characters");
+    		quantityField.setStyle("-fx-border-color: black");
+    		unitField.setStyle("-fx-border-color: black");
+    		ingredientField.setStyle("-fx-border-color: red");
+    		ingredientField.requestFocus();
+        }
+        else if(specialIng)
+        {
+        	Prefix.setText("Please use only letters for the ingredient");
+    		quantityField.setStyle("-fx-border-color: black");
+    		unitField.setStyle("-fx-border-color: black");
+    		ingredientField.setStyle("-fx-border-color: red");
+    		ingredientField.requestFocus();
         }
         else
         {
