@@ -173,6 +173,7 @@ public class Registration extends GridPane {
             		userTextField.setStyle("-fx-border-color: black");
             		pwBox.setStyle("-fx-border-color: black");
             		pwBox.clear();
+            		emailTextField.requestFocus();
                 }
                 else if(username.length() < 1)
             	{
@@ -182,6 +183,7 @@ public class Registration extends GridPane {
             		pwBox.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
             		pwBox.clear();
+            		userTextField.requestFocus();
             	}
             	else if(username.length() > 30)
             	{
@@ -191,6 +193,7 @@ public class Registration extends GridPane {
             		pwBox.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
             		pwBox.clear();
+            		userTextField.requestFocus();
             	}
             	else if(specialUsername)
             	{
@@ -200,6 +203,7 @@ public class Registration extends GridPane {
             		pwBox.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
             		pwBox.clear();
+            		userTextField.requestFocus();
             	}
                 else if(realname.length() < 1)
             	{
@@ -209,6 +213,7 @@ public class Registration extends GridPane {
             		pwBox.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
             		pwBox.clear();
+            		nameTextField.requestFocus();
             	}
             	else if(realname.length() > 30)
             	{
@@ -218,6 +223,7 @@ public class Registration extends GridPane {
             		pwBox.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
             		pwBox.clear();
+            		nameTextField.requestFocus();
             	}
             	else if(specialName)
             	{
@@ -227,6 +233,7 @@ public class Registration extends GridPane {
             		pwBox.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
             		pwBox.clear();
+            		nameTextField.requestFocus();
             	}
             	else if(password.length() < 8)
             	{
@@ -236,6 +243,7 @@ public class Registration extends GridPane {
             		nameTextField.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
             		pwBox.clear();
+            		pwBox.requestFocus();
             	}
             	else if(password.length() > 30)
             	{
@@ -245,6 +253,7 @@ public class Registration extends GridPane {
             		nameTextField.setStyle("-fx-border-color: black");
                 	emailTextField.setStyle("-fx-border-color: black");
             		pwBox.clear();
+            		pwBox.requestFocus();
             	}
             	else //all valid information
             	{
@@ -265,6 +274,8 @@ public class Registration extends GridPane {
                 		pwBox.setStyle("-fx-border-color: black");
                     	emailTextField.setStyle("-fx-border-color: red");
                 		pwBox.clear();
+                		pwBox.requestFocus();
+                		success = false;
                 	}
                 	if(success)
                 	{

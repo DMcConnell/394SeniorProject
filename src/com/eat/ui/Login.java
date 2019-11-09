@@ -113,78 +113,14 @@ public class Login extends GridPane {
 
             @Override
             public void handle(ActionEvent e) {
-            	String username = userTextField.getText();
-            	String password = pwBox.getText();
-            	
-                //CHECK IF VALID USERNAME (letters and numbers only, min length)
-            	// - if not, say incorrect or invalid username and password
-            	//CHECK IF VALID PASSWORD (certain characters only, min length)
-            	// - if not, say incorrect or invalid username and password
-            	
-            	Pattern userPattern = Pattern.compile("[^A-Za-z0-9]");
-                Matcher userMatcher = userPattern.matcher(username);
-                boolean specialUsername = userMatcher.find();
-               
-                
-            	if(username.length() < 1)
-            	{
-            		Prefix.setText("Enter a valid username");
-            		userTextField.setStyle("-fx-border-color: red");
-            		pwBox.setStyle("-fx-border-color: black");
-            		pwBox.clear();
-            	}
-            	else if(username.length() > 30)
-            	{
-            		Prefix.setText("Username cannot be more than 30 characters long");
-            		userTextField.setStyle("-fx-border-color: red");
-            		pwBox.setStyle("-fx-border-color: black");
-            		pwBox.clear();
-            	}
-            	else if(specialUsername)
-            	{
-            		Prefix.setText("Username must only contain letters and digits");
-            		userTextField.setStyle("-fx-border-color: red");
-            		pwBox.setStyle("-fx-border-color: black");
-            		pwBox.clear();
-            	}
-            	else if(password.length() < 8)
-            	{
-            		Prefix.setText("Password must be at least 8 characters long.");
-            		pwBox.setStyle("-fx-border-color: red");
-            		userTextField.setStyle("-fx-border-color: black");
-            		pwBox.clear();
-            	}
-            	else if(password.length() > 30)
-            	{
-            		Prefix.setText("Password cannot be more than 30 characters long");
-            		pwBox.setStyle("-fx-border-color: red");
-            		userTextField.setStyle("-fx-border-color: black");
-            		pwBox.clear();
-            	}
-            	else //all valid information
-            	{
-            		boolean success = false;
-                	try
-                	{
-                		LaunchStage.getInstance().getContactService().login(username, password);
-                		//TEMP_TEST_LOGIN(username, password);
-                		success = true;
-                	}
-                	catch (Exception ex)
-                	{
-                		Prefix.setText(ex.getMessage());
-                		userTextField.setStyle("-fx-border-color: red");
-                		pwBox.setStyle("-fx-border-color: red");
-                		pwBox.clear();
-                		success = false;
-                	}
-                	if(success)
-                	{
-                		//open profile page, where profile will retrieve the proper information needed.
-                		LaunchStage.getInstance().MainScene();
-                	}
-            	}
-            	
+            	LogUserIn();
+            }
+        });
+        pwBox.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+            	LogUserIn();
             }
         });
         
@@ -207,13 +143,94 @@ public class Login extends GridPane {
         });
     }
     
+    void LogUserIn()
+    {
+    	String username = userTextField.getText();
+    	String password = pwBox.getText();
+    	
+        //CHECK IF VALID USERNAME (letters and numbers only, min length)
+    	// - if not, say incorrect or invalid username and password
+    	//CHECK IF VALID PASSWORD (certain characters only, min length)
+    	// - if not, say incorrect or invalid username and password
+    	
+    	Pattern userPattern = Pattern.compile("[^A-Za-z0-9]");
+        Matcher userMatcher = userPattern.matcher(username);
+        boolean specialUsername = userMatcher.find();
+       
+        
+    	if(username.length() < 1)
+    	{
+    		Prefix.setText("Enter a valid username");
+    		userTextField.setStyle("-fx-border-color: red");
+    		pwBox.setStyle("-fx-border-color: black");
+    		pwBox.clear();
+    		userTextField.requestFocus();
+    	}
+    	else if(username.length() > 30)
+    	{
+    		Prefix.setText("Username cannot be more than 30 characters long");
+    		userTextField.setStyle("-fx-border-color: red");
+    		pwBox.setStyle("-fx-border-color: black");
+    		pwBox.clear();
+    		userTextField.requestFocus();
+    	}
+    	else if(specialUsername)
+    	{
+    		Prefix.setText("Username must only contain letters and digits");
+    		userTextField.setStyle("-fx-border-color: red");
+    		pwBox.setStyle("-fx-border-color: black");
+    		pwBox.clear();
+    		userTextField.requestFocus();
+    	}
+    	else if(password.length() < 8)
+    	{
+    		Prefix.setText("Password must be at least 8 characters long.");
+    		pwBox.setStyle("-fx-border-color: red");
+    		userTextField.setStyle("-fx-border-color: black");
+    		pwBox.clear();
+    		pwBox.requestFocus();
+    	}
+    	else if(password.length() > 30)
+    	{
+    		Prefix.setText("Password cannot be more than 30 characters long");
+    		pwBox.setStyle("-fx-border-color: red");
+    		userTextField.setStyle("-fx-border-color: black");
+    		pwBox.clear();
+    		pwBox.requestFocus();
+    	}
+    	else //all valid information
+    	{
+    		boolean success = false;
+        	try
+        	{
+        		LaunchStage.getInstance().getContactService().login(username, password);
+        		//TEMP_TEST_LOGIN(username, password);
+        		success = true;
+        	}
+        	catch (Exception ex)
+        	{
+        		Prefix.setText(ex.getMessage());
+        		userTextField.setStyle("-fx-border-color: red");
+        		pwBox.setStyle("-fx-border-color: red");
+        		pwBox.clear();
+        		pwBox.requestFocus();
+        		success = false;
+        	}
+        	if(success)
+        	{
+        		//open profile page, where profile will retrieve the proper information needed.
+        		LaunchStage.getInstance().MainScene();
+        	}
+    	}
+    }
     
     public void TEMP_TEST_LOGIN(String u, String p) throws Exception
     {
     	if(!u.equals("testuser") || !p.equals("password"))
     		throw new InvalidCombinationException();
     }
-        
+    
+    
 
 
 }
