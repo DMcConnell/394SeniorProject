@@ -136,7 +136,6 @@ public class Recipe extends ScrollPane{
 			String amountString;
 			for (int i = 0; i < ingredientList.size(); i++) { //iterate through the list and add each ingredient to a string on seperate line
 				amountString = String.valueOf(ingredientList.get(i).getAmount());
-				//System.out.println(ingredientList.get(i).getAmount());
 				ingredientString += amountString + " " + ingredientList.get(i).getUnit() + " " + ingredientList.get(i).getName() +"\n";
 			}
 			ingredients = new Label(ingredientString);
@@ -159,6 +158,7 @@ public class Recipe extends ScrollPane{
 			}
 			instructions = new Label(instructionsString);
 			instructions.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+			instructions.setMaxWidth(1000);
 			instructions.setWrapText(true);
 			grid.add(instructions, 0, 10);
 			

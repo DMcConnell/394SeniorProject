@@ -33,11 +33,15 @@ import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import java.util.LinkedList;
 import java.util.HashMap;
+import java.util.Comparator;
+import javafx.util.Pair;
+import com.eat.support.Ingredient;
 
 
 public class Search_view extends ScrollPane {     
 	public Search_view() {
 		try {
+			String username = LaunchStage.getInstance().getContactService().getSelfID();
 			String resultDivider = "_________________________________________________________________________";
 			GridPane mainGrid = new GridPane();
 			mainGrid.setAlignment(Pos.TOP_CENTER);
@@ -55,6 +59,7 @@ public class Search_view extends ScrollPane {
 			searchField.setMinHeight(40);
 			searchField.setFont(Font.font("Tahoma", FontWeight.NORMAL, 18));
 			searchBar.getChildren().add(searchField);
+			searchField.requestFocus();
 
 			Button searchButton = new Button("Search");
 			searchButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, 18));
@@ -67,21 +72,71 @@ public class Search_view extends ScrollPane {
 			mainGrid.add(searchBar, 0, 1);
 			GridPane resultGrid = new GridPane();
 			mainGrid.add(resultGrid, 0, 2);
-			
 			//Eventhandler to display results of the search
-			EventHandler<ActionEvent> fetchResults = new EventHandler<ActionEvent>() {
+			EventHandler<ActionEvent> displayResults = new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
 					try {
 						resultGrid.getChildren().clear();
-						LinkedList<HashMap<String,String>> results = rs.search(searchField.getText());
+						
+						/*-------------------------------------Sorting Results--------------------------------------------*/
+						
+						//Initializing lists/variables
+						LinkedList<HashMap<String,String>> rawResults = rs.search(searchField.getText()); //Unsorted results from services
+						LinkedList<Pair<Double,String>> ratiosList = new LinkedList<Pair<Double,String>>(); // List to store the ratio pairs
+						LinkedList<String> pantryItems = LaunchStage.getInstance().getContactService().getPantryItems(username); //List of the user's pantry items
+						double pantrySize = LaunchStage.getInstance().getContactService().getPantryItems(username).size(); // size of the user's pantry
+						
+						LinkedList<String> ingredientStrings = new LinkedList<String>();
+						//Nested loops to populate ratiosList
+						for (HashMap<String,String> result : rawResults) {
+							LinkedList<Ingredient> ingredients = rs.getIngredients(result.get(IRecipe.RECIPEID));
+							ingredientStrings.clear();
+							for (Ingredient ingredient : ingredients) {
+								ingredientStrings.add(ingredient.getName());
+							}
+							double pantryMatches = 0;
+							for( int a= 0; a< pantryItems.size(); a++) {							
+								A: for(String ingredient : ingredientStrings) {
+									if(ingredient.contains(pantryItems.get(a))) {
+										pantryMatches++;
+										break A;
+									}
+								}
+							}
+							ratiosList.add(new Pair<Double,String>(pantryMatches/pantrySize, result.get(IRecipe.RECIPEID)));
+							System.out.println(pantryMatches/pantrySize);
+						}
+						
+						//Sorting ratiosList
+						ratiosList.sort(new Comparator<Pair<Double,String>>(){
+							@Override
+							public int compare(Pair<Double,String> pair1, Pair<Double,String> pair2) {
+								//Multiplying by 1000 to ensure they are integers
+								double temp1 = pair1.getKey() * 1000;
+								double temp2 = pair2.getKey() * 1000;
+								int int1 = (int) temp1;
+								int int2 = (int) temp2;
+								return int2 - int1;
+							}
+						});
+						System.out.println(ratiosList);
+						
+						//Populating sortedResults
+						LinkedList<HashMap<String,String>> sortedResults = new LinkedList<HashMap<String,String>>();
+						for (Pair<Double,String> ratio : ratiosList) {
+							sortedResults.add(rs.getRecipe(ratio.getValue()));
+						}
+						/*--------------------------------------------------------------------------------------------------*/
+						
+						
 						int resultNumber = 0;
-						if (results.size() == 0) {
+						if (sortedResults.size() == 0) {
 							Label noResultsLabel = new Label("No results found.");
 							noResultsLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));
 							resultGrid.add(noResultsLabel, 0, 0);
 						}
-						for (HashMap<String,String> result : results) {
+						for (HashMap<String,String> result : sortedResults) {
 							HBox searchResult = new HBox(20);
 							/*
 							Image recipeImage = new Image(result.get(IRecipe.IMAGEPATH));
@@ -122,8 +177,8 @@ public class Search_view extends ScrollPane {
 				}
 			};
 			//Press enter on searchField or click searchButton to display results
-			searchButton.setOnAction(fetchResults);
-			searchField.setOnAction(fetchResults);
+			searchButton.setOnAction(displayResults);
+			searchField.setOnAction(displayResults);
 			
 			this.setContent(mainGrid);
 		}
