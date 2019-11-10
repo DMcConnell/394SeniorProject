@@ -105,7 +105,6 @@ public class Search_view extends ScrollPane {
 								}
 							}
 							ratiosList.add(new Pair<Double,String>(pantryMatches/pantrySize, result.get(IRecipe.RECIPEID)));
-							System.out.println(pantryMatches/pantrySize);
 						}
 						
 						//Sorting ratiosList

@@ -66,6 +66,9 @@ public class Profile extends ScrollPane{
 			allergyCB.setPromptText("Select or type an allergy");
 			allergyCB.setEditable(true);
 			
+			Button allergyAddButton = new Button("Add Allergy");
+			mainGrid.add(allergyAddButton, 3, 2);
+			
 			allergyCB.getItems().addAll(
 					IAllergy.EGG,
 					IAllergy.FISH,
@@ -78,7 +81,11 @@ public class Profile extends ScrollPane{
 					IAllergy.WHEAT
 			);
 			FxUtilTest.autoCompleteComboBoxPlus(allergyCB, (typedText, itemToCompare) -> itemToCompare.toLowerCase().contains(typedText.toLowerCase()) || itemToCompare.toString().equals(typedText));
-			mainGrid.add(allergyCB, 2, 2);
+			
+			HBox allergyButtonBox = new HBox(20);
+			allergyButtonBox.getChildren().addAll(allergyCB, allergyAddButton);
+			
+			mainGrid.add(allergyButtonBox, 2, 2);
 			mainGrid.add(allergyGrid, 2, 3);
 			
 			for (String allergy : userAllergies) {
@@ -99,6 +106,9 @@ public class Profile extends ScrollPane{
 			ComboBox<String> pantryCB = new ComboBox<String>();
 			pantryCB.setPromptText("Select or type an item");
 			pantryCB.setEditable(true);
+			
+			Button pantryAddButton = new Button("Add to pantry");
+			mainGrid.add(pantryAddButton, 3, 5);
 			
 			pantryCB.getItems().addAll(
 					IPantry.ANGELHAIRNOODLES,
@@ -182,7 +192,10 @@ public class Profile extends ScrollPane{
 			);
 			FxUtilTest.autoCompleteComboBoxPlus(pantryCB, (typedText, itemToCompare) -> itemToCompare.toLowerCase().contains(typedText.toLowerCase()) || itemToCompare.toString().equals(typedText));
 			
-			mainGrid.add(pantryCB, 2, 5);
+			HBox pantryButtonBox = new HBox(20);
+			pantryButtonBox.getChildren().addAll(pantryCB, pantryAddButton);
+			
+			mainGrid.add(pantryButtonBox, 2, 5);
 			
 			mainGrid.add(pantryGrid, 2, 6);
 			
@@ -272,6 +285,26 @@ public class Profile extends ScrollPane{
 				}
 			};
 			pantryCB.setOnKeyPressed(addPantryItem);
+			
+			allergyAddButton.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent e) {
+					if (!newAllergies.contains(allergyCB.getValue()) && allergyCB.getItems().contains(allergyCB.getValue())) {
+						newAllergies.add(allergyCB.getValue());
+						displayAllergies();
+					}
+				}
+			});
+			
+			pantryAddButton.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent e) {
+					if (!newPantryItems.contains(pantryCB.getValue()) && pantryCB.getItems().contains(pantryCB.getValue())){
+						newPantryItems.add(pantryCB.getValue());
+						displayPantry();
+					}
+				}
+			});
 		
 			
 		}
