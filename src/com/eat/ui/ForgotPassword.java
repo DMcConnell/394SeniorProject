@@ -109,7 +109,7 @@ public class ForgotPassword extends GridPane {
             	String email = emailTextField.getText();
             	
             	
-            	Pattern emailPattern = Pattern.compile("^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$");
+            	Pattern emailPattern = Pattern.compile("^[\\w!#$%&ï¿½*+/=?`{|}~^-]+(?:\\.[\\w!#$%&ï¿½*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$");
                 Matcher emailMatcher = emailPattern.matcher(email);
                 boolean specialEmail = !emailMatcher.matches();
             	
@@ -140,8 +140,8 @@ public class ForgotPassword extends GridPane {
                 	}
                 	catch (Exception ex)
                 	{
-                		Prefix.setText("An email will be sent to the address.");
-                		ex.printStackTrace();
+                		Prefix.setText(ex.getMessage());
+                		//ex.printStackTrace();
                     	emailTextField.setStyle("-fx-border-color: black");
                     	success = false;
                 	}

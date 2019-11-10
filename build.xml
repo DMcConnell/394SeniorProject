@@ -14,6 +14,8 @@
             </manifest>
             <fileset dir="${dir.buildfile}/bin"/>
             <zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/lib/mysql-connector-java-8.0.17.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/lib/activation.jar"/>
+            <zipfileset excludes="META-INF/*.SF" src="${dir.buildfile}/lib/mail.jar"/>
         </jar>
     </target>
 </project>
