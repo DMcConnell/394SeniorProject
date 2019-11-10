@@ -119,7 +119,7 @@ public class Search_view extends ScrollPane {
 								return int2 - int1;
 							}
 						});
-						System.out.println(ratiosList);
+						//System.out.println(ratiosList);
 						
 						//Populating sortedResults
 						LinkedList<HashMap<String,String>> sortedResults = new LinkedList<HashMap<String,String>>();
