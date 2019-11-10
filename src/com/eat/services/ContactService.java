@@ -93,7 +93,12 @@ public class ContactService {
 		String SQL = "SELECT * FROM emfUsers where email='" + email + "'";
 		try {
 			ResultSet rs = db.executeQuery(SQL);
-			return getUser(rs.getString("email"));
+			try {
+				rs.next();
+				return getUser(rs.getString("username"));
+			} catch (Exception e) {
+				throw new Exception("No user registered with this email.");
+			}
 			
 		} catch(Exception e) {
 			throw e;
