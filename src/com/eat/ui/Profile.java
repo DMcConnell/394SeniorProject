@@ -188,7 +188,7 @@ public class Profile extends ScrollPane{
 					IPantry.TOMATOES,
 					IPantry.TUNA,
 					IPantry.TURKEY,
-					IPantry.VEEL
+					IPantry.VEAL
 			);
 			FxUtilTest.autoCompleteComboBoxPlus(pantryCB, (typedText, itemToCompare) -> itemToCompare.toLowerCase().contains(typedText.toLowerCase()) || itemToCompare.toString().equals(typedText));
 			
