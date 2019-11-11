@@ -6,25 +6,25 @@ public class CreateRecipeTables {
 	
 	public static String createRecipeTable() {
 		return "CREATE TABLE recipes" + 
-				"( recipeID VARCHAR(12), name VARCHAR(255), author VARCHAR(32), summary VARCHAR(255), imagepath VARCHAR(255)," + 
+				"( recipeID INTEGER(12), name VARCHAR(255), author VARCHAR(32), summary VARCHAR(255), imagepath VARCHAR(255)," + 
 				"servings INTEGER(4), timeReq INTEGER(4), PRIMARY KEY (recipeID) )";
 	}
 	
 	public static String createDirectionsTable() {
 		return "CREATE TABLE directions" +
-				"( recipeID VARCHAR(12), stepNum INTEGER(2), direction VARCHAR(255),"
+				"( recipeID INTEGER(12), stepNum INTEGER(2), direction VARCHAR(255),"
 				+ "FOREIGN KEY (recipeID) REFERENCES recipes(recipeID))";
 	}
 	
 	public static String createIngredientsTable() {
 		return "CREATE TABLE ingredients" +
-				"( recipeID VARCHAR(12), ingredient VARCHAR(64), proportion DECIMAL(8,3),"
+				"( recipeID INTEGER(12), ingredient VARCHAR(64), proportion DECIMAL(8,3),"
 				+ "units VARCHAR(16), FOREIGN KEY (recipeID) REFERENCES recipes(recipeID))";
 	}
 	
 	public static String createRecipeAllergyTable() {
 		return "CREATE TABLE recipeAllergies" +
-				"( recipeID VARCHAR(12), allergy VARCHAR(32), FOREIGN KEY (recipeID) " +
+				"( recipeID INTEGER(12), allergy VARCHAR(32), FOREIGN KEY (recipeID) " +
 				"REFERENCES recipes(recipeID))";
 	}
 	
@@ -37,7 +37,7 @@ public class CreateRecipeTables {
 		return "CREATE TABLE favorites " + 
 				"(entryID INTEGER(20), " + 
 				"username VARCHAR(25), " + 
-				"recipeID VARCHAR(12)," + 
+				"recipeID INTEGER(12)," + 
 				"FOREIGN KEY (username) REFERENCES emfUsers(username), " + 
 				"FOREIGN KEY (recipeID) REFERENCES recipes(recipeID))";
 	}
