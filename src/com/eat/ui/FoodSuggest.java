@@ -175,7 +175,7 @@ public class FoodSuggest extends ScrollPane{
 					try {
 						Ingredients = LaunchStage.getInstance().getRecipeService().getIngredients(favorites.get(i));
 						for(Ingredient ingredient : Ingredients) {
-							finalIngredients.add(ingredient.getName());
+							finalIngredients.add(ingredient.getName().toUpperCase());
 						}
 					} catch(Exception e2) {
 						//LaunchStage.getInstance().RecipePane(Integer.parseInt(maxID));
@@ -189,7 +189,7 @@ public class FoodSuggest extends ScrollPane{
 							
 							A: for(String ingredient : finalIngredients) {
 								
-								if(ingredient.contains(PantryItems.get(a))) {
+								if(ingredient.contains(PantryItems.get(a).toUpperCase())) {
 									score++;
 									break A;
 								}
