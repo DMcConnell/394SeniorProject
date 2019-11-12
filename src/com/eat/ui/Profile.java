@@ -55,8 +55,7 @@ public class Profile extends ScrollPane{
 			userAllergies = cs.getAllergies(username);
 			newAllergies = new LinkedList<String>();
 			allergyGrid = new GridPane();
-			allergyGrid.setHgap(30);
-			allergyGrid.setVgap(30);
+			allergyGrid.setHgap(20);
 
 			Label allergyTitleLabel = new Label("Allergies");
 			allergyTitleLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
@@ -98,6 +97,7 @@ public class Profile extends ScrollPane{
 			userPantryItems = cs.getPantryItems(username);
 			newPantryItems = new LinkedList<String>();
 			pantryGrid = new GridPane();
+			pantryGrid.setHgap(20);
 			
 			Label pantryLabel = new Label("Pantry");
 			pantryLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
@@ -323,7 +323,7 @@ public class Profile extends ScrollPane{
 		int allergyRow = 0;
 		int allergyColumn = 0;
 		for (String allergy: newAllergies) {
-			HBox allergyBox = new HBox(10);
+			HBox allergyBox = new HBox(3);
 			Label allergyLabel = new Label(allergy);
 			allergyLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 			Button deleteAllergyButton = new Button("X");
@@ -352,7 +352,7 @@ public class Profile extends ScrollPane{
 		int itemRow = 0;
 		int itemColumn = 0;
 		for (String item: newPantryItems) {
-			HBox itemBox = new HBox(10);
+			HBox itemBox = new HBox(3);
 			Label itemLabel = new Label(item);
 			itemLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 			Button deleteItemButton = new Button("X");
