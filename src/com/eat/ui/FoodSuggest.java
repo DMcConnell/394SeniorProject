@@ -189,7 +189,7 @@ public class FoodSuggest extends ScrollPane{
 							
 							A: for(String ingredient : finalIngredients) {
 								
-								if(ingredient.contains(PantryItems.get(a).toUpperCase())) {
+								if(ingredient.toUpperCase().contains(PantryItems.get(a).toUpperCase())) {
 									score++;
 									break A;
 								}
