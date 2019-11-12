@@ -116,7 +116,7 @@ public class Search_view extends ScrollPane {
 								double pantryMatches = 0;
 								for( int a= 0; a< pantryItems.size(); a++) {							
 									A: for(String ingredient : ingredientStrings) {
-										if(ingredient.contains(pantryItems.get(a))) {
+										if(ingredient.toLowerCase().contains(pantryItems.get(a).toLowerCase())) {
 											pantryMatches++;
 											break A;
 										}
