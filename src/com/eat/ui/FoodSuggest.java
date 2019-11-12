@@ -53,6 +53,14 @@ public class FoodSuggest extends ScrollPane{
 	Label recipeSteps;
 	List<String> favorites;
 	
+	Label returnToRecipesL;
+	Label returnToRecipesL1;
+	Label returnToRecipesL2;
+
+	
+	Button returnToRecipes;
+	
+	
 
 	//suggest a recipe from the myfavorites
 //here we pass the parameter of the username as a string into the function
@@ -79,26 +87,71 @@ public class FoodSuggest extends ScrollPane{
 		    suggestButton.setText("New Suggestion");
 		    suggestButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		    suggestButton.setMinWidth(145);
-
 		    suggestGrid.add(suggestButton, 2, 1);
+		    
+		    returnToRecipes = new Button();
+		    returnToRecipes.setText("Go Back To Recipes");
+		    returnToRecipes.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+		    returnToRecipes.setMinWidth(145);
+		    suggestGrid.add(returnToRecipes, 2, 3);
+		    
+		    returnToRecipesL = new Label();
+		    returnToRecipesL.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
+		    suggestGrid.add(returnToRecipesL, 4, 7);
+		   
+		    returnToRecipesL1 = new Label();
+		    returnToRecipesL1.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
+		    suggestGrid.add(returnToRecipesL1, 4, 8);
+		    
+		    returnToRecipesL2 = new Label();   
+		    returnToRecipesL2.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
+		    suggestGrid.add(returnToRecipesL2, 4, 9);
+		    
+
+
+		    
 			this.setContent(suggestGrid);
 		    setActions();
+		    
+		    
+		    
+		    
 	}
 		
 
 	private void setActions() {
 		// TODO Auto-generated method stub
-		// in here we will generate a random query that will get the unique ID of some recipe 
-		// use get recipe on the unique id query 
+
 		
-	
-		suggestButton.setOnAction( new EventHandler <ActionEvent>() {
+		returnToRecipes.setOnAction( new EventHandler <ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent e) {
+				LaunchStage.getInstance().SearchPane(); 
+				
+			}
+
+		});
+	
+		suggestButton.setOnAction( new EventHandler <ActionEvent>() {
+			
+			//add error incase the favorites list is //make a text field make label with empty string label.settext(enter string)
+			
+			
+			@Override
+			public void handle(ActionEvent e) {
+				
+				//
+				if (favorites.isEmpty()) {
+					//return message to user 
+					returnToRecipesL.setText("You currently do not have any favorites saved, ");
+					returnToRecipesL1.setText("Please add a few so that Eat My Food can Better");
+					returnToRecipesL2.setText(" understand you :)  <3 Thank you <3 ");
+					
+					}
+				else {
 				
 				
-				int maxScore=0;
 				double maxRatio=0;
 				String maxID = favorites.get(0);
 				
@@ -106,7 +159,8 @@ public class FoodSuggest extends ScrollPane{
 			
 				//here is where we included our logic to randomly finding the recipe to present
 				List<String> PantryItems;
-				try {
+				try { //its not matching any of the pantry items to the ingredients list
+					
 					PantryItems= LaunchStage.getInstance().getContactService().
 						getPantryItems(LaunchStage.getInstance().getContactService().getSelfID()); 
 				} catch(Exception e1) {
@@ -131,8 +185,10 @@ public class FoodSuggest extends ScrollPane{
 					double ratio;
 
 					
-						for( int a= 0; a< PantryItems.size(); a++) {							
+						for( int a= 0; a< PantryItems.size(); a++) {	
+							
 							A: for(String ingredient : finalIngredients) {
+								
 								if(ingredient.contains(PantryItems.get(a))) {
 									score++;
 									break A;
@@ -149,7 +205,7 @@ public class FoodSuggest extends ScrollPane{
 				
 				//present this recipe to the user
 				LaunchStage.getInstance().RecipePane(Integer.parseInt((maxID)));
-			}
+			}}
 		});
 	}
 }
