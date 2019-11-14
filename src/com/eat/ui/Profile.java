@@ -50,24 +50,27 @@ public class Profile extends ScrollPane{
 			
 
 			/*----------------Allergies-------------*/
-			ContactService cs = LaunchStage.getInstance().getContactService();
-			String username = LaunchStage.getInstance().getContactService().getSelfID();
-			userAllergies = cs.getAllergies(username);
-			newAllergies = new LinkedList<String>();
-			allergyGrid = new GridPane();
-			allergyGrid.setHgap(20);
+			ContactService cs = LaunchStage.getInstance().getContactService(); //ContactService instance
+			String username = LaunchStage.getInstance().getContactService().getSelfID(); //User's username
+			userAllergies = cs.getAllergies(username); // Get a list of the user's current allergies
+			newAllergies = new LinkedList<String>(); //This list will be used to store the user's new allergies after they made their changes
+			allergyGrid = new GridPane(); //A separate grid for displaying the allergies
+			allergyGrid.setHgap(20); 
 
 			Label allergyTitleLabel = new Label("Allergies");
 			allergyTitleLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
 			mainGrid.add(allergyTitleLabel, 2, 1);
 			
+			//ComboBox for users to select which allergy they want to add
 			ComboBox<String> allergyCB = new ComboBox<String>();
 			allergyCB.setPromptText("Select or type an allergy");
-			allergyCB.setEditable(true);
+			allergyCB.setEditable(true); //allows the user to type into the box
 			
+			//Button to add whatever is in the ComboBox
 			Button allergyAddButton = new Button("Add Allergy");
 			mainGrid.add(allergyAddButton, 3, 2);
 			
+			//Putting allergies in the ComboBox
 			allergyCB.getItems().addAll(
 					IAllergy.EGG,
 					IAllergy.FISH,
@@ -79,37 +82,46 @@ public class Profile extends ScrollPane{
 					IAllergy.TREENUTS,
 					IAllergy.WHEAT
 			);
+			
+			//This line makes the ComboBox filterable by typing
 			FxUtilTest.autoCompleteComboBoxPlus(allergyCB, (typedText, itemToCompare) -> itemToCompare.toLowerCase().contains(typedText.toLowerCase()) || itemToCompare.toString().equals(typedText));
 			
+			//HBox to contain the ComboBox and the Add Button
 			HBox allergyButtonBox = new HBox(20);
 			allergyButtonBox.getChildren().addAll(allergyCB, allergyAddButton);
 			
-			mainGrid.add(allergyButtonBox, 2, 2);
-			mainGrid.add(allergyGrid, 2, 3);
 			
+			mainGrid.add(allergyButtonBox, 2, 2);
+			mainGrid.add(allergyGrid, 2, 3); //allergyGrid is added to the mainGrid
+			
+			//newAllergies list is initialized with the user's current allergies
 			for (String allergy : userAllergies) {
 				newAllergies.add(allergy);
 			}
 			
+			//Fuction to display the user's allergies in the allergyGrid
 			displayAllergies();
 
 			/*---------------Pantry---------------------*/
-			userPantryItems = cs.getPantryItems(username);
-			newPantryItems = new LinkedList<String>();
-			pantryGrid = new GridPane();
+			userPantryItems = cs.getPantryItems(username); //getting the user's pantry items
+			newPantryItems = new LinkedList<String>(); //This list will be used to store the user's new pantry after they made their changes
+			pantryGrid = new GridPane(); //A separate grid for displaying the user's pantry
 			pantryGrid.setHgap(20);
 			
 			Label pantryLabel = new Label("Pantry");
 			pantryLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
 			mainGrid.add(pantryLabel, 2, 4);
-
+			
+			//A ComboBox for the user to pick their allergies from
 			ComboBox<String> pantryCB = new ComboBox<String>();
 			pantryCB.setPromptText("Select or type an item");
 			pantryCB.setEditable(true);
 			
+			//A button that adds whatever is in the ComboBox to the pantry
 			Button pantryAddButton = new Button("Add to pantry");
 			mainGrid.add(pantryAddButton, 3, 5);
 			
+			//Adding all of the pantry items to the ComboBox
 			pantryCB.getItems().addAll(
 					IPantry.ANGELHAIRNOODLES,
 					IPantry.ANISE,
@@ -190,31 +202,37 @@ public class Profile extends ScrollPane{
 					IPantry.TURKEY,
 					IPantry.VEAL
 			);
+			
+			//This line makes the ComboBox filterable by typing
 			FxUtilTest.autoCompleteComboBoxPlus(pantryCB, (typedText, itemToCompare) -> itemToCompare.toLowerCase().contains(typedText.toLowerCase()) || itemToCompare.toString().equals(typedText));
 			
+			//HBox to hold the ComboBox and the Add button
 			HBox pantryButtonBox = new HBox(20);
 			pantryButtonBox.getChildren().addAll(pantryCB, pantryAddButton);
 			
+			
 			mainGrid.add(pantryButtonBox, 2, 5);
+			mainGrid.add(pantryGrid, 2, 6); //pantryGrid is added to the mainGrid under the ComboBox
 			
-			mainGrid.add(pantryGrid, 2, 6);
-			
+			//newPantryItems is initialized to the user's current pantry items
 			for (String item : userPantryItems) {
 				newPantryItems.add(item);
 			}
 			
-			
+			//A function that populates the pantryGrid with the items from newPantryItems
 			displayPantry();
 
 
 			//Save changes button
 			HBox saveBox = new HBox(20);
 			
+			//The button itself
 			Button saveButton = new Button("Save Changes");
 			saveButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 			saveButton.setMinHeight(80);
 			saveBox.getChildren().add(saveButton);
 			
+			//Text to display when changes are saved
 			Label saveLabel = new Label();
 			saveLabel.setStyle("-fx-text-fill: green");
 			saveBox.getChildren().add(saveLabel);
@@ -228,6 +246,7 @@ public class Profile extends ScrollPane{
 			
 			/*------------------------------------ACTIONS------------------------------------------*/
 			
+			//Saves the user's changes to the database
 			EventHandler<ActionEvent> saveChanges = new EventHandler<ActionEvent>(){
 				@Override
 				public void handle(ActionEvent e) {
@@ -235,19 +254,21 @@ public class Profile extends ScrollPane{
 						saveLabel.setText("");
 						/*-------------------Update Allergies------------------*/
 						for (String allergy : userAllergies) {
+							//Removing the allergies that aren't in the new list
 							if (!newAllergies.contains(allergy)) {
-								cs.removeAllergy(username, allergy);
+								cs.removeAllergy(username, allergy); 
 							}
 						}
-						cs.addAllergies(username, newAllergies);
+						cs.addAllergies(username, newAllergies); //Add the new allergies to the DB
 						
 						/*-------------------Update Pantry---------------------*/
 						for (String item : userPantryItems) {
+							//Removing the pantry items that aren't in the new list
 							if (!newPantryItems.contains(item)) {
 								cs.deletePantryItem(username, item);
 							}
 						}
-						cs.addPantryItems(username, newPantryItems);
+						cs.addPantryItems(username, newPantryItems); //Add the new pantry items to the DB
 						
 						saveLabel.setText("Changes Saved!");
 					}
@@ -260,32 +281,39 @@ public class Profile extends ScrollPane{
 			
 			saveButton.setOnAction(saveChanges);
 			
+			//Adds a new allergy to the newAllergies list
 			EventHandler<KeyEvent> addAllergy = new EventHandler<KeyEvent>() {
 				@Override
 				public void handle(KeyEvent e) {
-					if (e.getCode() == KeyCode.ENTER) {
-						if (!newAllergies.contains(allergyCB.getValue()) && allergyCB.getItems().contains(allergyCB.getValue())) {
-							newAllergies.add(allergyCB.getValue());
-							displayAllergies();
+					//if the user hits enter
+					if (e.getCode() == KeyCode.ENTER) { 
+						//if the allergy isn't already in the new list and if it is one of the options in the ComboBox
+						if (!newAllergies.contains(allergyCB.getValue()) && allergyCB.getItems().contains(allergyCB.getValue())) { 
+							newAllergies.add(allergyCB.getValue()); //add it to the new list
+							displayAllergies(); // re-display the allergies to reflect the change
 						}
 					}
 				}
 			};
 			allergyCB.setOnKeyPressed(addAllergy);
 			
+			//Adds a pantry item to the newPantryItems list
 			EventHandler<KeyEvent> addPantryItem = new EventHandler<KeyEvent>() {
 				@Override
 				public void handle(KeyEvent e) {
+					//If the user hits enter
 					if (e.getCode() == KeyCode.ENTER) {
+						//if the item isn't already in the new list and if it is one of the options in the ComboBox
 						if (!newPantryItems.contains(pantryCB.getValue()) && pantryCB.getItems().contains(pantryCB.getValue())){
-							newPantryItems.add(pantryCB.getValue());
-							displayPantry();
+							newPantryItems.add(pantryCB.getValue()); //add it to the new list
+							displayPantry(); // re-display the pantry to reflect the change
 						}
 					}
 				}
 			};
 			pantryCB.setOnKeyPressed(addPantryItem);
 			
+			//Same as add allergy but for the button instead of the ComboBox
 			allergyAddButton.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
@@ -296,6 +324,7 @@ public class Profile extends ScrollPane{
 				}
 			});
 			
+			//Same as addPantryItem but for the button instead of the ComboBox
 			pantryAddButton.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
@@ -319,6 +348,7 @@ public class Profile extends ScrollPane{
 
 	}
 	
+	//Function for displaying the new allergies in the allergyGrid
 	private void displayAllergies() {
 		int allergyRow = 0;
 		int allergyColumn = 0;
@@ -348,6 +378,7 @@ public class Profile extends ScrollPane{
 		}
 	}
 	
+	//Function for displaying the new pantry items in the pantryGrid
 	private void displayPantry() {
 		int itemRow = 0;
 		int itemColumn = 0;

@@ -44,8 +44,8 @@ public class Search_view extends ScrollPane {
 	public Search_view() {
 		try {
 			String username = LaunchStage.getInstance().getContactService().getSelfID();
-			String resultDivider = "_________________________________________________________________________";
-			GridPane mainGrid = new GridPane();
+			String resultDivider = "_________________________________________________________________________"; //string for dividing results, probably a better way to do this
+			GridPane mainGrid = new GridPane(); //Grid for displaying the whole page
 			mainGrid.setAlignment(Pos.TOP_CENTER);
 			mainGrid.setVgap(30);
 
@@ -69,32 +69,36 @@ public class Search_view extends ScrollPane {
 			searchButton.setMinHeight(40);
 			searchBar.getChildren().add(searchButton);
 
-			RecipeService rs = LaunchStage.getInstance().getRecipeService();
-
+			RecipeService rs = LaunchStage.getInstance().getRecipeService(); // getting a RecipeService instance
+			
+			//Label to be displayed when the user enters a bad character such as " or '
 			Label badSearchTerm = new Label("");
 			badSearchTerm.setTextFill(Color.web("red"));
 			searchBar.getChildren().add(badSearchTerm);
 
 			mainGrid.add(searchBar, 0, 1);
-			GridPane resultGrid = new GridPane();
+			GridPane resultGrid = new GridPane(); // A separate grid for displaying the search results
 			mainGrid.add(resultGrid, 0, 2);
 			//Eventhandler to display results of the search
 			EventHandler<ActionEvent> displayResults = new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
 					try {
+						//Checking the search terms for special characters
 						String t = searchField.getText();
 						Pattern pattern = Pattern.compile("[^A-Za-z0-9.,?! ]");
 						Matcher matcher = pattern.matcher(t);
 						boolean specialT = matcher.find();
 						
 						if (specialT) {
+							//Yell at them if they do
 							badSearchTerm.setText("Do not use special characters in your search!");
 							searchField.setStyle("-fx-border-color: red");
 						}
 						else {
-							resultGrid.getChildren().clear();
-							badSearchTerm.setText("");
+							//Otherwise, display the results
+							resultGrid.getChildren().clear(); // clear the current results to make room for the new ones
+							badSearchTerm.setText(""); //Stop yelling at them
 							searchField.setStyle("");
 
 							/*-------------------------------------Sorting Results--------------------------------------------*/
@@ -116,6 +120,7 @@ public class Search_view extends ScrollPane {
 								double pantryMatches = 0;
 								for( int a= 0; a< pantryItems.size(); a++) {							
 									A: for(String ingredient : ingredientStrings) {
+										//If the ingredient contains the pantry item then increase the pantry matches
 										if(ingredient.toLowerCase().contains(pantryItems.get(a).toLowerCase())) {
 											pantryMatches++;
 											break A;
@@ -146,46 +151,63 @@ public class Search_view extends ScrollPane {
 							}
 							/*--------------------------------------------------------------------------------------------------*/
 
-
-							int resultNumber = 0;
+							/*-----------------------------------------Displaying Results---------------------------------------*/
+							int resultNumber = 0; //number for positioning the results
+							
+							//Display text "No results found" if no results are found
 							if (sortedResults.size() == 0) {
 								Label noResultsLabel = new Label("No results found.");
 								noResultsLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 25));
 								resultGrid.add(noResultsLabel, 0, 0);
 							}
+							
+							//For loop to display all of the results
 							for (HashMap<String,String> result : sortedResults) {
+								//Each result is an HBox (currently unnecessary because we are not displaying images)
 								HBox searchResult = new HBox(20);
+								
+								//Images are not being displayed yet
 								/*
-							Image recipeImage = new Image(result.get(IRecipe.IMAGEPATH));
-							ImageView recipeImageView = new ImageView(recipeImage);
-							recipeImageView.setFitHeight(150);
-							recipeImageView.setFitWidth(200);
-							searchResult.getChildren().add(recipeImageView);
+								Image recipeImage = new Image(result.get(IRecipe.IMAGEPATH));
+								ImageView recipeImageView = new ImageView(recipeImage);
+								recipeImageView.setFitHeight(150);
+								recipeImageView.setFitWidth(200);
+								searchResult.getChildren().add(recipeImageView);
 								 */
+								
+								//VBox to contain the title and the description
 								VBox recipeText = new VBox(5);
-
+								
+								//Recipe's name
 								Label recipeName = new Label(result.get(IRecipe.NAME));
 								recipeName.setFont(Font.font("Tahoma", FontWeight.NORMAL, 40));
 								recipeName.setAlignment(Pos.TOP_CENTER);
-
+								
+								//Recipe's summary
 								Label recipeSummary = new Label(result.get(IRecipe.SUMMARY) + "\n" + resultDivider);
 								recipeSummary.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 								recipeSummary.setMaxWidth(800);
 								recipeSummary.setWrapText(true);
-
+								
+								//Add them to the VBox
 								recipeText.getChildren().add(recipeName);
 								recipeText.getChildren().add(recipeSummary);
-
+								
+								//Add the VBox containing title and summary to the HBox
 								searchResult.getChildren().add(recipeText);
+								
+								//Setting the eventhandler on the HBox so the whole thing can be clicked
 								searchResult.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 									@Override
 									public void handle(MouseEvent e) {
+										//Transfer user to the recipe page of the given recipe
 										LaunchStage.getInstance().RecipePane(Integer.valueOf(result.get(IRecipe.RECIPEID)));
 									}
 								});
+								//Add the resulting HBox to the resultGrid
 								resultGrid.add(searchResult, 0, resultNumber);
-								resultNumber++;
+								resultNumber++; // Increment the resultNumber for the next result
 							}
 						}
 					}

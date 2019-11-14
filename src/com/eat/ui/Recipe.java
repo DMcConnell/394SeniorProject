@@ -40,11 +40,12 @@ public class Recipe extends ScrollPane{
 
 	public Recipe(int idInt) {
 		try {
-			String id = String.valueOf(idInt);
-			HashMap<String,String> recipe = LaunchStage.getInstance().getRecipeService().getRecipe(id);
-			ContactService cs = LaunchStage.getInstance().getContactService();
-			String username = cs.getSelfID();
-
+			String id = String.valueOf(idInt); //converting parameter to a String so everything else doesn't break
+			HashMap<String,String> recipe = LaunchStage.getInstance().getRecipeService().getRecipe(id); //getting the recipe in question
+			ContactService cs = LaunchStage.getInstance().getContactService(); //ContactService instance
+			String username = cs.getSelfID(); // Current user's username
+			
+			//Grid for displaying everything
 			GridPane grid = new GridPane();
 			grid.setAlignment(Pos.TOP_CENTER);
 			grid.setVgap(20);
@@ -56,16 +57,17 @@ public class Recipe extends ScrollPane{
 			//Favorite Button
 			Button favoriteButton = new Button();
 			if (cs.getFavorites(cs.getSelfID()).contains(String.valueOf(id))) {
-				favoriteButton.setText("<3");
+				favoriteButton.setText("<3"); //display a heart if the current recipe is favorited
 			}
 			else {
-				favoriteButton.setText("Favorite");
+				favoriteButton.setText("Favorite"); //otherwise display the text favorite
 			}
 			favoriteButton.setMinHeight(50);
 			favoriteButton.setMinWidth(140);
 			favoriteButton.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 			favoriteButton.setAlignment(Pos.CENTER);
-
+			
+			//HBox for the Recipe name and Favorite button
 			HBox title = new HBox(571);
 			title.setMinWidth(900);
 			title.getChildren().add(recipeName);
@@ -81,7 +83,7 @@ public class Recipe extends ScrollPane{
 			grid.add(recipeImageView, 0, 1);
 			*/
 
-			//Summary Title
+			//HBox for the summary title and the Recipe's author
 			HBox summaryAndAuthor = new HBox(571);
 			
 			Label summaryTitle = new Label("Summary");
@@ -108,12 +110,23 @@ public class Recipe extends ScrollPane{
 			Label recipeAllergies = new Label();
 			String allergyString = "Allergies: ";
 			LinkedList<String> recipeAllergiesList = LaunchStage.getInstance().getRecipeService().getRecipeAllergies(id);
+			LinkedList<String> userAllergies = cs.getAllergies(username);
+			
+			//Check if user has any of the allergies, if so display them in red
 			for (String allergy : recipeAllergiesList) {
-				allergyString += allergy + " ";
-				if (cs.getAllergies(username).contains(allergy)) {
+				allergyString += allergy + ", ";
+				if (userAllergies.contains(allergy)) {
 					recipeAllergies.setStyle("-fx-text-fill: red");
+					break;
 				}
 			}
+			if (allergyString.length() <= 11) {
+				allergyString = "Allergies: none";
+			}
+			else {
+				allergyString = allergyString.substring(0, allergyString.length() - 2);
+			}
+			
 			recipeAllergies.setText(allergyString);
 			recipeAllergies.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 			grid.add(recipeAllergies, 0, 5);
