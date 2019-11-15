@@ -1,14 +1,11 @@
 package com.eat.ui;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -18,18 +15,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
-
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import com.eat.services.IUser;
 import com.eat.support.Support;
 
 public class ForgotPassword extends GridPane {
 
-	
+	//Visual Elements and input fields
 	Text scenetitle;
 	Label Prefix;
 	Label email;
@@ -37,7 +31,7 @@ public class ForgotPassword extends GridPane {
 	Button LoginBtn;
 	Button RecoverBtn;
 	
-	
+	//In constructor, apply all visual elements to the Pane (this)
     public ForgotPassword()
     {
         this.setAlignment(Pos.CENTER);
@@ -89,6 +83,7 @@ public class ForgotPassword extends GridPane {
         setActions();
     }
     
+  //Set action for each interactable element
     public void setActions()
     {
     	/*------------------------------------------------------ACTIONS------------------------------------------------------*/
@@ -102,6 +97,8 @@ public class ForgotPassword extends GridPane {
             }
         });
         
+        //Check pattern for valid email address, check for existing user with email, 
+        //create and update a new temporary random password for them and email it to them
         RecoverBtn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -141,7 +138,6 @@ public class ForgotPassword extends GridPane {
                 	catch (Exception ex)
                 	{
                 		Prefix.setText(ex.getMessage());
-                		//ex.printStackTrace();
                     	emailTextField.setStyle("-fx-border-color: black");
                     	success = false;
                 	}
@@ -157,12 +153,5 @@ public class ForgotPassword extends GridPane {
         
     }
     
-    
-    public void TEMP_TEST_RECOVER(String email) throws Exception
-    {
-    	throw new Exception();
-    }
-        
-
 
 }

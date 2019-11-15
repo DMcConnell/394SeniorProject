@@ -1,11 +1,9 @@
 package com.eat.ui;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -18,14 +16,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import com.eat.services.Exceptions.*;
 
+//GridPane for central structured view
 public class Login extends GridPane {
 
-	
+	//Visual Elements and input fields
 	Text scenetitle;
 	Label Prefix;
 	Label userName;
@@ -36,7 +33,7 @@ public class Login extends GridPane {
 	Button RegBtn;
 	Button ForgotPW;
 	
-	
+	//In constructor, apply all visual elements to the Pane (this)
     public Login()
     {
         this.setAlignment(Pos.CENTER);
@@ -106,6 +103,7 @@ public class Login extends GridPane {
         setActions();
     }
     
+    //Set action for each interactable element
     public void setActions()
     {
     	/*------------------------------------------------------ACTIONS------------------------------------------------------*/
@@ -143,15 +141,11 @@ public class Login extends GridPane {
         });
     }
     
+    //check that all fields have correctly formatted and allowed input, then log in user
     void LogUserIn()
     {
     	String username = userTextField.getText();
     	String password = pwBox.getText();
-    	
-        //CHECK IF VALID USERNAME (letters and numbers only, min length)
-    	// - if not, say incorrect or invalid username and password
-    	//CHECK IF VALID PASSWORD (certain characters only, min length)
-    	// - if not, say incorrect or invalid username and password
     	
     	Pattern userPattern = Pattern.compile("[^A-Za-z0-9]");
         Matcher userMatcher = userPattern.matcher(username);
@@ -204,7 +198,6 @@ public class Login extends GridPane {
         	try
         	{
         		LaunchStage.getInstance().getContactService().login(username, password);
-        		//TEMP_TEST_LOGIN(username, password);
         		success = true;
         	}
         	catch (Exception ex)
@@ -224,13 +217,5 @@ public class Login extends GridPane {
     	}
     }
     
-    public void TEMP_TEST_LOGIN(String u, String p) throws Exception
-    {
-    	if(!u.equals("testuser") || !p.equals("password"))
-    		throw new InvalidCombinationException();
-    }
-    
-    
-
 
 }

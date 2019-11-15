@@ -1,48 +1,39 @@
 package com.eat.ui;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import com.eat.services.IAllergy;
 import com.eat.services.IRecipe;
 import com.eat.support.*;
-import com.eat.services.Exceptions.*;
 
 public class UploadRecipe extends ScrollPane {
 
+	//Visual Elements and input fields
 	GridPane GRID;
 	
 	Text scenetitle;
@@ -80,11 +71,12 @@ public class UploadRecipe extends ScrollPane {
 	
 	Button Upload;
 	
+	//lists for collecting data before sending
 	List<String> addedAllergies;
 	List<Ingredient> addedIngredients;
 	Map<Integer, String> addedInstructions;
 	
-	
+	//In constructor, apply all visual elements to the Pane (this)
     public UploadRecipe()
     {
     	GRID = new GridPane();
@@ -121,7 +113,7 @@ public class UploadRecipe extends ScrollPane {
         GRID.add(titleField, 1, vLevel);
         vLevel++;
         /*
-        //image fields
+        //image fields, not used because we don't have a download service to have images available
         image = new Label("Image URL:");
         image.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         GRID.add(image, 0, vLevel);
@@ -282,11 +274,12 @@ public class UploadRecipe extends ScrollPane {
         setActions();
     }
     
+  //Set action for each interactable element
     public void setActions()
     {
     	/*------------------------------------------------------ACTIONS------------------------------------------------------*/
         Upload.setOnAction(new EventHandler<ActionEvent>() {
-
+        	//check to ensure all fields valid and upload recipe
             @Override
             public void handle(ActionEvent e) {
             	String t = titleField.getText();
@@ -305,7 +298,6 @@ public class UploadRecipe extends ScrollPane {
             	boolean specialB = matcher.find();
             	/*
             	String i = imageField.getText();
-            	
             	pattern = Pattern.compile("^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]");
             	matcher = pattern.matcher(i);
             	boolean specialI = matcher.find();
@@ -559,12 +551,9 @@ public class UploadRecipe extends ScrollPane {
         });
         
         allergyAdd.setOnAction(new EventHandler<ActionEvent>() {
-
+        	//Add new allergies to list
             @Override
             public void handle(ActionEvent e) {
-            	//CHECK ALL FIELDS TO HAVE PROPER FORMAT
-            	
-            	
                 //add selected allergy to list and to HBox as string
             	String s = allergies.getValue();
             	if(s == null)
@@ -621,6 +610,7 @@ public class UploadRecipe extends ScrollPane {
         });
     }
     
+    //Add new ingredients to list
     void AddNewIngredient()
     {
     	//CHECK ALL FIELDS ESPECIALLY Q TO HAVE PROPER FORMAT
@@ -733,10 +723,10 @@ public class UploadRecipe extends ScrollPane {
         }
     }
     
+    //Add new instructions to list
     void AddNewInstruction()
     {
     	//CHECK ALL FIELDS TO HAVE PROPER FORMAT
-    	
     	String s = instructionsField.getText();
     	Pattern pattern = Pattern.compile("[^A-Za-z0-9.,:? ]");
         Matcher matcher = pattern.matcher(s);
@@ -772,7 +762,5 @@ public class UploadRecipe extends ScrollPane {
     		
     	}
     }
-        
-
-
+    
 }

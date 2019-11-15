@@ -3,11 +3,8 @@ import java.util.HashMap;
 import java.util.Properties;  
 import javax.mail.*;
 import javax.mail.internet.*;
-
 import com.eat.support.Support;
 import com.eat.ui.LaunchStage;
-
-import javax.activation.*;
   
 public class EmailService {
 	
@@ -21,6 +18,8 @@ public class EmailService {
     private String username="";
     private String password="";
  
+    
+    //Initialize email setup and connection with admin user info from database
     public void init() throws Exception {
     	HashMap<String, String> admin = LaunchStage.getInstance().getContactService().getUser("Admin");
     	username = admin.get(IUser.EMAIL);
@@ -40,6 +39,7 @@ public class EmailService {
         });
     }
  
+    //Using provided address, send an email with given subject and message
     public void sendEmail(String toEmailAddress, String emailSubject, String emailMessage) {
         try
         {

@@ -1,11 +1,9 @@
 package com.eat.ui;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -18,14 +16,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import com.eat.services.Exceptions.*;
 
 public class Registration extends GridPane {
 
-	
+	//Visual Elements and input fields
 	Text scenetitle;
 	Label Prefix;
 	Label email;
@@ -39,7 +35,7 @@ public class Registration extends GridPane {
 	Button LoginBtn;
 	Button RegBtn;
 	
-	
+	//In constructor, apply all visual elements to the Pane (this)
     public Registration()
     {
         this.setAlignment(Pos.CENTER);
@@ -96,7 +92,6 @@ public class Registration extends GridPane {
         this.add(nameTextField, 2, 3);
         
         //password fields
-
         pw = new Label("Password:");
         pw.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         this.add(pw, 1, 4);
@@ -125,6 +120,7 @@ public class Registration extends GridPane {
         setActions();
     }
     
+  //Set action for each interactable element
     public void setActions()
     {
     	/*------------------------------------------------------ACTIONS------------------------------------------------------*/
@@ -138,8 +134,8 @@ public class Registration extends GridPane {
             }
         });
         
+        //check that all fields have correctly formatted and allowed input, then register user and log in
         RegBtn.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent e) {
             	String email = emailTextField.getText();
@@ -260,10 +256,8 @@ public class Registration extends GridPane {
             		boolean success = false;
                 	try
                 	{
-                		//need an instance of contact service to call
                 		LaunchStage.getInstance().getContactService().registerUser(username, password, realname, email);
                 		
-                		//TEMP_TEST_REGISTER(username, password, email);
                 		success = true;
                 	}
                 	catch (Exception ex)
@@ -286,18 +280,6 @@ public class Registration extends GridPane {
             	
             }
         });
-        
     }
     
-    
-    public void TEMP_TEST_REGISTER(String u, String p, String email) throws Exception
-    {
-    	if(email.equals("testuser@email.com"))
-    		throw new EmailTakenException();
-    	if(u.equals("testuser"))
-    		throw new UsernameTakenException();
-    }
-        
-
-
 }

@@ -1,31 +1,13 @@
 package com.eat.ui;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import com.eat.services.Exceptions.*;
 
 public class Navigation extends VBox{
 
+	//Visual Elements
 	Button Profile;
 	Button Favorites;
 	Button Search;
@@ -34,6 +16,7 @@ public class Navigation extends VBox{
 	Button FoodSuggestion;
 	Button Settings;
 	
+	//In constructor, apply all visual elements to the Pane (this)
 	public Navigation()
 	{
 		int numpages = 0;
@@ -59,7 +42,7 @@ public class Navigation extends VBox{
 		Logout.setPrefWidth(250);
 		numpages++;
 		
-
+		//set spacing based off of window/screen size
 		this.setSpacing(LaunchStage.getInstance().getScreenHeight() / (numpages+1));
 		
 		this.getChildren().addAll(Profile, Favorites, Search, UploadRecipe, FoodSuggestion, Settings, Logout);
@@ -67,6 +50,7 @@ public class Navigation extends VBox{
 		setActions();
 	}
 	
+	//Set action for each button
 	void setActions()
 	{
 		Profile.setOnAction(new EventHandler<ActionEvent>() {
@@ -128,7 +112,6 @@ public class Navigation extends VBox{
             @Override
             public void handle(ActionEvent e) {
                 //Log Out
-            	//LaunchStage.getInstance().getContactService().logout();
             	LaunchStage.getInstance().StartScene();
             }
         });
