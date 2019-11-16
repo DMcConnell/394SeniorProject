@@ -1,29 +1,15 @@
 package com.eat.ui;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 import javafx.scene.input.MouseEvent;
-
-import java.util.LinkedList;
 
 import com.eat.services.IRecipe;
 import com.eat.services.RecipeService;
