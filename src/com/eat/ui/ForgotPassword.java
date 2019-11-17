@@ -40,7 +40,7 @@ public class ForgotPassword extends GridPane {
         this.setPadding(new Insets(20, 20, 20, 20));
         this.getColumnConstraints().add(new ColumnConstraints(150)); // column 0 is 150 wide
 
-        scenetitle = new Text("Please enter your information to register.");
+        scenetitle = new Text("Please enter the email address associated with your account.");
         scenetitle.setTextAlignment(TextAlignment.CENTER);
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 35));
         this.add(scenetitle, 0, 0, 3, 1);
