@@ -1,34 +1,24 @@
 package com.eat.ui;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.eat.services.ContactService;
 import com.eat.services.IUser;
-import com.eat.services.Exceptions.*;
 
 public class UserSettings extends GridPane {
 
-	
+	//Visual Elements and input fields
 	Text scenetitle;
 	Label Prefix;
 	Label email;
@@ -48,6 +38,7 @@ public class UserSettings extends GridPane {
 	
 	ContactService cs;
 	
+	//In constructor, apply all visual elements to the Pane (this)
     public UserSettings()
     {
     	this.setHgap(10);
@@ -137,10 +128,12 @@ public class UserSettings extends GridPane {
         setActions();
     }
     
+  //Set action for each interactable element
     public void setActions()
     {
     	/*------------------------------------------------------ACTIONS------------------------------------------------------*/
     	/*
+    	 //Change username not made due to username being the unique ID on the database, will need restructure to allow this
         changeUsername.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
@@ -215,6 +208,7 @@ public class UserSettings extends GridPane {
         });
         */
     	
+    	//check that all fields have correctly formatted and allowed input, then change password through services
         changePWord.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override

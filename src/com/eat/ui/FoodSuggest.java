@@ -163,6 +163,7 @@ public class FoodSuggest extends ScrollPane{
 					
 					PantryItems= LaunchStage.getInstance().getContactService().
 						getPantryItems(LaunchStage.getInstance().getContactService().getSelfID()); 
+					
 				} catch(Exception e1) {
 					//e1.printStackTrace();
 					LaunchStage.getInstance().RecipePane(Integer.parseInt(maxID));
@@ -170,18 +171,22 @@ public class FoodSuggest extends ScrollPane{
 				}
 				
 				for(int i = 0; i < favorites.size(); i++) {
+					if(PantryItems.size() < 1)
+					{
+						break;
+					}
 					List<Ingredient> Ingredients;
 					List<String> finalIngredients = new LinkedList<String>();
 					try {
 						Ingredients = LaunchStage.getInstance().getRecipeService().getIngredients(favorites.get(i));
 						for(Ingredient ingredient : Ingredients) {
-							finalIngredients.add(ingredient.getName().toUpperCase());
+							finalIngredients.add(ingredient.getName());
 						}
 					} catch(Exception e2) {
 						//LaunchStage.getInstance().RecipePane(Integer.parseInt(maxID));
 						break;
 					}
-					int score=0;
+					double score=0;
 					double ratio;
 
 					
@@ -190,13 +195,13 @@ public class FoodSuggest extends ScrollPane{
 							A: for(String ingredient : finalIngredients) {
 								
 								if(ingredient.toUpperCase().contains(PantryItems.get(a).toUpperCase())) {
-									score++;
+									score+= 1;
 									break A;
 								}
 							}
 						}
-					ratio =score/Ingredients.size();
 						
+					ratio = score/(double)PantryItems.size();
 					if (ratio> maxRatio) 
 						{maxRatio=ratio; maxID = favorites.get(i);}
 

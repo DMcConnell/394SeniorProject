@@ -3,18 +3,10 @@ package com.eat.ui;
 import com.eat.services.ContactService;
 import com.eat.services.EmailService;
 import com.eat.services.RecipeService;
-
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -83,7 +75,7 @@ public class LaunchStage extends Application {
 	
 	BackgroundImage logo;
 	
-	
+	//Application begins here, set the scene, set the pane(s) to in the scene, show the scene using the stage
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
@@ -93,14 +85,14 @@ public class LaunchStage extends Application {
 		ScreenWidth = Screen.getPrimary().getBounds().getWidth() * .85;
 		ScreenHeight = Screen.getPrimary().getBounds().getHeight() * .85;
 		
-		//logo = new BackgroundImage(new Image("file:EMF1.jpeg"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
-		
 		startPane = new BorderPane();
 		
 		currentPane = startPane;
 		
 		LoginPane();
 		
+		//image would not show up as background, unsure what is going wrong
+		//logo = new BackgroundImage(new Image("file:EMF1.jpeg"), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
 		//currentPane.setBackground(new Background(logo));
 		
 		startScene = new Scene(currentPane, ScreenWidth, ScreenHeight);
@@ -121,7 +113,7 @@ public class LaunchStage extends Application {
 		return logo;
 	}
 	
-	
+	//close out all services so that when logged out, all session data is cleared
 	private void resetServices() {
 		try {
 			rs.close();
@@ -133,7 +125,7 @@ public class LaunchStage extends Application {
 		}
 	}
 	
-	//This is for logging out and switching back to login page, disconnected from database.
+	//This is for logging out and switching back to login page, disconnect from database.
 	protected void StartScene()
 	{
 		resetServices();
@@ -158,10 +150,9 @@ public class LaunchStage extends Application {
 	protected void MainScene()
 	{
 		mainPane = new BorderPane();
-		//mainPane.setAlignment(Pos.CENTER);
-		
 		
 		currentPane = mainPane;
+		
 		//set current pane to be new pane with navigation window and profile page
 		NavPane();
 		ProfilePane();
@@ -175,10 +166,9 @@ public class LaunchStage extends Application {
 		stage.setScene(currentScene);
 		stage.show();
 		
-		//stage.setFullScreen(true);
 	}
 	
-	
+	//Functions called to set the view pane to be the class which is desired
 	protected void LoginPane()
 	{
 		currentPane.setCenter(new Login());
